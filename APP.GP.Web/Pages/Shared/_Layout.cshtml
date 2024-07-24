@@ -3,14 +3,12 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MORENA</title>
-
-    @* <link href="~/lib/kendo/styles/bootstrap-4.css" rel="stylesheet" /> *@
-    @* <link href="~/lib/kendo/styles/classic-green.css" rel="stylesheet" /> *@
-  @*   <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" /> *@
+    <title>@@ DIRECTORIO</title>
+    <link rel="icon" href="~/img/favicon.ico" type="image/x-icon">
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/kendo/js/kendo.all.min.js"></script>
-
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/kendo/styles/material-lime.css" rel="stylesheet" />
     @await RenderSectionAsync("Css", required: false)
     <meta http-equiv='cache-control' content='no-cache'>
     <meta http-equiv='expires' content='0'>
@@ -19,9 +17,7 @@
 <body>
     <div class="container nav-header-container">
         <div class="col-auto header-content">
-            @*   <a href="#" title="Consejo Nacional Morena" class="logo">
-            <img src="img/logo@2x.png" data-rjs="img/logo@2x.png" class="logo-dark" alt="Morena">
-            </a> *@
+            <a href="#" title="Consejo Nacional Morena" class="logo"></a>
         </div>
     </div>
 
