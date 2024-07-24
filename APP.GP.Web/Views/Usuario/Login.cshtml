@@ -1,0 +1,51 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Layout";
+}
+<div id="divHeader" style="display:none" class="mt-3 text-center">
+<h1>Inicio de Sesión</h1>
+<h3>SIITIC</h3>
+</div>
+<hr>
+<div id="divForm" style="display:none" class="row mb-3">
+    <div class="col-md-4">
+        &nbsp;
+    </div>
+    <div class="col-md-4">
+        
+            <div id="frmLogin">
+
+            <div class="form-group">
+                <label class="control-label" for="NombreUsuario">Nombre de Usuario <span style="color:red">*</span></label>
+                <input class="form-control valida OnlyAlfanumeric" placeholder="RPE o RTT" type="text" id="NombreUsuario" name="NombreUsuario" value="" maxlength="5">
+                @*<span class="text-danger field-validation-valid" data-valmsg-for="NombreUsuario" data-valmsg-replace="true"></span>*@
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="Contrasenia">Contraseña <span style="color:red">*</span></label>
+                <input class="form-control valida" type="password" placeholder="Contraseña"  id="Contrasenia" name="Contrasenia" maxlength="25">
+               @* <span class="text-danger field-validation-valid" data-valmsg-for="Contrasenia" data-valmsg-replace="true"></span>*@
+            </div>
+            <div class="form-group text-center">
+                <button id="btnEntrar" class="button button-rounded button-small m-0"><span class="k-icon k-i-login"></span> Entrar</button>
+                   
+            </div>
+            <br />
+            <span style="color:red; font-size:small">* Campos Obligatorios</span>
+        </div>
+        
+    </div>
+    <div class="col-md-4">
+            @using (Html.BeginForm("Redirect", "Usuario")){
+            <input id="btnEntrarSubmit" disabled style="display:none" value="Submit Data" type="submit" class="btn btn-primary" />
+        }
+        &nbsp;
+    </div>
+</div>
+@section Scripts{
+    <script>
+        var _urlLogin = "@Url.Action("Autenticar","Usuario")";
+    </script>
+    <script src="~/js/Login/login.js" asp-append-version="true"></script>
+}
