@@ -13,6 +13,172 @@ public class HomeController : Controller
         return View();
     }
 
+    public JsonResult GetContentData()
+    {
+        var data = new
+        {
+            titleGroup = "PODERES",
+            colClasses = new[] { "col-xl-9", "col-lg-12", "col-md-12", "col-sm-12", "col-12" },
+            sections = new[]
+            {
+                new
+                {
+                    header = "FEDERAL",
+                    colDivClasses = new[] { "col-xl-4", "col-lg-4", "col-md-4", "col-sm-6", "col-12" },
+                    columns = new[] { "Ejecutivo", "Legislativo", "Judicial", "Autónomos" },
+                    rows = new[]
+                    {
+                        new[] { new { text = "Oficina de la presidencia", popupId = 1 }, new { text = "Diputados", popupId = 1 }, new { text = "SCJN", popupId = 1 }, new { text = "CNDH", popupId = 1 } },
+                        new[] { new { text = "APF", popupId = 1 }, new { text = "Senadores", popupId = 1 }, new { text = "PJF", popupId = 1 }, new { text = "INEGI", popupId = 1 } },
+                        new[] { new { text = "Administración Pública Federal", popupId = 9 }, new { text = "ASF", popupId = 1 }, new { text = "CJF", popupId = 1 }, new { text = "UNAM", popupId = 1 } }
+                    }
+                },
+                new
+                {
+                    header = "ESTATAL",
+                    colDivClasses = new[] { "col-xl-4", "col-lg-4", "col-md-4", "col-sm-6", "col-12" },
+                    columns = new[] { "Ejecutivo", "Legislativo", "Judicial", "Autónomos" },
+                    rows = new[]
+                    {
+                        new[] { new { text = "Oficina de la presidencia", popupId = 1 }, new { text = "Diputados", popupId = 1 }, new { text = "SCJN", popupId = 1 }, new { text = "CNDH", popupId = 1 } },
+                        new[] { new { text = "APF", popupId = 1 }, new { text = "Senadores", popupId = 1 }, new { text = "PJF", popupId = 9 }, new { text = "INEGI", popupId = 1 } },
+                        new[] { new { text = "APF", popupId = 1 }, new { text = "ASF", popupId = 1 }, new { text = "CJF", popupId = 1 }, new { text = "UNAM", popupId = 1 } }
+                    }
+                },
+                new
+                {
+                    header = "MUNICIPAL",
+                    colDivClasses = new[] { "col-xl-4", "col-lg-4", "col-md-4", "col-sm-6", "col-12" },
+                    columns = new[] { "Ejecutivo", "Legislativo", "Judicial", "Autónomos" },
+                    rows = new[]
+                    {
+                        new[] { new { text = "Oficina de la presidencia", popupId = 1 }, new { text = "Diputados", popupId = 1 }, new { text = "SCJN", popupId = 1 }, new { text = "CNDH", popupId = 1 } },
+                        new[] { new { text = "APF", popupId = 1 }, new { text = "Senadores", popupId = 1 }, new { text = "PJF", popupId = 1 }, new { text = "INEGI", popupId = 1 } },
+                        new[] { new { text = "APF", popupId = 1 }, new { text = "ASF", popupId = 1 }, new { text = "CJF", popupId = 1 }, new { text = "UNAM", popupId = 1 } }
+                    }
+                }
+            },
+            titleGroupState = "GOBIERNOS ESTATALES",
+            stateColClasses = new[] { "col-xl-3", "col-lg-12", "col-md-12", "col-sm-12", "col-12" },
+            statePowers = new
+            {
+                header = "PODERES",
+                colDivClasses = new[] { "col-12" },
+                columns = new[] { "Ejecutivo", "Legislativo", "Judicial" },
+                rows = new[]
+                {
+                    new[] { new { text = "Oficina de la presidencia", popupId = 37 }, new { text = "Diputados", popupId = 1 }, new { text = "SCJN", popupId = 1 } },
+                    new[] { new { text = "APF", popupId = 1 }, new { text = "Senadores", popupId = 1 }, new { text = "PJF", popupId = 1 } },
+                    new[] { new { text = "APF", popupId = 1 }, new { text = "ASF", popupId = 1 }, new { text = "CJF", popupId = 1 } }
+                }
+            },
+            otherSections = new[]
+            {
+                new
+                {
+                    titleGroup = "ORGANISMOS ELECTORALES",
+                    colClasses = new[] { "col-xl-3", "col-lg-4", "col-md-6", "col-sm-6", "col-12" },
+                    colDivClasses = new[] { "col-12", "mb-3" },
+                    header = "",
+                    columns = new[] { "", "", "", "" },
+                    rows = new[]
+                    {
+                        new[] { new { text = "Nacional", popupId = 1 }, new { text = "INE", popupId = 1 }, new { text = "Tribunal Electoral", popupId = 1 }, new { text = "FEPADE", popupId = 1 } },
+                        new[] { new { text = "Estatal", popupId = 1 }, new { text = "OPLE", popupId = 1 }, new { text = "TRIFE", popupId = 1 }, new { text = "", popupId = 1 } },
+                        new[] { new { text = "Diputados", popupId = 53 }, new { text = "", popupId = 1 }, new { text = "", popupId = 1 }, new { text = "", popupId = 1 } }
+                    }
+                },
+                new
+                {
+                    titleGroup = "SECTOR POLÍTICO",
+                    colClasses = new[] { "col-xl-3", "col-lg-4", "col-md-6", "col-sm-6", "col-12" },
+                    colDivClasses = new[] { "col-12", "mb-3" },
+                    header = "",
+                    columns = new[] { "", "", "", "" },
+                    rows = new[]
+                    {
+                        new[] { new { text = "Nacional", popupId = 1 }, new { text = "INE", popupId = 1 }, new { text = "Tribunal Electoral", popupId = 1 }, new { text = "FEPADE", popupId = 1 } },
+                        new[] { new { text = "Estatal", popupId = 1 }, new { text = "OPLE", popupId = 1 }, new { text = "TRIFE", popupId = 1 }, new { text = "", popupId = 1 } },
+                        new[] { new { text = "Diputados", popupId = 1 }, new { text = "", popupId = 1 }, new { text = "", popupId = 1 }, new { text = "", popupId = 1 } }
+                    }
+                },
+                new
+                {
+                    titleGroup = "RELACIONES INTERNACIONALES",
+                    colClasses = new[] { "col-xl-3", "col-lg-4", "col-md-6", "col-sm-6", "col-12" },
+                    colDivClasses = new[] { "col-12", "mb-3" },
+                    header = "",
+                    columns = new[] { "", "", "", "" },
+                    rows = new[]
+                    {
+                        new[] { new { text = "Nacional", popupId = 1 }, new { text = "INE", popupId = 1 }, new { text = "Tribunal Electoral", popupId = 1 }, new { text = "FEPADE", popupId = 1 } },
+                        new[] { new { text = "Estatal", popupId = 1 }, new { text = "OPLE", popupId = 1 }, new { text = "TRIFE", popupId = 1 }, new { text = "", popupId = 1 } },
+                        new[] { new { text = "Diputados", popupId = 69 }, new { text = "", popupId = 1 }, new { text = "", popupId = 1 }, new { text = "", popupId = 1 } }
+                    }
+                },
+                new
+                {
+                    titleGroup = "MIGRANTES",
+                    colClasses = new[] { "col-xl-3", "col-lg-4", "col-md-6", "col-sm-6", "col-12" },
+                    colDivClasses = new[] { "col-12", "mb-3" },
+                    header = "",
+                    columns = new[] { "", "", "", "" },
+                    rows = new[]
+                    {
+                        new[] { new { text = "Nacional", popupId = 1 }, new { text = "INE", popupId = 1 }, new { text = "Tribunal Electoral", popupId = 1 }, new { text = "FEPADE", popupId = 1 } },
+                        new[] { new { text = "Estatal", popupId = 1 }, new { text = "OPLE", popupId = 1 }, new { text = "TRIFE", popupId = 1 }, new { text = "", popupId = 1 } },
+                        new[] { new { text = "Diputados", popupId = 1 }, new { text = "", popupId = 1 }, new { text = "", popupId = 1 }, new { text = "", popupId = 1 } }
+                    }
+                },
+                new
+                {
+                    titleGroup = "ORGANISMOS INTERNACIONALES",
+                    colClasses = new[] { "col-xl-3", "col-lg-4", "col-md-6", "col-sm-6", "col-12" },
+                    colDivClasses = new[] { "col-12", "mb-3" },
+                    header = "",
+                    columns = new[] { "", "", "", "" },
+                    rows = new[]
+                    {
+                        new[] { new { text = "Nacional", popupId = 1 }, new { text = "INE", popupId = 1 }, new { text = "Tribunal Electoral", popupId = 1 }, new { text = "FEPADE", popupId = 1 } },
+                        new[] { new { text = "Estatal", popupId = 1 }, new { text = "OPLE", popupId = 1 }, new { text = "TRIFE", popupId = 1 }, new { text = "", popupId = 1 } },
+                        new[] { new { text = "Diputados", popupId = 1 }, new { text = "", popupId = 1 }, new { text = "", popupId = 1 }, new { text = "", popupId = 1 } }
+                    }
+                },
+                new
+                {
+                    titleGroup = "SECTOR PRODUCTIVO",
+                    colClasses = new[] { "col-xl-3", "col-lg-4", "col-md-6", "col-sm-6", "col-12" },
+                    colDivClasses = new[] { "col-12", "mb-3" },
+                    header = "",
+                    columns = new[] { "", "", "", "" },
+                    rows = new[]
+                    {
+                        new[] { new { text = "Nacional", popupId = 1 }, new { text = "INE", popupId = 1 }, new { text = "Tribunal Electoral", popupId = 1 }, new { text = "FEPADE", popupId = 1 } },
+                        new[] { new { text = "Estatal", popupId = 1 }, new { text = "OPLE", popupId = 1 }, new { text = "TRIFE", popupId = 1 }, new { text = "", popupId = 1 } },
+                        new[] { new { text = "Diputados", popupId = 1 }, new { text = "", popupId = 1 }, new { text = "", popupId = 1 }, new { text = "", popupId = 1 } }
+                    }
+                },
+                new
+                {
+                    titleGroup = "MEDIOS DE COMUNICACIÓN",
+                    colClasses = new[] { "col-xl-3", "col-lg-4", "col-md-6", "col-sm-6", "col-12" },
+                    colDivClasses = new[] { "col-12", "mb-3" },
+                    header = "",
+                    columns = new[] { "", "", "", "" },
+                    rows = new[]
+                    {
+                        new[] { new { text = "", popupId = 1 }, new { text = "Locales", popupId = 1 }, new { text = "Nacionales", popupId = 1 }, new { text = "Internacionales", popupId = 1 } },
+                        new[] { new { text = "Impresos", popupId = 1 }, new { text = "", popupId = 1 }, new { text = "", popupId = 1 }, new { text = "", popupId = 1 } },
+                        new[] { new { text = "Electrónicos", popupId = 1 }, new { text = "", popupId = 1 }, new { text = "", popupId = 1 }, new { text = "", popupId = 1 } },
+                        new[] { new { text = "Digitales", popupId = 1 }, new { text = "", popupId = 1 }, new { text = "", popupId = 1 }, new { text = "", popupId = 1 } }
+                    }
+                }
+            }
+        };
+
+        return Json(data);
+    }
+
     public JsonResult GetPopupContent(int popupId)
     {
         if (popupId == 2)

@@ -1,376 +1,17 @@
-﻿const data = {
-    titleGroup: "PODERES",
-    colClasses: ["col-xl-9", "col-lg-12", "col-md-12", "col-sm-12", "col-12"],
-    sections: [
-        {
-            header: "FEDERAL",
-            colDivClasses: ["col-xl-4", "col-lg-4", "col-md-4", "col-sm-6", "col-12"],
-            columns: ["Ejecutivo", "Legislativo", "Judicial", "Autónomos"],
-            rows: [
-                [
-                    { text: "Oficina de la presidencia", popupId: 1 },
-                    { text: "Diputados", popupId: 1 },
-                    { text: "SCJN", popupId: 1 },
-                    { text: "CNDH", popupId: 1 }
-                ],
-                [
-                    { text: "APF", popupId: 1 },
-                    { text: "Senadores", popupId: 1 },
-                    { text: "PJF", popupId: 1 },
-                    { text: "INEGI", popupId: 1 }
-                ],
-                [
-                    { text: "Administración Pública Federal", popupId: 9 },
-                    { text: "ASF", popupId: 1 },
-                    { text: "CJF", popupId: 1 },
-                    { text: "UNAM", popupId: 1 }
-                ]
-            ]
+﻿$(document).ready(function () {
+    $.ajax({
+        url: '/Home/GetContentData',
+        type: 'GET',
+        success: function (data) {
+            renderContent(data);
         },
-        {
-            header: "ESTATAL",
-            colDivClasses: ["col-xl-4", "col-lg-4", "col-md-4", "col-sm-6", "col-12"],
-            columns: ["Ejecutivo", "Legislativo", "Judicial", "Autónomos"],
-            rows: [
-                [
-                    { text: "Oficina de la presidencia", popupId: 1 },
-                    { text: "Diputados", popupId: 1 },
-                    { text: "SCJN", popupId: 1 },
-                    { text: "CNDH", popupId: 1 }
-                ],
-                [
-                    { text: "APF", popupId: 1 },
-                    { text: "Senadores", popupId: 1 },
-                    { text: "PJF", popupId: 9 },
-                    { text: "INEGI", popupId: 1 }
-                ],
-                [
-                    { text: "APF", popupId: 1 },
-                    { text: "ASF", popupId: 1 },
-                    { text: "CJF", popupId: 1 },
-                    { text: "UNAM", popupId: 1 }
-                ]
-            ]
-        },
-        {
-            header: "MUNICIPAL",
-            colDivClasses: ["col-xl-4", "col-lg-4", "col-md-4", "col-sm-6", "col-12"],
-            columns: ["Ejecutivo", "Legislativo", "Judicial", "Autónomos"],
-            rows: [
-                [
-                    { text: "Oficina de la presidencia", popupId: 1 },
-                    { text: "Diputados", popupId: 1 },
-                    { text: "SCJN", popupId: 1 },
-                    { text: "CNDH", popupId: 1 }
-                ],
-                [
-                    { text: "APF", popupId: 1 },
-                    { text: "Senadores", popupId: 1 },
-                    { text: "PJF", popupId: 1 },
-                    { text: "INEGI", popupId: 1 }
-                ],
-                [
-                    { text: "APF", popupId: 1 },
-                    { text: "ASF", popupId: 1 },
-                    { text: "CJF", popupId: 1 },
-                    { text: "UNAM", popupId: 1 }
-                ]
-            ]
+        error: function (xhr, status, error) {
+            console.error('Error fetching content data:', error);
         }
-    ],
-    titleGroupState: "GOBIERNOS ESTATALES",
-    stateColClasses: ["col-xl-3", "col-lg-12", "col-md-12", "col-sm-12", "col-12"],
-    statePowers: {
-        header: "PODERES",
-        colDivClasses: ["col-12"],
-        columns: ["Ejecutivo", "Legislativo", "Judicial"],
-        rows: [
-            [
-                { text: "Oficina de la presidencia", popupId: 37 },
-                { text: "Diputados", popupId: 1 },
-                { text: "SCJN", popupId: 1 }
-            ],
-            [
-                { text: "APF", popupId: 1 },
-                { text: "Senadores", popupId: 1 },
-                { text: "PJF", popupId: 1 }
-            ],
-            [
-                { text: "APF", popupId: 1 },
-                { text: "ASF", popupId: 1 },
-                { text: "CJF", popupId: 1 }
-            ]
-        ]
-    },
-    otherSections: [
-        {
-            titleGroup: "ORGANISMOS ELECTORALES",
-            colClasses: ["col-xl-3", "col-lg-4", "col-md-6", "col-sm-6", "col-12"],
-            colDivClasses: ["col-12", "mb-3"],
-            header: "",
-            columns: ["", "", "", ""],
-            rows: [
-                [
-                    { text: "Nacional", popupId: 1 },
-                    { text: "INE", popupId: 1 },
-                    { text: "Tribunal Electoral", popupId: 1 },
-                    { text: "FEPADE", popupId: 1 }
-                ],
-                [
-                    { text: "Estatal", popupId: 1 },
-                    { text: "OPLE", popupId: 1 },
-                    { text: "TRIFE", popupId: 1 },
-                    { text: "", popupId: 1 }
-                ],
-                [
-                    { text: "Diputados", popupId: 53 },
-                    { text: "", popupId: 1 },
-                    { text: "", popupId: 1 },
-                    { text: "", popupId: 1 }
-                ]
-            ]
-        },
-        {
-            titleGroup: "SECTOR POLÍTICO",
-            colClasses: ["col-xl-3", "col-lg-4", "col-md-6", "col-sm-6", "col-12"],
-            colDivClasses: ["col-12", "mb-3"],
-            header: "",
-            columns: ["", "", "", ""],
-            rows: [
-                [
-                    { text: "Nacional", popupId: 1 },
-                    { text: "INE", popupId: 1 },
-                    { text: "Tribunal Electoral", popupId: 1 },
-                    { text: "FEPADE", popupId: 1 }
-                ],
-                [
-                    { text: "Estatal", popupId: 1 },
-                    { text: "OPLE", popupId: 1 },
-                    { text: "TRIFE", popupId: 1 },
-                    { text: "", popupId: 1 }
-                ],
-                [
-                    { text: "Diputados", popupId: 1 },
-                    { text: "", popupId: 1 },
-                    { text: "", popupId: 1 },
-                    { text: "", popupId: 1 }
-                ]
-            ]
-        },
-        {
-            titleGroup: "RELACIONES INTERNACIONALES",
-            colClasses: ["col-xl-3", "col-lg-4", "col-md-6", "col-sm-6", "col-12"],
-            colDivClasses: ["col-12", "mb-3"],
-            header: "",
-            columns: ["", "", "", ""],
-            rows: [
-                [
-                    { text: "Nacional", popupId: 1 },
-                    { text: "INE", popupId: 1 },
-                    { text: "Tribunal Electoral", popupId: 1 },
-                    { text: "FEPADE", popupId: 1 }
-                ],
-                [
-                    { text: "Estatal", popupId: 1 },
-                    { text: "OPLE", popupId: 1 },
-                    { text: "TRIFE", popupId: 1 },
-                    { text: "", popupId: 1 }
-                ],
-                [
-                    { text: "Diputados", popupId: 69 },
-                    { text: "", popupId: 1 },
-                    { text: "", popupId: 1 },
-                    { text: "", popupId: 1 }
-                ]
-            ]
-        },
-        {
-            titleGroup: "MIGRANTES",
-            colClasses: ["col-xl-3", "col-lg-4", "col-md-6", "col-sm-6", "col-12"],
-            colDivClasses: ["col-12", "mb-3"],
-            header: "",
-            columns: ["", "", "", ""],
-            rows: [
-                [
-                    { text: "Nacional", popupId: 1 },
-                    { text: "INE", popupId: 1 },
-                    { text: "Tribunal Electoral", popupId: 1 },
-                    { text: "FEPADE", popupId: 1 }
-                ],
-                [
-                    { text: "Estatal", popupId: 1 },
-                    { text: "OPLE", popupId: 1 },
-                    { text: "TRIFE", popupId: 1 },
-                    { text: "", popupId: 1 }
-                ],
-                [
-                    { text: "Diputados", popupId: 1 },
-                    { text: "", popupId: 1 },
-                    { text: "", popupId: 1 },
-                    { text: "", popupId: 1 }
-                ]
-            ]
-        },
-        {
-            titleGroup: "ORGANISMOS INTERNACIONALES",
-            colClasses: ["col-xl-3", "col-lg-4", "col-md-6", "col-sm-6", "col-12"],
-            colDivClasses: ["col-12", "mb-3"],
-            header: "",
-            columns: ["", "", "", ""],
-            rows: [
-                [
-                    { text: "Nacional", popupId: 1 },
-                    { text: "INE", popupId: 1 },
-                    { text: "Tribunal Electoral", popupId: 1 },
-                    { text: "FEPADE", popupId: 1 }
-                ],
-                [
-                    { text: "Estatal", popupId: 1 },
-                    { text: "OPLE", popupId: 1 },
-                    { text: "TRIFE", popupId: 1 },
-                    { text: "", popupId: 1 }
-                ],
-                [
-                    { text: "Diputados", popupId: 1 },
-                    { text: "", popupId: 1 },
-                    { text: "", popupId: 1 },
-                    { text: "", popupId: 1 }
-                ]
-            ]
-        },
-        {
-            titleGroup: "SECTOR PRODUCTIVO",
-            colClasses: ["col-xl-3", "col-lg-4", "col-md-6", "col-sm-6", "col-12"],
-            colDivClasses: ["col-12", "mb-3"],
-            header: "",
-            columns: ["", "", "", ""],
-            rows: [
-                [
-                    { text: "Nacional", popupId: 1 },
-                    { text: "INE", popupId: 1 },
-                    { text: "Tribunal Electoral", popupId: 1 },
-                    { text: "FEPADE", popupId: 1 }
-                ],
-                [
-                    { text: "Estatal", popupId: 1 },
-                    { text: "OPLE", popupId: 1 },
-                    { text: "TRIFE", popupId: 1 },
-                    { text: "", popupId: 1 }
-                ],
-                [
-                    { text: "Diputados", popupId: 1 },
-                    { text: "", popupId: 1 },
-                    { text: "", popupId: 1 },
-                    { text: "", popupId: 1 }
-                ]
-            ]
-        },
-        {
-            titleGroup: "MEDIOS DE COMUNICACIÓN",
-            colClasses: ["col-xl-3", "col-lg-4", "col-md-6", "col-sm-6", "col-12"],
-            colDivClasses: ["col-12", "mb-3"],
-            header: "",
-            columns: ["", "", "", ""],
-            rows: [
-                [
-                    { text: "", popupId: 1 },
-                    { text: "Locales", popupId: 1 },
-                    { text: "Nacionales", popupId: 1 },
-                    { text: "Internacionales", popupId: 1 }
-                ],
-                [
-                    { text: "Impresos", popupId: 1 },
-                    { text: "", popupId: 1 },
-                    { text: "", popupId: 1 },
-                    { text: "", popupId: 1 }
-                ],
-                [
-                    { text: "Electrónicos", popupId: 1 },
-                    { text: "", popupId: 1 },
-                    { text: "", popupId: 1 },
-                    { text: "", popupId: 1 }
-                ],
-                [
-                    { text: "Digitales", popupId: 1 },
-                    { text: "", popupId: 1 },
-                    { text: "", popupId: 1 },
-                    { text: "", popupId: 1 }
-                ]
-            ]
-        }
-    ]
-};
-function createSection(title, sections, colClasses, isSingleColumn = false) {
-    const sectionDiv = document.createElement("div");
-    colClasses.forEach(colClass => sectionDiv.classList.add(colClass));
-    const titleGroup = document.createElement("div");
-    titleGroup.classList.add("title-group");
-    titleGroup.textContent = title;
-    sectionDiv.appendChild(titleGroup);
-    const rowDiv = document.createElement("div");
-    rowDiv.classList.add("row");
-    sections.forEach(section => {
-        const colDiv = document.createElement("div");
-        section.colDivClasses.forEach(colDivClass => colDiv.classList.add(colDivClass));
-        const cardDiv = document.createElement("div");
-        cardDiv.classList.add("k-card");
-        const cardHeader = document.createElement("div");
-        cardHeader.classList.add("k-card-header");
-        const headerTitle = document.createElement("h5");
-        headerTitle.textContent = section.header;
-        cardHeader.appendChild(headerTitle);
-        cardDiv.appendChild(cardHeader);
-        const cardBody = document.createElement("div");
-        cardBody.classList.add("k-card-body");
-        const table = document.createElement("table");
-        table.classList.add("custom-table");
-        const thead = document.createElement("thead");
-        const headerRow = document.createElement("tr");
-        section.columns.forEach(column => {
-            const th = document.createElement("th");
-            th.textContent = column;
-            headerRow.appendChild(th);
-        });
-        thead.appendChild(headerRow);
-        table.appendChild(thead);
-        const tbody = document.createElement("tbody");
-        section.rows.forEach(row => {
-            const tr = document.createElement("tr");
-            row.forEach(cell => {
-                const td = document.createElement("td");
-                td.textContent = cell.text;
-                td.addEventListener("click", () => {
-                    showPopup(cell.popupId);
-                });
-                tr.appendChild(td);
-            });
-            tbody.appendChild(tr);
-        });
-        table.appendChild(tbody);
-        cardBody.appendChild(table);
-        cardDiv.appendChild(cardBody);
-        colDiv.appendChild(cardDiv);
-        rowDiv.appendChild(colDiv);
     });
-    sectionDiv.appendChild(rowDiv);
-    return sectionDiv;
-}
+});
 
-function showPopup(popupId) {
-    switch (popupId) {
-        case 1:
-            showKendoWindow('.detPrimerNivel', '700px', 'MEDIOS DE COMUNICACIÓN', popupId);
-            break;
-        case 2:
-            showKendoWindow('.popupDet', '900px', 'MEDIOS DE COMUNICACIÓN / IMPRESOS / LOCALES', popupId);
-            break;
-        default:
-            console.error(`Popup ID ${popupId} no reconocido`);
-            break;
-    }
-}
-
-$(document).ready(function () {
+function renderContent(data) {
     const container = document.querySelector("#container");
 
     const mainRow = document.createElement("div");
@@ -392,7 +33,93 @@ $(document).ready(function () {
     $(window).resize(function () {
         checkAndMaximizeWindow();
     });
-});
+}
+
+function createSection(title, sections, colClasses, isSingleColumn = false) {
+    const sectionDiv = document.createElement("div");
+    colClasses.forEach(colClass => sectionDiv.classList.add(colClass));
+
+    const titleGroup = document.createElement("div");
+    titleGroup.classList.add("title-group");
+    titleGroup.textContent = title;
+    sectionDiv.appendChild(titleGroup);
+
+    const rowDiv = document.createElement("div");
+    rowDiv.classList.add("row");
+
+    sections.forEach(section => {
+        const colDiv = document.createElement("div");
+        section.colDivClasses.forEach(colDivClass => colDiv.classList.add(colDivClass));
+
+        const cardDiv = document.createElement("div");
+        cardDiv.classList.add("k-card");
+
+        const cardHeader = document.createElement("div");
+        cardHeader.classList.add("k-card-header");
+        const headerTitle = document.createElement("h5");
+        headerTitle.textContent = section.header;
+        cardHeader.appendChild(headerTitle);
+        cardDiv.appendChild(cardHeader);
+
+        const cardBody = document.createElement("div");
+        cardBody.classList.add("k-card-body");
+
+        const table = document.createElement("table");
+        table.classList.add("custom-table");
+
+        const thead = document.createElement("thead");
+        const headerRow = document.createElement("tr");
+        section.columns.forEach(column => {
+            const th = document.createElement("th");
+            th.textContent = column;
+            headerRow.appendChild(th);
+        });
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        const tbody = document.createElement("tbody");
+        section.rows.forEach(row => {
+            const tr = document.createElement("tr");
+            row.forEach(cell => {
+                const td = document.createElement("td");
+                td.textContent = cell.text;
+                td.addEventListener("click", () => {
+                    showPopup(cell.popupId);
+                });
+                tr.appendChild(td);
+            });
+            tbody.appendChild(tr);
+        });
+        table.appendChild(tbody);
+
+        cardBody.appendChild(table);
+        cardDiv.appendChild(cardBody);
+
+        const cardFooter = document.createElement("div");
+        cardFooter.classList.add("k-card-footer");
+        cardDiv.appendChild(cardFooter);
+
+        colDiv.appendChild(cardDiv);
+        rowDiv.appendChild(colDiv);
+    });
+
+    sectionDiv.appendChild(rowDiv);
+    return sectionDiv;
+}
+
+function showPopup(popupId) {
+    switch (popupId) {
+        case 1:
+            showKendoWindow('.detPrimerNivel', '700px', 'MEDIOS DE COMUNICACIÓN', popupId);
+            break;
+        case 2:
+            showKendoWindow('.popupDet', '900px', 'MEDIOS DE COMUNICACIÓN / IMPRESOS / LOCALES', popupId);
+            break;
+        default:
+            console.error(`Popup ID ${popupId} no reconocido`);
+            break;
+    }
+}
 
 function showKendoWindow(selector, width, title, popupId) {
     var kendoWindow = $(selector).kendoWindow({
