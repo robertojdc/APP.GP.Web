@@ -15,6 +15,7 @@ public class HomeController : Controller
 
     public JsonResult GetContentData()
     {
+        //Estructura inicial
         var data = new
         {
             titleGroup = "PODERES",
@@ -181,6 +182,7 @@ public class HomeController : Controller
 
     public JsonResult GetPopupContent(int popupId)
     {
+        //Segundo nivel de detalle
         if (popupId == 2)
         {
             var data = new
@@ -208,7 +210,7 @@ public class HomeController : Controller
 
             return Json(data);
         }
-        else
+        else // Primer nivel de detalle
         {
             var data = new
             {
@@ -250,6 +252,7 @@ public class HomeController : Controller
         }
     }
 
+    //Tercer nivel de detalle
     public JsonResult GetContactDetails(int productId)
     {
         var contacts = new[]
