@@ -1,0 +1,619 @@
+﻿@{
+    ViewData["Title"] = "Tablero";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="example" style="margin:10px;">   
+    <div class="row">
+        <center><h4 style="margin-top: 60px;">Tablero de actores</h4></center>
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="category">GOBIERNO FEDERAL</div>
+            <div class="subcategory-row">
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>EJECUTIVO</div>
+                </div>
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>LEGISLATIVO</div>
+                </div>
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>JUDICIAL</div>
+                </div>
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>AUTÓNOMO</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="category">GOBIERNO ESTATAL</div>
+            <div class="subcategory-row">
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>EJECUTIVO</div>
+                </div>
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>LEGISLATIVO</div>
+                </div>
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>JUDICIAL</div>
+                </div>
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>AUTÓNOMO</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="category">GOBIERNO MUNICIPAL</div>
+            <div class="subcategory-row">
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>PRESIDENCIA</div>
+                </div>
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>SINDICATURA</div>
+                </div>
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>CABILDO</div>
+                </div>
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>GABINETE MUNICIPAL</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="category">ESTADOS DE LA REPUBLICA</div>
+            <div class="subcategory-row">
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>GOBERNADOR</div>
+                </div>
+                <div class="col-2 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>CÓNYUGE</div>
+                </div>
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>LEGISLATURA</div>
+                </div>
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>JUDICIAL</div>
+                </div>
+                <div class="col-2 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>CONAGO</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="category">FAMILIA / AMISTADES</div>
+            <div class="subcategory-row">
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>FAMILIA</div>
+                </div>
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>FAMILIA AMPLIADA</div>
+                </div>
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>FAMILIA ESPOSA</div>
+                </div>
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>AMISTADES</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="category">SECTOR EMPRESARIAL</div>
+            <div class="subcategory-row">
+                <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>EMPRESARIOS / AS</div>
+                </div>
+                <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>CAMARAS Y ORGANISMOS</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="category">MEDIOS DE COMUNICACIÓN</div>
+            <div class="subcategory-row">
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>GOBERNADOR</div>
+                </div>
+                <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>IMPRESOS</div>
+                </div>
+                <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>ELECTRÓNICOS</div>
+                </div>
+                <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>DIGITALES</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="category">ORGANISMOS INTERNACIONALES</div>
+            <div class="subcategory-row">
+                <div class="col-12 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>ONU</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="category">ORGANISMOS ELECTORALES</div>
+            <div class="subcategory-row">
+                <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>NACIONAL</div>
+                </div>
+                <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>ESTATAL</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="category">MIGRANTES</div>
+            <div class="subcategory-row">
+                <div class="col-2 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>CASA PUEBLA</div>
+                </div>
+                <div class="col-2 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>LÍDERES</div>
+                </div>
+                <div class="col-2 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>ORGANISMOS</div>
+                </div>
+                <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>POBLANOS EN EL EXTERIOR</div>
+                </div>
+                <div class="col-2 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>COLECTIVOS</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="category">RELACIONES INTERNACIONALES</div>
+            <div class="subcategory-row">
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>EMBAJADAS DE MÉXICO EN EL EXTERIOR</div>
+                </div>
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>CONSUADOS DE MÉXICO EN EL EXTERIOR</div>
+                </div>
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>EMBAJADORES DE PAISES EN MÉXICO</div>
+                </div>
+                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>CONSULADOS DE PAISES EN MÉXICO</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="category">SOCIEDAD CIVIL</div>
+            <div class="subcategory-row">
+                <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>ASOCIACIONES CIVILES</div>
+                </div>
+                <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>OSC</div>
+                </div>
+                <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>CLUBES</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="category">IGLESIAS</div>
+            <div class="subcategory-row">
+                <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>CATÓLICA</div>
+                </div>
+                <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>EVANGÉLICO / CRISTIANAS</div>
+                </div>
+                <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>OTRAS</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="category">UNIVERSIDADES</div>
+            <div class="subcategory-row">
+                <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>PÚBLICAS</div>
+                </div>
+                <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>PRIVADAS</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+            <div class="category">SECTOR POLÍTICO</div>
+            <div class="subcategory-row">
+                <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>PARTIDOS</div>
+                </div>
+                <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                    <div>ASOCIACIONES</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="window" style="border: 2px solid #8B0000; padding: 20px; background-color: #FFFFFF; display:none;">
+        <div style="background-color: #8B0000; color: white; padding: 10px; text-align: center; font-weight: bold; margin-top: 10px;">
+            EL SOL DE PUEBLA
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+            <tr>
+                <td style="border: 1px solid #8B0000; padding: 10px;">DOMICILIO</td>
+                <td style="border: 1px solid #8B0000; padding: 10px;">3 Oriente 201, col. Centro</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #8B0000; padding: 10px;">TELÉFONO</td>
+                <td style="border: 1px solid #8B0000; padding: 10px;">79 75 14 33 00</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #8B0000; padding: 10px;">ANIVERSARIO</td>
+                <td style="border: 1px solid #8B0000; padding: 10px;">05 de Mayo</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #8B0000; padding: 10px;">SITIO WEB</td>
+                <td style="border: 1px solid #8B0000; padding: 1px;"><a href='https://www.elsoldepuebla.com.mx/'>https://www.elsoldepuebla.com.mx/</a></td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #8B0000; padding: 10px;">REDES SOCIALES</td>
+                <td style="border: 1px solid #8B0000; padding: 10px;">Twitter: @@elsoldepuebla1<br />Facebook: elsoldpuebla</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid #8B0000; padding: 10px;">COMENTARIOS</td>
+                <td style="border: 1px solid #8B0000; padding: 10px;"></td>
+            </tr>
+        </table>
+
+        <div style="background-color: #8B0000; color: white; padding: 10px; text-align: center; font-weight: bold; margin-top: 20px;">
+            CONTACTOS
+        </div>
+
+        <div style="padding: 5px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px;">
+            <div class="teamMate">
+                <img src="~/img/1.png" alt="Kendo UI for jQuery PanelBar Andrew Fuller">
+                <div class="details">
+                    <label>Andrew Fuller</label>
+                    <p>Team Lead</p>
+                </div>
+            </div>
+            <div class="teamMate">
+                <img src="~/img/2.png" alt="Kendo UI for jQuery PanelBar Nancy Leverling">
+                <div class="details">
+                    <label>Nancy Leverling</label>
+                    <p>Sales Associate</p>
+                </div>
+            </div>
+            <div class="teamMate">
+                <img src="~/img/3.png" alt="Kendo UI for jQuery PanelBar Robert King">
+                <div class="details">
+                    <label>Robert King</label>
+                    <p>Business System Analyst</p>
+                </div>
+            </div>
+            <div class="teamMate">
+                <img src="~/img/4.png" alt="Kendo UI for jQuery PanelBar Laura Callahan">
+                <div class="details">
+                    <label>Laura Callahan</label>
+                    <p>HR Manager</p>
+                </div>
+            </div>
+            <div class="teamMate">
+                <img src="~/img/1.png" alt="Kendo UI for jQuery PanelBar Andrew Fuller">
+                <div class="details">
+                    <label>Andrew Fuller</label>
+                    <p>Team Lead</p>
+                </div>
+            </div>
+            <div class="teamMate">
+                <img src="~/img/2.png" alt="Kendo UI for jQuery PanelBar Nancy Leverling">
+                <div class="details">
+                    <label>Nancy Leverling</label>
+                    <p>Sales Associate</p>
+                </div>
+            </div>
+            <div class="teamMate">
+                <img src="~/img/3.png" alt="Kendo UI for jQuery PanelBar Robert King">
+                <div class="details">
+                    <label>Robert King</label>
+                    <p>Business System Analyst</p>
+                </div>
+            </div>
+            <div class="teamMate">
+                <img src="~/img/4.png" alt="Kendo UI for jQuery PanelBar Laura Callahan">
+                <div class="details">
+                    <label>Laura Callahan</label>
+                    <p>HR Manager</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contactDetailWindow" style="display:none;">
+        <div id="contactDetailContent" style="padding: 20px;">
+            <div style="background-color: #8B0000; color: white; padding: 10px; text-align: center; font-weight: bold; margin-top: 10px;">
+                NOMBRE
+            </div>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                <tr>
+                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">FOTO</td>
+                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">
+                        <center><img src="~/img/1.png" alt="Foto del contacto" style="width: 100px; height: 100px;"></center>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">CARGO ACTUAL</td>
+                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">DIRECTOR GENERAL</td>
+                </tr>
+                <tr>
+                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">FECHA DE NACIMIENTO</td>
+                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">22 DE DICIEMBRE DE 1969</td>
+                </tr>
+                <tr>
+                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">DOMICILIO LABORAL</td>
+                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">AVENIDA 16 DE SEPTIEMBRE 59 LOS ALAMOS PUEBLA</td>
+                </tr>
+                <tr>
+                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">DOMICILIO PARTICULAR</td>
+                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">CALLE 5 DE FEBRERO EL ROSAL PUEBLA</td>
+                </tr>
+                <tr>
+                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">TELÉFONO LABORAL</td>
+                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">5541236548</td>
+                </tr>
+                <tr>
+                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">TELÉFONO PERSONAL</td>
+                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">4452120014</td>
+                </tr>
+                <tr>
+                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">CORREO ELECTRÓNICO</td>
+                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">serafin.herrera@solpuebla.com</td>
+                </tr>
+                <tr>
+                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">REDES SOCIALES</td>
+                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;"></td>
+                </tr>
+                <tr>
+                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">PÁGINA WEB</td>
+                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;"></td>
+                </tr>
+                <tr>
+                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">AFINIDAD</td>
+                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">AFIN AL GOBIERNO DE ALEJANDRO ARMENTA</td>
+                </tr>
+                <tr>
+                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">COMPROMISO</td>
+                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">{{Compromiso}}</td>
+                </tr>
+                <tr>
+                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">ANEXOS</td>
+                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">{{Anexos}}</td>
+                </tr>
+                <tr>
+                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">COMENTARIOS</td>
+                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">{{Comentarios}}</td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+    <div class="responsive-message"></div>
+
+    <script>
+        $(document).ready(function () {            
+            $(".subcategory").click(function () { 
+                mostrarVentanaKendo("#window", "600px", "FICHA INSTITUCIONAL");
+            });
+            $(".teamMate").click(function () {
+                mostrarVentanaKendo("#contactDetailWindow", "600px", "FICHA PERSONAL");
+            });
+        });
+
+        function mostrarVentanaKendo(selector, ancho, titulo) {
+            var kendoWindow = $(selector).kendoWindow({
+                width: ancho,
+                title: titulo,
+                visible: false,
+                modal: true,
+                actions: ["Close"],
+                activate: function () {
+                    checkAndMaximizeWindow(kendoWindow);
+                }
+            }).data("kendoWindow");
+            kendoWindow.center().open();
+        }
+
+        function checkAndMaximizeWindow(kendoWindow) {
+            var windowWidth = $(window).width();
+            if (windowWidth < 576)
+                kendoWindow.maximize();
+            else
+                kendoWindow.restore();
+        }
+    </script>
+
+    <style>
+        .menu {
+            margin-bottom: 20px; 
+        }
+        #example {
+            min-height: 400px;
+            margin-top: 100px; 
+        }
+
+        #undo {
+            text-align: center;
+            position: absolute;
+            white-space: nowrap;
+            padding: 1em;
+            cursor: pointer;
+        }
+
+        .category {
+            background-color: #8B0000;
+            color: white;
+            text-align: center;
+            padding: 5px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .subcategory {
+            background-color: #fff;
+            color: #8B0000;
+            text-align: center;
+            padding: 5px;
+            font-weight: 500;
+            min-height: 75px;
+            border: 1px solid #8B0000;
+            margin: 0;
+            word-wrap: break-word !important;
+            overflow-wrap: break-word !important;
+            white-space: normal !important;
+            flex: 1 1 0;
+            box-sizing: border-box;
+            transition: background-color 0.2s ease, color 0.1s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+            .subcategory:hover {
+                block-size:12pt;
+                background-color: darkred; 
+                color: #FFF; 
+                border-color: #000; 
+                box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+            }
+
+
+
+.subcategory-row {
+    display: flex;
+    margin: 10px 0; 
+    flex-wrap: wrap; 
+}
+
+
+        #window {
+            padding: 20px;
+            box-sizing: border-box; 
+        }
+
+        #window .category,
+        #window .subcategory {
+            margin: 10px 0; 
+        }
+
+        #panelbar {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .teamMate {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            transition: background-color 0.3s, transform 0.3s, color 0.3s, font-size 0.3s;
+            cursor: pointer;
+        }
+
+            .teamMate:hover {
+                background-color: #AAA; /* Cambia el color de fondo a un tono más oscuro al hacer hover */
+                transform: scale(1.05); /* Aplica una ligera escala */
+                color: #DDD; /* Opcional: cambia el color del texto para que contraste mejor */
+            }
+
+            .teamMate h2 {
+                font-size: 1.4em;
+                font-weight: normal;
+                margin-bottom: 0px;
+                transition: font-size 0.3s; /* Transición suave para el tamaño del texto */
+            }
+
+            .teamMate:hover h2 {
+                font-size: 1.5em; /* Aumenta ligeramente el tamaño del texto en hover */
+            }
+
+            .teamMate p {
+                margin: 0;
+                transition: font-size 0.3s; /* Transición suave para el tamaño del texto */
+            }
+
+            .teamMate:hover p {
+                font-size: 1.1em; /* Aumenta ligeramente el tamaño del texto en hover */
+            }
+
+            .teamMate img {
+                display: inline-block;
+                margin: 5px 15px 5px 5px;
+                border: 1px solid #ccc;
+                border-radius: 50%;
+                width: 60px;
+                height: 60px;
+                transition: border-color 0.3s, box-shadow 0.3s;
+            }
+
+            .teamMate:hover img {
+                border-color: #007bff; /* Cambia el color del borde de la imagen al hacer hover */
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Agrega una sombra a la imagen al hacer hover */
+            }
+
+            .teamMate .details label {
+                font-weight: bold;
+                display: block;
+            }
+
+            .teamMate .details p {
+                font-size: 0.9em;
+                color: #666;
+                transition: font-size 0.3s; /* Transición suave para el tamaño del texto */
+            }
+
+
+        .details {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        #contactDetailWindow {
+            border: 2px solid #8B0000;
+        }
+
+            #contactDetailWindow table td {
+                padding: 10px;
+                border: 1px solid #8B0000;
+                vertical-align: middle;
+            }
+
+            #contactDetailWindow img {
+                border-radius: 5px;
+            }
+
+            #contactDetailWindow h2 {
+                color: #8B0000;
+                font-size: 18px;
+                margin-bottom: 5px;
+            }
+
+            #contactDetailWindow p {
+                color: #555;
+                font-size: 14px;
+            }
+    </style>
+
+
+</div>

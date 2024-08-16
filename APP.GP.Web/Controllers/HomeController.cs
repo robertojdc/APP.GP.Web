@@ -10,6 +10,30 @@ public class HomeController : Controller
     [AllowAnonymous]
     public IActionResult Index()
     {
+        return View("Tablero");
+    }
+
+    [HttpGet]
+    public IActionResult Place()
+    {
+        return View();
+    }
+
+    [HttpGet]
+    public IActionResult Default()
+    {
+        return View();
+    }
+
+    [HttpGet]
+    public IActionResult Tablero()
+    {
+        return View();
+    }
+
+    [HttpGet]
+    public IActionResult Invite()
+    {
         return View();
     }
 

@@ -1,51 +1,134 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    Layout = "_Layout";
-}
-<div id="divHeader" style="display:none" class="mt-3 text-center">
-<h1>Inicio de Sesión</h1>
-<h3>SIITIC</h3>
-</div>
-<hr>
-<div id="divForm" style="display:none" class="row mb-3">
-    <div class="col-md-4">
-        &nbsp;
-    </div>
-    <div class="col-md-4">
-        
-            <div id="frmLogin">
-
-            <div class="form-group">
-                <label class="control-label" for="NombreUsuario">Nombre de Usuario <span style="color:red">*</span></label>
-                <input class="form-control valida OnlyAlfanumeric" placeholder="RPE o RTT" type="text" id="NombreUsuario" name="NombreUsuario" value="" maxlength="5">
-                @*<span class="text-danger field-validation-valid" data-valmsg-for="NombreUsuario" data-valmsg-replace="true"></span>*@
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="Contrasenia">Contraseña <span style="color:red">*</span></label>
-                <input class="form-control valida" type="password" placeholder="Contraseña"  id="Contrasenia" name="Contrasenia" maxlength="25">
-               @* <span class="text-danger field-validation-valid" data-valmsg-for="Contrasenia" data-valmsg-replace="true"></span>*@
-            </div>
-            <div class="form-group text-center">
-                <button id="btnEntrar" class="button button-rounded button-small m-0"><span class="k-icon k-i-login"></span> Entrar</button>
-                   
-            </div>
-            <br />
-            <span style="color:red; font-size:small">* Campos Obligatorios</span>
-        </div>
-        
-    </div>
-    <div class="col-md-4">
-            @using (Html.BeginForm("Redirect", "Usuario")){
-            <input id="btnEntrarSubmit" disabled style="display:none" value="Submit Data" type="submit" class="btn btn-primary" />
-        }
-        &nbsp;
-    </div>
-</div>
-@section Scripts{
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantalla de Inicio</title>
     <script>
-        var _urlLogin = "@Url.Action("Autenticar","Usuario")";
+        $("nav").hide();
     </script>
-    <script src="~/js/Login/login.js" asp-append-version="true"></script>
-}
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .background {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #79211F;
+            background-image: url('/img/login.png'); /* Ruta de la imagen de fondo */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            padding: 20px; /* Espacio alrededor en pantallas más pequeñas */
+            margin-top: -200px;
+        }
+
+        .login-form {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .login-form h2 {
+            margin-bottom: 20px;
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .login-form .form-control {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px;
+        }
+
+        .login-form .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .login-form .btn {
+            background-color: #E1563F;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            color: white;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+
+        .login-form .btn:hover {
+            background-color: #D14533;
+        }
+
+        /* Media Queries para pantallas más pequeñas */
+        @@media (max-width: 768px) {
+            .login-container {
+                margin-top: 0; /* Ajuste para pantallas más pequeñas */
+            }
+
+            .login-form {
+                max-width: 300px; /* Más pequeño para pantallas móviles */
+                padding: 20px; /* Reducir el relleno en pantallas más pequeñas */
+            }
+
+            .login-form h2 {
+                font-size: 1.5rem; /* Reducir tamaño de la fuente */
+            }
+        }
+
+        @@media (max-width: 576px) {
+            .login-container {
+                margin-left: 0;
+                padding: 10px;
+            }
+
+            .login-form {
+                max-width: 100%; /* Para pantallas muy pequeñas, usa todo el ancho */
+                padding: 15px; /* Aún más reducido el padding */
+            }
+
+            .login-form h2 {
+                font-size: 1.3rem;
+            }
+
+            .login-form .btn {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="login-container">
+            <form class="login-form" action="/Usuario/Validate" method="post">
+                <h2 class="text-center">Inicio de Sesión</h2>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Usuario">
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña">
+                </div>
+                <button type="submit" class="btn btn-primary">Entrar</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

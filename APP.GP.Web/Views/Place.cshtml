@@ -1,0 +1,243 @@
+﻿@{
+    ViewData["Title"] = "View"; Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<script src="~/js/app/qrcode.min.js"></script>
+<style>
+    .available {
+        background-color: green;
+        color: white;
+    }
+
+    .reserved {
+        background-color: red;
+        color: white;
+    }
+
+    .seat-button {
+        width: 100%;
+        height: 100%;
+        border: none;
+        cursor: pointer;
+    }
+
+        .seat-button:hover {
+            opacity: 0.7;
+        }
+</style>
+
+<div id="seatGrid"></div>
+
+<!-- Define the Kendo Window -->
+<div id="seatWindow" style="display:none;">
+    <p id="seatInfo"></p>
+
+    <label for="comboBox">Choose an option:</label>
+    <input id="comboBox" style="width: 100%;" />
+    <div id="divInfo" style="display:none; margin:10px;">
+        <p><strong>Nombre:</strong> <span id="contactName"></span></p>
+        <p><strong>Ocupación:</strong> <span id="contactOccupation"></span></p>
+        <p><strong>Teléfono:</strong> <span id="contactPhone"></span></p>
+        <p><strong>Correo:</strong> <span id="contactEmail"></span></p>
+        <p><strong>Dirección:</strong> <span id="contactAddress"></span></p>
+        <br />
+        <hr />
+        <button id="generateInvitation" class="k-button">Generar invitación</button>
+    </div>
+</div>
+
+<div id="invitationWindow" style="display:none;">
+    <h3>Invitación para el Evento</h3>
+    <p><strong>Nombre:</strong> <span id="inviteeName"></span></p>
+    <p><strong>Evento:</strong> <span id="eventName">Toma de protesta</span></p>
+    <p><strong>Luhar:</strong> <span id="eventName">Centro de convenciones</span></p>
+    <p><strong>Fecha:</strong> <span id="eventDate">14/12/2024</span></p>
+    <div style="margin:auto;" id="qrCode"></div>
+    <hr />
+    <button id="sendInvitation" class="k-button right">Enviar invitación</button>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var seatData = [
+            { Row: '1', A: 'available', B: 'reserved', C: 'available', D: 'reserved', E: 'reserved' },
+            { Row: '2', A: 'reserved', B: 'reserved', C: 'reserved', D: 'available', E: 'available' },
+            { Row: '3', A: 'available', B: 'available', C: 'reserved', D: 'available', E: 'available' },
+            { Row: '4', A: 'available', B: 'available', C: 'available', D: 'available', E: 'available' },
+            { Row: '5', A: 'available', B: 'available', C: 'available', D: 'available', E: 'available' },
+            { Row: '6', A: 'available', B: 'available', C: 'available', D: 'available', E: 'available' },
+            { Row: '7', A: 'available', B: 'available', C: 'available', D: 'available', E: 'available' },
+            { Row: '8', A: 'available', B: 'available', C: 'available', D: 'available', E: 'available' },
+            { Row: '9', A: 'available', B: 'available', C: 'available', D: 'available', E: 'available' },
+            { Row: '10', A: 'available', B: 'available', C: 'available', D: 'available', E: 'available' }
+        ];
+
+        var comboBoxData = [
+            { text: "", value: "0" },
+            { text: "Jose Roberto Juarez Diaz", value: "1" },
+            { text: "Jair Manjarrez Morales", value: "2" },
+            { text: "Antonio de Jesus Hernandez Islas", value: "3" },
+            { text: "Erick Garcia de la Rosa", value: "4" },
+            { text: "Maria Fernanda Lopez Perez", value: "5" },
+            { text: "Sofia Martinez Sanchez", value: "6" },
+            { text: "Carlos Alberto Ramirez Ortega", value: "7" },
+            { text: "Luis Fernando Torres Castillo", value: "8" },
+            { text: "Ana Maria Gomez Cruz", value: "9" },
+            { text: "Jorge Luis Dominguez Flores", value: "10" },
+            { text: "Fernanda Lucia Herrera Jimenez", value: "11" },
+            { text: "Alejandro Medina Ruiz", value: "12" },
+            { text: "Valeria Margarita Salazar Romero", value: "13" },
+            { text: "Daniel Ricardo Nunez Rojas", value: "14" },
+            { text: "Gabriela Alejandra Navarro Mora", value: "15" },
+            { text: "Ricardo Javier Molina Vargas", value: "16" },
+            { text: "Andrea Isabel Soto Paz", value: "17" },
+            { text: "Miguel Angel Chavez Mendoza", value: "18" },
+            { text: "Paola Veronica Velez Rios", value: "19" },
+            { text: "Jose Manuel Reyes Pineda", value: "20" },
+            { text: "Roberto Carlos Ortega Cruz", value: "21" },
+            { text: "Alonso Javier Jimenez Marin", value: "22" },
+            { text: "Carla Beatriz Vasquez Quintana", value: "23" },
+            { text: "Emilio Enrique Mendez Ramos", value: "24" },
+            { text: "Monica Yolanda Guerrero Leon", value: "25" },
+            { text: "Francisco Javier Vega Lozano", value: "26" },
+            { text: "Karla Patricia Olvera Soto", value: "27" },
+            { text: "Sebastian Alejandro Alvarez Delgado", value: "28" },
+            { text: "Marcela Cristina Moreno Castro", value: "29" },
+            { text: "Hugo Fernando Ibarra Duran", value: "30" },
+            { text: "Lucia Fernanda Morales Salas", value: "31" },
+            { text: "David Alejandro Guzman Vega", value: "32" },
+            { text: "Victoria Isabel Serrano Zamora", value: "33" },
+            { text: "Oscar Eduardo Delgado Medina", value: "34" },
+            { text: "Mariana Andrea Campos Gil", value: "35" },
+            { text: "Felipe Andres Gutierrez Sosa", value: "36" },
+            { text: "Lorena Marcela Cardenas Bravo", value: "37" },
+            { text: "Rafael Arturo Morales Reyes", value: "38" },
+            { text: "Isabel Cristina Perez Gonzalez", value: "39" },
+            { text: "Rodrigo Antonio Carrillo Cabrera", value: "40" },
+            { text: "Carmen Teresa Flores Castillo", value: "41" },
+            { text: "Edgar Ricardo Mendez Vargas", value: "42" },
+            { text: "Sara Beatriz Diaz Herrera", value: "43" },
+            { text: "Manuel Alejandro Luna Ramos", value: "44" },
+            { text: "Julia Estefania Romero Soto", value: "45" },
+            { text: "Antonio David Vazquez Nunez", value: "46" },
+            { text: "Melissa Patricia Sanchez Medina", value: "47" },
+            { text: "Cristian Gabriel Torres Ruiz", value: "48" },
+            { text: "Angela Guadalupe Ortiz Chavez", value: "49" },
+            { text: "Ivan Eduardo Herrera Moreno", value: "50" },
+            { text: "Daniela Karina Castro Velazquez", value: "51" },
+            { text: "Arturo Javier Lopez Salinas", value: "52" },
+            { text: "Patricia Fernanda Ruiz Diaz", value: "53" },
+            { text: "Alejandra Beatriz Garcia Perez", value: "54" }
+        ];
+
+        var invitationWindow = $("#invitationWindow").kendoWindow({
+            width: "400px",
+            height: "550px",
+            title: "Invitación",
+            visible: false,
+            actions: [
+                "Close"
+            ],
+            modal: true
+        }).data("kendoWindow");
+
+        $("#comboBox").kendoComboBox({
+            dataTextField: "text",
+            dataValueField: "value",
+            dataSource: comboBoxData,
+            filter: "contains",
+            suggest: true,
+            index: 0,
+            change: function (e) {
+                $("#contactName").text("Roberto Juarez");
+                $("#contactOccupation").text("Director General");
+                $("#contactPhone").text("5548520010");
+                $("#contactEmail").text("roberto@hotmail.com");
+                $("#contactAddress").text("Calle 10, Colonia San Martin Texmelucan, Puebla, Puebla CP 45201");
+                $("#divInfo").show();
+            }
+        });
+
+
+        var seatWindow = $("#seatWindow").kendoWindow({
+            width: "500px",
+            height: "600px",
+            title: "Seat Information",
+            visible: false,
+            actions: [
+                "Pin",
+                "Minimize",
+                "Maximize",
+                "Close"
+            ],
+            modal: true,
+            activate: function () {
+                $("#comboBox").data("kendoComboBox").focus();
+            }
+        }).data("kendoWindow");
+
+        $("#seatGrid").kendoGrid({
+            dataSource: {
+                data: seatData,
+                schema: {
+                    model: {
+                        fields: {
+                            Row: { type: "string" },
+                            A: { type: "string" },
+                            B: { type: "string" },
+                            C: { type: "string" },
+                            D: { type: "string" },
+                            E: { type: "string" }
+                        }
+                    }
+                }
+            },
+            columns: [
+                { field: "Row", title: "FILA" },
+                { field: "A", title: "A", template: kendo.template($("#seatTemplate").html().replace(/#= column.field #/g, 'A')) },
+                { field: "B", title: "B", template: kendo.template($("#seatTemplate").html().replace(/#= column.field #/g, 'B')) },
+                { field: "C", title: "C", template: kendo.template($("#seatTemplate").html().replace(/#= column.field #/g, 'C')) },
+                { field: "D", title: "D", template: kendo.template($("#seatTemplate").html().replace(/#= column.field #/g, 'D')) },
+                { field: "E", title: "E", template: kendo.template($("#seatTemplate").html().replace(/#= column.field #/g, 'E')) }
+            ]
+        });
+
+        $(document).on('click', '.seat-button', function () {
+            var seat = $(this).data('seat');
+            var row = $(this).data('row');
+            var grid = $("#seatGrid").data("kendoGrid");
+            var dataItem = grid.dataSource.getByUid($(this).closest("tr").data("uid"));
+
+            dataItem.set(seat, dataItem[seat] === 'available' ? 'reserved' : 'available');
+            grid.refresh();
+
+            $("#seatInfo").text("Lugar seleccionado " + + " fila " + seat + " lugar " + row);
+            seatWindow.center().open();
+        });
+
+        $("#generateInvitation").click(function () {
+
+            $("#inviteeName").text("Jose Roberto Juarez Diaz");
+
+            var qrCodeData = "Evento: Toma de protesta\nInvitado: " + "Jose Roberto Juarez Diaz" + "\nFecha: 14/12/2024" + "\nHora: 13:00 horas" + "\nAsiento: 14" + "\nFila: 12";
+            $("#qrCode").empty();
+            new QRCode(document.getElementById("qrCode"), {
+                text: qrCodeData,
+                width: 200,
+                height: 200
+            });
+
+            invitationWindow.center().open();
+
+        });
+    });
+</script>
+
+<script type="text/x-kendo-template" id="seatTemplate">
+    <button class="seat-button #= data['#= column.field #'] #" data-seat="#= column.field #" data-row="#= data.Row #">
+        # if (data['#= column.field #'] === 'available') { #
+            Available
+        # } else { #
+            Reserved
+        # } #
+    </button>
+</script>
