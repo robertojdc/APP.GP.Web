@@ -9,110 +9,111 @@
     </script>
     <style>
         body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-        }
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
 
-        .background {
-            height: 100%;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #79211F;
-            background-image: url('/img/login.png'); /* Ruta de la imagen de fondo */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
+.background {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #79211F;
+    background-image: url('/img/login.png'); /* Ruta de la imagen de fondo */
+    background-size: cover; /* Asegura que la imagen cubra toda el área */
+    background-position: center;
+    background-repeat: no-repeat;
+}
 
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            width: 100%;
-            padding: 20px; /* Espacio alrededor en pantallas más pequeñas */
-            margin-top: -200px;
-        }
+.login-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
 
-        .login-form {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
-        }
+.login-form {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
 
-        .login-form h2 {
-            margin-bottom: 20px;
-            color: white;
-            font-size: 1.8rem;
-        }
+.login-form h2 {
+    margin-bottom: 20px;
+    color: white;
+    font-size: 1.8rem;
+}
 
-        .login-form .form-control {
-            background-color: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 10px;
-        }
+.login-form .form-control {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    padding: 10px;
+}
 
-        .login-form .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
+.login-form .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
 
-        .login-form .btn {
-            background-color: #E1563F;
-            border: none;
-            width: 100%;
-            padding: 10px;
-            color: white;
-            font-size: 18px;
-            border-radius: 5px;
-        }
+.login-form .btn {
+    background-color: #E1563F;
+    border: none;
+    width: 100%;
+    padding: 10px;
+    color: white;
+    font-size: 18px;
+    border-radius: 5px;
+}
 
-        .login-form .btn:hover {
-            background-color: #D14533;
-        }
+.login-form .btn:hover {
+    background-color: #D14533;
+}
 
-        /* Media Queries para pantallas más pequeñas */
-        @@media (max-width: 768px) {
-            .login-container {
-                margin-top: 0; /* Ajuste para pantallas más pequeñas */
-            }
+/* Media Queries para pantallas más pequeñas */
+@@media (max-width: 768px) {
+    .login-container {
+        justify-content: center; /* Centra el formulario en pantallas más pequeñas */
+        padding: 10px;
+    }
 
-            .login-form {
-                max-width: 300px; /* Más pequeño para pantallas móviles */
-                padding: 20px; /* Reducir el relleno en pantallas más pequeñas */
-            }
+    .login-form {
+        max-width: 90%; /* Más pequeño para pantallas móviles */
+        padding: 20px; /* Reducir el relleno en pantallas más pequeñas */
+    }
 
-            .login-form h2 {
-                font-size: 1.5rem; /* Reducir tamaño de la fuente */
-            }
-        }
+    .login-form h2 {
+        font-size: 1.5rem; /* Reducir tamaño de la fuente */
+    }
+}
 
-        @@media (max-width: 576px) {
-            .login-container {
-                margin-left: 0;
-                padding: 10px;
-            }
+@@media (max-width: 576px) {
+    .login-container {
+        padding: 10px;
+    }
 
-            .login-form {
-                max-width: 100%; /* Para pantallas muy pequeñas, usa todo el ancho */
-                padding: 15px; /* Aún más reducido el padding */
-            }
+    .login-form {
+        max-width: 100%; /* Para pantallas muy pequeñas, usa todo el ancho */
+        padding: 15px; /* Aún más reducido el padding */
+    }
 
-            .login-form h2 {
-                font-size: 1.3rem;
-            }
+    .login-form h2 {
+        font-size: 1.3rem;
+    }
 
-            .login-form .btn {
-                font-size: 16px;
-            }
-        }
+    .login-form .btn {
+        font-size: 16px;
+    }
+}
+
+        
     </style>
 </head>
 <body>

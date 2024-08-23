@@ -3,252 +3,260 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="example" style="margin:10px;">   
+<div id="example" style="margin:10px;">
+
     <div class="row">
         <center><h4 style="margin-top: 60px;">Tablero de actores</h4></center>
+        <div class="row" id="categorias-container"></div>
 
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <div class="category">GOBIERNO FEDERAL</div>
-            <div class="subcategory-row">
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>EJECUTIVO</div>
-                </div>
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>LEGISLATIVO</div>
-                </div>
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>JUDICIAL</div>
-                </div>
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>AUTÓNOMO</div>
+        <div style="display:none;">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                <div class="category">GOBIERNO FEDERAL</div>
+                <div class="subcategory-row">
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>EJECUTIVO</div>
+                    </div>
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>LEGISLATIVO</div>
+                    </div>
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>JUDICIAL</div>
+                    </div>
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>AUTÓNOMO</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <div class="category">GOBIERNO ESTATAL</div>
-            <div class="subcategory-row">
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>EJECUTIVO</div>
-                </div>
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>LEGISLATIVO</div>
-                </div>
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>JUDICIAL</div>
-                </div>
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>AUTÓNOMO</div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                <div class="category">GOBIERNO ESTATAL</div>
+                <div class="subcategory-row">
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>EJECUTIVO</div>
+                    </div>
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>LEGISLATIVO</div>
+                    </div>
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>JUDICIAL</div>
+                    </div>
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>AUTÓNOMO</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <div class="category">GOBIERNO MUNICIPAL</div>
-            <div class="subcategory-row">
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>PRESIDENCIA</div>
-                </div>
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>SINDICATURA</div>
-                </div>
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>CABILDO</div>
-                </div>
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>GABINETE MUNICIPAL</div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                <div class="category">GOBIERNO MUNICIPAL</div>
+                <div class="subcategory-row">
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>PRESIDENCIA</div>
+                    </div>
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>SINDICATURA</div>
+                    </div>
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>CABILDO</div>
+                    </div>
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>GABINETE MUNICIPAL</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <div class="category">ESTADOS DE LA REPUBLICA</div>
-            <div class="subcategory-row">
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>GOBERNADOR</div>
-                </div>
-                <div class="col-2 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>CÓNYUGE</div>
-                </div>
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>LEGISLATURA</div>
-                </div>
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>JUDICIAL</div>
-                </div>
-                <div class="col-2 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>CONAGO</div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                <div class="category">ESTADOS DE LA REPUBLICA</div>
+                <div class="subcategory-row">
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>GOBERNADOR</div>
+                    </div>
+                    <div class="col-2 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>CÓNYUGE</div>
+                    </div>
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>LEGISLATURA</div>
+                    </div>
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>JUDICIAL</div>
+                    </div>
+                    <div class="col-2 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>CONAGO</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <div class="category">FAMILIA / AMISTADES</div>
-            <div class="subcategory-row">
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>FAMILIA</div>
-                </div>
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>FAMILIA AMPLIADA</div>
-                </div>
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>FAMILIA ESPOSA</div>
-                </div>
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>AMISTADES</div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                <div class="category">FAMILIA / AMISTADES</div>
+                <div class="subcategory-row">
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>FAMILIA</div>
+                    </div>
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>FAMILIA AMPLIADA</div>
+                    </div>
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>FAMILIA ESPOSA</div>
+                    </div>
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>AMISTADES</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <div class="category">SECTOR EMPRESARIAL</div>
-            <div class="subcategory-row">
-                <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>EMPRESARIOS / AS</div>
-                </div>
-                <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>CAMARAS Y ORGANISMOS</div>
-                </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                <div class="category">SECTOR EMPRESARIAL</div>
+                <div class="subcategory-row">
+                    <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>EMPRESARIOS / AS</div>
+                    </div>
+                    <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>CAMARAS Y ORGANISMOS</div>
+                    </div>
 
-            </div>
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <div class="category">MEDIOS DE COMUNICACIÓN</div>
-            <div class="subcategory-row">
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>GOBERNADOR</div>
-                </div>
-                <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>IMPRESOS</div>
-                </div>
-                <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>ELECTRÓNICOS</div>
-                </div>
-                <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>DIGITALES</div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <div class="category">ORGANISMOS INTERNACIONALES</div>
-            <div class="subcategory-row">
-                <div class="col-12 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>ONU</div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                <div class="category">MEDIOS DE COMUNICACIÓN</div>
+                <div class="subcategory-row">
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>GOBERNADOR</div>
+                    </div>
+                    <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>IMPRESOS</div>
+                    </div>
+                    <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>ELECTRÓNICOS</div>
+                    </div>
+                    <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>DIGITALES</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <div class="category">ORGANISMOS ELECTORALES</div>
-            <div class="subcategory-row">
-                <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>NACIONAL</div>
-                </div>
-                <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>ESTATAL</div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <div class="category">MIGRANTES</div>
-            <div class="subcategory-row">
-                <div class="col-2 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>CASA PUEBLA</div>
-                </div>
-                <div class="col-2 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>LÍDERES</div>
-                </div>
-                <div class="col-2 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>ORGANISMOS</div>
-                </div>
-                <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>POBLANOS EN EL EXTERIOR</div>
-                </div>
-                <div class="col-2 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>COLECTIVOS</div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                <div class="category">ORGANISMOS INTERNACIONALES</div>
+                <div class="subcategory-row">
+                    <div class="col-12 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>ONU</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <div class="category">RELACIONES INTERNACIONALES</div>
-            <div class="subcategory-row">
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>EMBAJADAS DE MÉXICO EN EL EXTERIOR</div>
-                </div>
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>CONSUADOS DE MÉXICO EN EL EXTERIOR</div>
-                </div>
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>EMBAJADORES DE PAISES EN MÉXICO</div>
-                </div>
-                <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>CONSULADOS DE PAISES EN MÉXICO</div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                <div class="category">ORGANISMOS ELECTORALES</div>
+                <div class="subcategory-row">
+                    <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>NACIONAL</div>
+                    </div>
+                    <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>ESTATAL</div>
+                    </div>
+
                 </div>
             </div>
-        </div>
 
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <div class="category">SOCIEDAD CIVIL</div>
-            <div class="subcategory-row">
-                <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>ASOCIACIONES CIVILES</div>
-                </div>
-                <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>OSC</div>
-                </div>
-                <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>CLUBES</div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                <div class="category">MIGRANTES</div>
+                <div class="subcategory-row">
+                    <div class="col-2 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>CASA PUEBLA</div>
+                    </div>
+                    <div class="col-2 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>LÍDERES</div>
+                    </div>
+                    <div class="col-2 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>ORGANISMOS</div>
+                    </div>
+                    <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>POBLANOS EN EL EXTERIOR</div>
+                    </div>
+                    <div class="col-2 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>COLECTIVOS</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <div class="category">IGLESIAS</div>
-            <div class="subcategory-row">
-                <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>CATÓLICA</div>
-                </div>
-                <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>EVANGÉLICO / CRISTIANAS</div>
-                </div>
-                <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>OTRAS</div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                <div class="category">RELACIONES INTERNACIONALES</div>
+                <div class="subcategory-row">
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>EMBAJADAS DE MÉXICO EN EL EXTERIOR</div>
+                    </div>
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>CONSUADOS DE MÉXICO EN EL EXTERIOR</div>
+                    </div>
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>EMBAJADORES DE PAISES EN MÉXICO</div>
+                    </div>
+                    <div class="col-3 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>CONSULADOS DE PAISES EN MÉXICO</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <div class="category">UNIVERSIDADES</div>
-            <div class="subcategory-row">
-                <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>PÚBLICAS</div>
-                </div>
-                <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>PRIVADAS</div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                <div class="category">SOCIEDAD CIVIL</div>
+                <div class="subcategory-row">
+                    <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>ASOCIACIONES CIVILES</div>
+                    </div>
+                    <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>OSC</div>
+                    </div>
+                    <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>CLUBES</div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
-            <div class="category">SECTOR POLÍTICO</div>
-            <div class="subcategory-row">
-                <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>PARTIDOS</div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                <div class="category">IGLESIAS</div>
+                <div class="subcategory-row">
+                    <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>CATÓLICA</div>
+                    </div>
+                    <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>EVANGÉLICO / CRISTIANAS</div>
+                    </div>
+                    <div class="col-4 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>OTRAS</div>
+                    </div>
                 </div>
-                <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
-                    <div>ASOCIACIONES</div>
-                </div>
+            </div>
 
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                <div class="category">UNIVERSIDADES</div>
+                <div class="subcategory-row">
+                    <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>PÚBLICAS</div>
+                    </div>
+                    <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>PRIVADAS</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+                <div class="category">SECTOR POLÍTICO</div>
+                <div class="subcategory-row">
+                    <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>PARTIDOS</div>
+                    </div>
+                    <div class="col-6 k-button k-button-solid-base k-button-solid k-button-md k-rounded-md hidden-on-narrow subcategory">
+                        <div>ASOCIACIONES</div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
 
-    <div id="window" style="border: 2px solid #8B0000; padding: 20px; background-color: #FFFFFF; display:none;">
+    <div id="windowInstitucional" style="border: 2px solid #8B0000; padding: 20px; background-color: #FFFFFF; display:none;">
+        <div id="combosCategoria">
+            <select id="comboBox"></select>
+        </div>
+      
         <div style="background-color: #8B0000; color: white; padding: 10px; text-align: center; font-weight: bold; margin-top: 10px;">
             EL SOL DE PUEBLA
         </div>
@@ -416,27 +424,132 @@
     <div class="responsive-message"></div>
 
     <script>
-        $(document).ready(function () {            
-            $(".subcategory").click(function () { 
-                mostrarVentanaKendo("#window", "600px", "FICHA INSTITUCIONAL");
-            });
-            $(".teamMate").click(function () {
-                mostrarVentanaKendo("#contactDetailWindow", "600px", "FICHA PERSONAL");
-            });
+        $(document).ready(function () {
+            obtenerGrupos();
+
+      
         });
 
-        function mostrarVentanaKendo(selector, ancho, titulo) {
-            var kendoWindow = $(selector).kendoWindow({
-                width: ancho,
-                title: titulo,
-                visible: false,
-                modal: true,
-                actions: ["Close"],
-                activate: function () {
-                    checkAndMaximizeWindow(kendoWindow);
+        function obtenerGrupos() {
+            $.ajax({
+                url: '@Url.Action("ObtenerGrupos", "Home")', // URL de la acción en el controlador
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    const container = $('#categorias-container'); // Usar jQuery para seleccionar el contenedor
+
+                    data.forEach(item => {
+                        const colDiv = $('<div>').addClass(item.descripcion);
+
+                        const categoryDiv = $('<div>').addClass('category').text(item.nombre);
+
+                        colDiv.append(categoryDiv);
+
+                        const subCategoryRowDiv = $('<div>').addClass('subcategory-row');
+
+                        item.subGrupoList.forEach(subGrupo => {
+                            // Agregar el id del subGrupo como un atributo de datos
+                            const subGroupDiv = $('<div>')
+                                .addClass(subGrupo.descripcion)
+                                .attr('data-id', item.id); // Añadir data-id con el id del subGrupo
+
+                            const subGroupContentDiv = $('<div>').text(subGrupo.nombre);
+
+                            subGroupDiv.append(subGroupContentDiv);
+                            subCategoryRowDiv.append(subGroupDiv);
+                        });
+
+                        colDiv.append(subCategoryRowDiv);
+
+                        container.append(colDiv);
+                    });
+
+                    // Asignar el evento click a las subcategorías
+                    $(".subcategory").click(function () {
+                        const idSubGrupo = $(this).data("id"); // Obtener el id del subgrupo desde data-id
+                        mostrarVentanaKendo("#windowInstitucional", "600px", "FICHA INSTITUCIONAL", idSubGrupo);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error al obtener los grupos:', error);
                 }
-            }).data("kendoWindow");
-            kendoWindow.center().open();
+            });
+        }
+
+
+        function mostrarVentanaKendo(selector, ancho, titulo, id) {
+            $.ajax({
+                url: '@Url.Action("ObtenerCategoriaGrupo", "Home")',
+                type: 'GET',
+                dataType: 'json',
+                data: { idSubGrupo: id }, // Aquí pasas el parámetro idCatalogo
+                success: function (data) {
+                    var kendoWindow = $(selector).kendoWindow({
+                        width: ancho,
+                        title: titulo,
+                        visible: false,
+                        modal: true,
+                        actions: ["Close"],
+                        activate: function () {
+                            checkAndMaximizeWindow(kendoWindow);
+                        }
+                    }).data("kendoWindow");
+
+                    $("#comboBox").kendoComboBox({
+                        dataTextField: "descripcion", // Campo a mostrar
+                        dataValueField: "idCategoria", // Campo de valor
+                        dataSource: data, // Los datos obtenidos del servidor
+                        placeholder: "Selecciona una opción...",
+                        change: function (e) {
+                            var value = this.value(); // Obtiene el valor seleccionado (idCategoria)
+                            if (value) {
+                                ObtenerSubCategoria(value); // Invoca la función pasando el idCategoria seleccionado
+                            }
+                        }
+                    });
+
+                    kendoWindow.center().open();
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error al obtener los grupos:', error);
+                }
+            });
+        }
+
+        function ObtenerSubCategoria(id) {
+            $.ajax({
+                url: '@Url.Action("ObtenerSubCategoria", "Home")',
+                type: 'GET',
+                dataType: 'json',
+                data: { idCategoria: id },
+                success: function (data) {
+                    // Verifica si la lista tiene valores
+                    if (data && data.length > 0) {
+                        // Crea un nuevo elemento select
+                        var newComboBoxId = "comboBoxSubCategoria" + id; // ID único para cada nuevo ComboBox
+                        var selectElement = $('<select>').attr('id', newComboBoxId);
+
+                        // Agrega el select al DOM (por ejemplo, debajo del ComboBox existente)
+                        $('#combosCategoria').append(selectElement);
+
+                        // Inicializa el nuevo ComboBox con los datos obtenidos
+                        $("#" + newComboBoxId).kendoComboBox({
+                            dataTextField: "descripcion", // Campo a mostrar
+                            dataValueField: "idCategoria", // Campo de valor
+                            dataSource: data, // Los datos obtenidos del servidor
+                            placeholder: "Selecciona una opción...",
+                            change: function (e) {
+                                var value = this.value(); // Obtiene el valor seleccionado (idCategoria)
+                                console.log("Subcategoría seleccionada:", value);
+                                ObtenerSubCategoria(value);
+                            }
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error al obtener las subcategorías:', error);
+                }
+            });
         }
 
         function checkAndMaximizeWindow(kendoWindow) {
@@ -450,11 +563,12 @@
 
     <style>
         .menu {
-            margin-bottom: 20px; 
+            margin-bottom: 20px;
         }
+
         #example {
             min-height: 400px;
-            margin-top: 100px; 
+            margin-top: 100px;
         }
 
         #undo {
@@ -492,31 +606,31 @@
         }
 
             .subcategory:hover {
-                block-size:12pt;
-                background-color: darkred; 
-                color: #FFF; 
-                border-color: #000; 
+                block-size: 12pt;
+                background-color: darkred;
+                color: #FFF;
+                border-color: #000;
                 box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
             }
 
 
 
-.subcategory-row {
-    display: flex;
-    margin: 10px 0; 
-    flex-wrap: wrap; 
-}
+        .subcategory-row {
+            display: flex;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
 
 
         #window {
             padding: 20px;
-            box-sizing: border-box; 
+            box-sizing: border-box;
         }
 
-        #window .category,
-        #window .subcategory {
-            margin: 10px 0; 
-        }
+            #window .category,
+            #window .subcategory {
+                margin: 10px 0;
+            }
 
         #panelbar {
             max-width: 400px;

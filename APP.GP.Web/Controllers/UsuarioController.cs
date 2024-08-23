@@ -2,11 +2,19 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace APP.GP.Web.Controllers;
+
 public class UsuarioController : Controller
 {
     [HttpGet]
     [AllowAnonymous]
     public IActionResult Login()
+    {
+        return View();
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
+    public IActionResult Index()
     {
         return View();
     }
@@ -27,5 +35,4 @@ public class UsuarioController : Controller
         ViewBag.Error = "Usuario o contraseña incorrectos.";
         return View("Login");
     }
-
 }

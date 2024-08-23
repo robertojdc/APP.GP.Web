@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using APP.GP.Web.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,6 +7,14 @@ namespace APP.GP.Web.Controllers;
 
 public class HomeController : Controller
 {
+    private readonly GrupoService _grupoService;
+
+    // Inyección de dependencias del GrupoService
+    public HomeController(GrupoService grupoService)
+    {
+        _grupoService = grupoService;
+    }
+
     [HttpGet]
     [AllowAnonymous]
     public IActionResult Index()
@@ -35,6 +44,30 @@ public class HomeController : Controller
     public IActionResult Invite()
     {
         return View();
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
+    public async Task<IActionResult> ObtenerGrupos()
+    {
+        var grupos = await _grupoService.GetGruposAsync();
+        return Json(grupos);
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
+    public async Task<IActionResult> ObtenerCategoriaGrupo(int idSubGrupo)
+    {
+        var grupos = await _grupoService.GetCategoriasAsync(idSubGrupo);
+        return Json(grupos);
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
+    public async Task<IActionResult> ObtenerSubCategoria(int idCategoria)
+    {
+        var grupos = await _grupoService.GetSubCategoriasAsync(idCategoria);
+        return Json(grupos);
     }
 
     public JsonResult GetContentData()
@@ -276,7 +309,6 @@ public class HomeController : Controller
         }
     }
 
-    //Tercer nivel de detalle
     public JsonResult GetContactDetails(int productId)
     {
         var contacts = new[]
