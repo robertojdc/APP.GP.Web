@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\APP.GP.Common\APP.GP.Common.csproj" />
+    <ProjectReference Include="..\APP.GP.Entities\APP.GP.Entities.csproj" />
+    <ProjectReference Include="..\APP.GP.FactoryData\APP.GP.FactoryData.csproj" />
+  </ItemGroup>
+
+</Project>
