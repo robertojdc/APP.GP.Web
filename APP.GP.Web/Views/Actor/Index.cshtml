@@ -162,6 +162,7 @@
 
         <div class="text-center mt-4">
             <button type="button" class="btn btn-danger" id="submitButton">Guardar</button>
+            <button type="button" class="btn" id="regresarActor">Regresar</button>
         </div>
     </form>
 
@@ -170,6 +171,11 @@
 
 <script>
     $(document).ready(function () {
+        $("#regresarActor").click(function (e) {
+            e.preventDefault();
+            window.location.href = '/Actor/Index';
+        });
+
         $('#submitButton').on('click', function (e) {
             e.preventDefault();
 

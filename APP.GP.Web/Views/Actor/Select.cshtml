@@ -52,7 +52,8 @@
         </div>
 
         <div class="text-center mt-4">
-            <button type="button" class="btn btn-primary" id="buscarActor">Buscar</button>
+            <button type="button" class="btn" id="buscarActor">Buscar</button>
+            <button type="button" class="btn" id="crearActor">Crear</button>
         </div>
     </form>
 
@@ -129,6 +130,11 @@
             });
         });
         obtenerGrupos();
+
+        $("#crearActor").on('click', function (e) {
+            e.preventDefault();
+            window.location.href = '/Actor/Index';
+        });
     });
 
     function obtenerGrupos() {
