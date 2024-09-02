@@ -51,6 +51,18 @@ public class GrupoService
         return response;
     }
 
+    public async Task<List<CatalogoGrupo>> GetCatalogoGruposAsync()
+    {
+        var response  = await _httpClient.GetFromJsonAsync<List<CatalogoGrupo>>("/Grupo/GetGrupos");
+        return response;
+    }
+
+    public async Task<Resultado<CatalogoGrupo>> GetGrupoByIdAsync(int idGrupo)
+    {
+        var response = await _httpClient.GetFromJsonAsync<Resultado<CatalogoGrupo>>("/Grupo/GetGrupoById?idGrupo=" + idGrupo);
+        return response;
+    }
+
     public async Task<List<Actor>> GetActoresAsync(FiltroActor filtro)
     {
         var query = new Dictionary<string, string>();
@@ -78,5 +90,26 @@ public class GrupoService
         var response = await _httpClient.GetFromJsonAsync<List<Actor>>($"/Actor/GetActores?{queryString}");
 
         return response;
+    }
+
+    public async Task<Resultado> InsCatalogoGrupoAsync(CatalogoGrupo objeto)
+    {
+        var response = await _httpClient.PostAsJsonAsync<CatalogoGrupo>("/Grupo/AddGrupo", objeto);
+
+        return await response.Content.ReadFromJsonAsync<Resultado>();
+    }
+
+    public async Task<Resultado> UpdCatalogoGrupoAsync(CatalogoGrupo objeto)
+    {
+        var response = await _httpClient.PutAsJsonAsync<CatalogoGrupo>("/Grupo/UpdGrupo", objeto);
+
+        return await response.Content.ReadFromJsonAsync<Resultado>();
+    }
+
+    public async Task<Resultado> DelCatalogoGrupoAsync(int idGrupo)
+    {
+        var response = await _httpClient.DeleteAsync("/Grupo/DelGrupo?idGrupo=" + idGrupo);
+
+        return await response.Content.ReadFromJsonAsync<Resultado>();
     }
 }

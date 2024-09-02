@@ -1,0 +1,40 @@
+﻿@model APP.GP.Web.Model.CatalogoGrupo
+
+@{
+    ViewData["Title"] = "Crear Grupo";
+}
+
+<h1>Crear Grupo</h1>
+<hr />
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <form asp-action="Create">
+            <div class="row">
+                <div class="col-12">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label asp-for="Nombre" class="control-label"></label>
+                        <input asp-for="Nombre" class="form-control" required />
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <input type="submit" value="Crear" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-4"></div>
+</div>
+<div class="row">
+    <a asp-action="Index">Regresar a Catálogo</a>
+</div>
+
