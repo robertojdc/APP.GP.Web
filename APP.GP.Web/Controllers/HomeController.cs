@@ -1,5 +1,4 @@
 ﻿using APP.GP.Web.Services;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +8,6 @@ public class HomeController : Controller
 {
     private readonly GrupoService _grupoService;
 
-    // Inyección de dependencias del GrupoService
     public HomeController(GrupoService grupoService)
     {
         _grupoService = grupoService;
@@ -47,10 +45,16 @@ public class HomeController : Controller
     }
 
     [HttpGet]
+    public IActionResult Actor()
+    {
+        return View();
+    }
+
+    [HttpGet]
     [AllowAnonymous]
     public async Task<IActionResult> ObtenerGrupos()
     {
-        var grupos = await _grupoService.GetGruposAsync();
+        var grupos = await _grupoService.GetAllTablero();
         return Json(grupos);
     }
 

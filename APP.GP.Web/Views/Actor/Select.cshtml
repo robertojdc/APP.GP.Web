@@ -1,0 +1,242 @@
+﻿@{
+    ViewData["Title"] = "Consultar Actor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <h3 class="text-center bg-danger text-white py-2">BÚSQUEDA DE ACTORES</h3>
+    <form id="consultaForm" class="p-4 border">
+        <div class="form-group row">
+            <label class="col-3 col-form-label">NOMBRE(S)</label>
+            <div class="col-9">
+                <input id="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre(s)">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-3 col-form-label">APELLIDO PATERNO</label>
+            <div class="col-9">
+                <input id="apellidoPaterno" name="apellidoPaterno" type="text" class="form-control" placeholder="Apellido paterno">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-3 col-form-label">APELLIDO MATERNO</label>
+            <div class="col-9">
+                <input id="apellidoMaterno" name="apellidoMaterno" type="text" class="form-control" placeholder="Apellido materno">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-3 col-form-label">GRUPO</label>
+            <div class="col-9">
+                <input id="grupo" name="grupo" class="form-control" placeholder="Seleccione un grupo">
+                <input type="hidden" id="grupoId" name="grupoId">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-3 col-form-label">SUBGRUPO</label>
+            <div class="col-9">
+                <input id="subgrupo" name="subgrupo" class="form-control" placeholder="Seleccione un subgrupo">
+                <input type="hidden" id="subgrupoId" name="subgrupoId">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-3 col-form-label">CLASIFICACIÓN</label>
+            <div class="col-9">
+                <input id="clasificacion" name="clasificacion" class="form-control" placeholder="Seleccione una clasificación">
+                <input type="hidden" id="clasificacionId" name="clasificacionId">
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="button" class="btn btn-primary" id="buscarActor">Buscar</button>
+        </div>
+    </form>
+
+    <div id="gridResultados" class="mt-4"></div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#buscarActor').on('click', function (e) {
+            e.preventDefault();
+
+            var nombre = $('#nombre').val();
+            var apellidoPaterno = $('#apellidoPaterno').val();
+            var apellidoMaterno = $('#apellidoMaterno').val();
+            var clasificacionId = $('#grupo').data('kendoDropDownList').value();
+            $("#gridResultados").empty();
+            $.ajax({
+                url: '/Actor/Consultar',
+                type: 'GET',
+                data: {
+                    nombre: nombre,
+                    apellidoPaterno: apellidoPaterno,
+                    apellidoMaterno: apellidoMaterno,
+                    idGrupo: $("#grupo").data('kendoDropDownList') ? $("#grupo").data('kendoDropDownList').value() : 0,
+                    idSubGrupo: $("#subgrupo").data('kendoDropDownList') ? $("#subgrupo").data('kendoDropDownList').value() : 0,
+                    idCategoria: $("#clasificacion").data('kendoDropDownList') ? $("#clasificacion").data('kendoDropDownList').value() : 0
+                },
+                success: function (response) {
+                    $("#gridResultados").kendoGrid({
+                        dataSource: {
+                            data: response,
+                            pageSize: 10
+                        },
+                        height: 400,
+                        pageable: true,
+                        columns: [
+                            { field: "nombre", title: "Nombre" },
+                            { field: "apellidoPaterno", title: "Apellido Paterno" },
+                            { field: "apellidoMaterno", title: "Apellido Materno" },
+                            { field: "cargoActual", title: "Cargo Actual" },
+                            {
+                                title: "Acciones",
+                                width: "180px",
+                                template: `
+                                    <a href="\\#" class="btn-ver-detalle" title="Ver Detalles">
+                                        <i class="k-icon k-i-search"></i>Detalle
+                                    </a>
+                                    <a href="\\#" class="btn-eliminar" title="Eliminar">
+                                        <i class="k-icon k-i-delete"></i>Borrar
+                                    </a>
+                                `
+                            }
+                        ],
+                        dataBound: function (e) {
+                            // Asignar eventos click a los botones dentro del grid
+                            e.sender.tbody.find(".btn-ver-detalle").on("click", function (ev) {
+                                ev.preventDefault();
+                                var dataItem = e.sender.dataItem($(this).closest("tr"));
+                                alert("Ver detalles de: " + dataItem.idActor);
+                            });
+
+                            e.sender.tbody.find(".btn-eliminar").on("click", function (ev) {
+                                ev.preventDefault();
+                                var dataItem = e.sender.dataItem($(this).closest("tr"));
+                                alert("Eliminar: " + dataItem.idActor);
+                            });
+                        }
+                    });
+
+                },
+                error: function (xhr, status, error) {
+                    alert('Ocurrió un error: ' + error);
+                }
+            });
+        });
+        obtenerGrupos();
+    });
+
+    function obtenerGrupos() {
+        $.ajax({
+            url: '/Actor/ObtenerGrupos',
+            type: 'GET',
+            success: function (response) {
+                $("#grupo").kendoDropDownList({
+                    dataTextField: "nombre",
+                    dataValueField: "id",
+                    dataSource: response,
+                    optionLabel: "Seleccione un grupo",
+                    change: function (e) {
+                        var idGrupo = this.value();
+                        if (idGrupo) {
+                            obtenerSubGrupos(idGrupo);
+                        }
+                    }
+                });
+            },
+            error: function (xhr, status, error) {
+                console.log('Ocurrió un error: ' + error);
+            }
+        });
+    }
+
+    function obtenerSubGrupos(idGrupo) {
+        $.ajax({
+            url: '/Actor/ObtenerSubGrupos',
+            type: 'POST',
+            data: { idGrupo: idGrupo },
+            success: function (response) {
+                $("#subgrupo").kendoDropDownList({
+                    dataTextField: "nombre",
+                    dataValueField: "id",
+                    dataSource: response,
+                    optionLabel: "Seleccione un subgrupo",
+                    change: function (e) {
+                        var idSubGrupo = this.value();
+                        if (idSubGrupo) {
+                            obtenerCategoria(idSubGrupo);
+                        }
+                    }
+                });
+            },
+            error: function (xhr, status, error) {
+                console.log('Ocurrió un error: ' + error);
+            }
+        });
+    }
+
+    function obtenerCategoria(idSubGrupo) {
+        $.ajax({
+            url: '/Actor/ObtenerCategorias',
+            type: 'POST',
+            data: { idSubGrupo: idSubGrupo },
+            success: function (response) {
+                $("#clasificacion").kendoDropDownList({
+                    dataTextField: "descripcion",
+                    dataValueField: "idCategoria",
+                    dataSource: response,
+                    optionLabel: "Seleccione una clasificación",
+                    change: function (e) {
+                        var idSubCategoria = this.value();
+                        if (idSubCategoria) {
+                            obtenerSubCategoria(idSubCategoria);
+                        }
+                    }
+                });
+            },
+            error: function (xhr, status, error) {
+                console.log('Ocurrió un error: ' + error);
+            }
+        });
+    }
+
+    function obtenerSubCategoria(idSubCategoria) {
+        $.ajax({
+            url: '/Actor/ObtenerSubCategorias',
+            type: 'POST',
+            data: { idCategoria: idSubCategoria },
+            success: function (response) {
+                if (response && response.length > 0) {
+                    var subCategoriaContainer = $('<div class="form-group row subcategoria-container">')
+                        .append('<label class="col-3 col-form-label">SUBCATEGORÍA</label>')
+                        .append('<div class="col-9"><input id="subcategoria' + idSubCategoria + '" name="subcategoria" class="form-control"></div>');
+
+                    $('#clasificacionForm').append(subCategoriaContainer);
+
+                    $("#subcategoria" + idSubCategoria).kendoDropDownList({
+                        dataTextField: "descripcion",
+                        dataValueField: "idCategoria",
+                        dataSource: response,
+                        optionLabel: "Seleccione una subcategoría",
+                        change: function (e) {
+                            var idSubCategoria = this.value();
+                            if (idSubCategoria) {
+                                obtenerSubCategoria(idSubCategoria);
+                            }
+                        }
+                    });
+                } else {
+                    alert('No hay subcategorías disponibles para esta categoría.');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log('Ocurrió un error: ' + error);
+            }
+        });
+    }
+</script>

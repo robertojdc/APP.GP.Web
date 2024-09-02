@@ -1,0 +1,390 @@
+﻿<div class="container mt-4">
+    <h3 class="text-center bg-danger text-white py-2">CLASIFICACIÓN</h3>
+    <form id="clasificacionForm" class="p-4 border">
+        <div class="form-group row">
+            <label class="col-3 col-form-label">GRUPO</label>
+            <div class="col-9">
+                <input id="grupo" name="grupo" class="form-control" placeholder="Seleccione un grupo">
+                <input type="hidden" id="grupoId" name="grupoId">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-3 col-form-label">SUBGRUPO</label>
+            <div class="col-9">
+                <input id="subgrupo" name="subgrupo" class="form-control" placeholder="Seleccione un subgrupo">
+                <input type="hidden" id="subgrupoId" name="subgrupoId">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-3 col-form-label">CLASIFICACIÓN</label>
+            <div class="col-9">
+                <input id="clasificacion" name="clasificacion" class="form-control" placeholder="Seleccione una clasificación">
+                <input type="hidden" id="clasificacionId" name="clasificacionId">
+            </div>
+        </div>
+
+
+    </form>
+
+    <div class="text-center mt-4">
+        <button type="button" class="btn btn-danger" id="agregarCategoria">Agregar</button>
+    </div>
+    <table class="table mt-4" id="tablaCategorias">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Grupo</th>
+                <th scope="col">Subgrupo</th>
+                <th scope="col">Clasificación</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+
+
+<div class="container mt-4">
+    <h3 class="text-center bg-danger text-white py-2">FICHA PERSONAL</h3>
+
+    <form id="personalForm" class="p-4 border">
+        <div class="form-group row">
+            <label class="col-3 col-form-label">NOMBRE(S)</label>
+            <div class="col-9">
+                <input name="Nombre" type="text" class="form-control" placeholder="Nombre(s)">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-3 col-form-label">APELLIDO PATERNO</label>
+            <div class="col-9">
+                <input name="ApellidoPaterno" type="text" class="form-control" placeholder="Apellido paterno">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-3 col-form-label">APELLIDO MATERNO</label>
+            <div class="col-9">
+                <input name="ApellidoMaterno" type="text" class="form-control" placeholder="Apellido materno">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-3 col-form-label">FOTO</label>
+            <div class="col-9">
+                <input name="Foto" type="file" class="form-control-file">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-3 col-form-label">CARGO ACTUAL</label>
+            <div class="col-9">
+                <input name="CargoActual" type="text" class="form-control" placeholder="Ingrese cargo actual">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-3 col-form-label">FECHA DE NACIMIENTO</label>
+            <div class="col-9">
+                <input name="FechaNacimiento" type="date" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-3 col-form-label">DOMICILIO LABORAL</label>
+            <div class="col-9">
+                <input name="DomicilioLaboral" type="text" class="form-control" placeholder="Ingrese domicilio laboral">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-3 col-form-label">DOMICILIO PARTICULAR</label>
+            <div class="col-9">
+                <input name="DomicilioParticular" type="text" class="form-control" placeholder="Ingrese domicilio particular">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-3 col-form-label">TELÉFONO LABORAL</label>
+            <div class="col-9">
+                <input name="TelefonoLaboral" type="tel" class="form-control" placeholder="Ingrese teléfono laboral">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-3 col-form-label">TELÉFONO PERSONAL</label>
+            <div class="col-9">
+                <input name="TelefonoPersonal" type="tel" class="form-control" placeholder="Ingrese teléfono personal">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-3 col-form-label">CORREO ELECTRÓNICO</label>
+            <div class="col-9">
+                <input name="CorreoElectronico" type="email" class="form-control" placeholder="Ingrese correo electrónico">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-3 col-form-label">REDES SOCIALES</label>
+            <div class="col-9">
+                <input name="RedesSociales" type="text" class="form-control" placeholder="Ingrese redes sociales">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-3 col-form-label">PÁGINA WEB</label>
+            <div class="col-9">
+                <input name="PaginaWeb" type="url" class="form-control" placeholder="Ingrese página web">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-3 col-form-label">AFINIDAD</label>
+            <div class="col-9">
+                <input name="Afinidad" type="text" class="form-control" placeholder="Ingrese afinidad">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-3 col-form-label">COMPROMISO</label>
+            <div class="col-9">
+                <input name="Compromiso" type="text" class="form-control" placeholder="Ingrese compromiso">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-3 col-form-label">COMENTARIOS</label>
+            <div class="col-9">
+                <textarea name="Comentarios" class="form-control" placeholder="Ingrese comentarios"></textarea>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="button" class="btn btn-danger" id="submitButton">Guardar</button>
+        </div>
+    </form>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#submitButton').on('click', function (e) {
+            e.preventDefault();
+
+            var formData = $('#personalForm').serializeArray();
+
+            var categorias = [];
+            $('#tablaCategorias tbody tr').each(function () {
+                var grupoId = $(this).data('grupoid');
+                var idSubGrupo = $(this).data('subgrupoid');
+                var idCategoria = $(this).data('clasificacionid');
+                var idSubcategoria = $(this).data('subcategoriaid');
+
+                categorias.push({
+                    IdGrupo: grupoId,
+                    IdSubGrupo: idSubGrupo,
+                    IdCategoria: idCategoria,
+                    IdSubcategoria: idSubcategoria 
+                });
+            });
+
+            formData.push({ name: 'categoriasJson', value: JSON.stringify(categorias) });
+
+            $.ajax({
+                url: '/Actor/Create',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    alert('Actor creado exitosamente!');
+                    //Limpiar formulatio
+                    // $('#personalForm')[0].reset();
+                },
+                error: function (xhr, status, error) {
+                    alert('Ocurrió un error: ' + error);
+                }
+            });
+        });
+
+        $('#agregarCategoria').on('click', function (e) {
+            e.preventDefault();
+
+            // Captura los valores de los inputs y sus IDs
+            var grupo = $('#grupo').data('kendoDropDownList').text();
+            var grupoId = $('#grupo').data('kendoDropDownList').value(); // Obtener el valor correcto del kendoDropDownList
+            var subgrupo = $('#subgrupo').data('kendoDropDownList').text();
+            var subgrupoId = $('#subgrupo').data('kendoDropDownList').value();
+            var clasificacion = $('#clasificacion').data('kendoDropDownList').text();
+            var clasificacionId = $('#clasificacion').data('kendoDropDownList').value();
+
+            // Validar que los campos no estén vacíos antes de agregar
+            if (!grupoId || !subgrupoId || !clasificacionId) {
+                alert('Todos los campos deben estar llenos y seleccionados correctamente.');
+                return;
+            }
+
+            // Selecciona solo la última subcategoría agregada dinámicamente
+            var ultimaSubcategoria = $('.subcategoria-container input').last();
+            if (ultimaSubcategoria.data('kendoDropDownList') != null) {
+
+                var subcategoriaText = ultimaSubcategoria.data('kendoDropDownList').text();
+                var subcategoriaId = ultimaSubcategoria.data('kendoDropDownList').value();
+
+                // Evitar agregar subcategorías sin seleccionar
+                if (subcategoriaId) {
+                    // Agrega una nueva fila a la tabla con los IDs
+                    var nuevaFila = `
+                        <tr data-grupoid="${grupoId}" data-subgrupoid="${subgrupoId}" data-clasificacionid="${clasificacionId}" data-subcategoriaid="${subcategoriaId}">
+                            <td>${grupo}</td>
+                            <td>${subgrupo}</td>
+                            <td>${subcategoriaText}</td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm eliminarFila">Eliminar</button>
+                            </td>
+                        </tr>
+                    `;
+                    $('#tablaCategorias tbody').append(nuevaFila);
+                }
+            } else {
+                                // Agrega una nueva fila a la tabla con los IDs
+                var nuevaFila = `
+                    <tr data-grupoid="${grupoId}" data-subgrupoid="${subgrupoId}" data-clasificacionid="${clasificacionId}">
+                        <td>${grupo}</td>
+                        <td>${subgrupo}</td>
+                        <td>${clasificacion}</td>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-sm eliminarFila">Eliminar</button>
+                        </td>
+                    </tr>
+                `;
+                $('#tablaCategorias tbody').append(nuevaFila);
+            }
+            // Limpia los campos después de agregar la fila
+            $('#grupo').data('kendoDropDownList').value('');
+            $('#subgrupo').data('kendoDropDownList').value('');
+            $('#clasificacion').data('kendoDropDownList').value('');
+            $('#grupoId').val('');
+            $('#subgrupoId').val('');
+            $('#clasificacionId').val('');
+
+            // Elimina todas las subcategorías dinámicas después de agregar a la tabla
+            $('.subcategoria-container').remove();
+        });
+
+
+        $(document).on('click', '.eliminarFila', function () {
+            $(this).closest('tr').remove();
+        });
+
+        // Carga inicial de grupos
+        obtenerGrupos();
+    });
+
+    function obtenerGrupos() {
+        $.ajax({
+            url: '/Actor/ObtenerGrupos',
+            type: 'GET',
+            success: function (response) {
+                $("#grupo").kendoDropDownList({
+                    dataTextField: "nombre",
+                    dataValueField: "id",
+                    dataSource: response,
+                    optionLabel: "Seleccione un grupo",
+                    change: function (e) {
+                        var idGrupo = this.value();
+                        if (idGrupo) {
+                            obtenerSubGrupos(idGrupo);
+                        }
+                    }
+                });
+            },
+            error: function (xhr, status, error) {
+                console.log('Ocurrió un error: ' + error);
+            }
+        });
+    }
+
+    function obtenerSubGrupos(idGrupo) {
+        $.ajax({
+            url: '/Actor/ObtenerSubGrupos',
+            type: 'POST',
+            data: { idGrupo: idGrupo },
+            success: function (response) {
+                $("#subgrupo").kendoDropDownList({
+                    dataTextField: "nombre",
+                    dataValueField: "id",
+                    dataSource: response,
+                    optionLabel: "Seleccione un subgrupo",
+                    change: function (e) {
+                        var idSubGrupo = this.value();
+                        if (idSubGrupo) {
+                            obtenerCategoria(idSubGrupo);
+                        }
+                    }
+                });
+            },
+            error: function (xhr, status, error) {
+                console.log('Ocurrió un error: ' + error);
+            }
+        });
+    }
+
+    function obtenerCategoria(idSubGrupo) {
+        $.ajax({
+            url: '/Actor/ObtenerCategorias',
+            type: 'POST',
+            data: { idSubGrupo: idSubGrupo },
+            success: function (response) {
+                $("#clasificacion").kendoDropDownList({
+                    dataTextField: "descripcion",
+                    dataValueField: "idCategoria",
+                    dataSource: response,
+                    optionLabel: "Seleccione una clasificación",
+                    change: function (e) {
+                        var idSubCategoria = this.value();
+                        if (idSubCategoria) {
+                            obtenerSubCategoria(idSubCategoria);
+                        }
+                    }
+                });
+            },
+            error: function (xhr, status, error) {
+                console.log('Ocurrió un error: ' + error);
+            }   
+        });
+    }
+
+    function obtenerSubCategoria(idSubCategoria) {
+        $.ajax({
+            url: '/Actor/ObtenerSubCategorias',
+            type: 'POST',
+            data: { idCategoria: idSubCategoria },
+            success: function (response) {
+                if (response && response.length > 0) {
+                    var subCategoriaContainer = $('<div class="form-group row subcategoria-container">')
+                        .append('<label class="col-3 col-form-label">SUBCATEGORÍA</label>')
+                        .append('<div class="col-9"><input id="subcategoria' + idSubCategoria + '" name="subcategoria" class="form-control"></div>');
+
+                    $('#clasificacionForm').append(subCategoriaContainer);
+
+                    $("#subcategoria" + idSubCategoria).kendoDropDownList({
+                        dataTextField: "descripcion",
+                        dataValueField: "idCategoria",
+                        dataSource: response,
+                        optionLabel: "Seleccione una subcategoría",
+                        change: function (e) {
+                            var idSubCategoria = this.value();
+                            if (idSubCategoria) {
+                                obtenerSubCategoria(idSubCategoria);
+                            }
+                        }
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log('Ocurrió un error: ' + error);
+            }
+        });
+    }
+</script>

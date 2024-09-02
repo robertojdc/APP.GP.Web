@@ -7,11 +7,11 @@
     <link rel="icon" href="~/img/favicon.ico" type="image/x-icon">
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/lib/kendo/styles/material-lime.css" rel="stylesheet" />
+    <script src="~/js/popper.min.js"></script>
 </head>
 <body cz-shortcut-listen="true">
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Mi Sitio</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -21,18 +21,19 @@
                         <a class="nav-link active" aria-current="page" href="#">Inicio</a>
                     </li>
                     <li class="nav-item">
-                    <li><a href="../Home/Tablero" title="Tablero de actores" class="nav-link">Tablero de actores</a></li>
+                        <a href="../Home/Tablero" title="Tablero de actores" class="nav-link">Tablero de actores</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Precios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Deshabilitado</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="administracionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Administración
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="administracionDropdown">
+                            <li><a class="dropdown-item" href="../Actor/Select">Actores</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
         </nav>
-        <!-- /menu -->
     </header>
 
     <div class="container nav-header-container">
@@ -53,21 +54,25 @@
             .nav-header-container .col-auto {
                 margin-bottom: 15px;
                 width: 100%;
-            }z
+            }
+
+            z
             .accordion-menu {
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: center;
             }
+
             .nav-header-container .navbar-nav {
                 display: flex;
                 flex-wrap: wrap;
             }
-            .nav-header-container .navbar-nav li {
-                margin-bottom: 10px;
-                flex: 1 1 45%; /* Ocupa 45% del ancho disponible */
-                text-align: center;
-            }
+
+                .nav-header-container .navbar-nav li {
+                    margin-bottom: 10px;
+                    flex: 1 1 45%; /* Ocupa 45% del ancho disponible */
+                    text-align: center;
+                }
         }
 
     </style>
