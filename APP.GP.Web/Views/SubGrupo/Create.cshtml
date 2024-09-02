@@ -1,0 +1,45 @@
+﻿@model APP.GP.Web.Model.CatalogoSubGrupo
+
+@{
+    ViewData["Title"] = "Crear SubGrupo";
+}
+
+<h1>Crear SubGrupo</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="IdGrupo" class="control-label">Grupo</label>
+                <select asp-for="IdGrupo" class="form-control">
+                    <option value="0">-- SELECCIONA --</option>
+                    @foreach (var item in ViewBag.ListaGrupos)
+                    {
+                        <option value="@item.IdGrupo">@item.Nombre</option>
+                    }
+                </select>
+                <span asp-validation-for="IdGrupo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group text-center">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Regresar a Catálogo</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

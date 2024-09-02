@@ -17,21 +17,6 @@ public class GrupoService
         return response;
     }
 
-    //public async Task<List<Grupo>> GetCatalogoAsync(int idCatalogo)
-    //{
-    //    var response = await _httpClient.GetFromJsonAsync<List<Grupo>>($"/Actor/GetCatalogoAsync/{idCatalogo}");
-    //    return response;
-    //}
-
-    //public async Task<Resultado> AddActorAsync(Actor actor)
-    //{
-    //    var response = await _httpClient.PostAsJsonAsync("/Actor/AddActor", actor);
-    //    response.EnsureSuccessStatusCode();
-
-    //    var result = await response.Content.ReadFromJsonAsync<Resultado>();
-    //    return result;
-    //}
-
     public async Task<List<Categoria>> GetCategoriasAsync(int idSubGrupo)
     {
         var response = await _httpClient.GetFromJsonAsync<List<Categoria>>($"/Actor/GetCategorias/{idSubGrupo}");
@@ -42,5 +27,38 @@ public class GrupoService
     {
         var response = await _httpClient.GetFromJsonAsync<List<Categoria>>($"/Actor/GetSubCategorias/{idCategoria}");
         return response;
+    }
+
+    public async Task<List<CatalogoGrupo>> GetCatalogoGruposAsync()
+    {
+        var response  = await _httpClient.GetFromJsonAsync<List<CatalogoGrupo>>("/Grupo/GetGrupos");
+        return response;
+    }
+
+    public async Task<Resultado<CatalogoGrupo>> GetGrupoByIdAsync(int idGrupo)
+    {
+        var response = await _httpClient.GetFromJsonAsync<Resultado<CatalogoGrupo>>("/Grupo/GetGrupoById?idGrupo=" + idGrupo);
+        return response;
+    }
+
+    public async Task<Resultado> InsCatalogoGrupoAsync(CatalogoGrupo objeto)
+    {
+        var response = await _httpClient.PostAsJsonAsync<CatalogoGrupo>("/Grupo/AddGrupo", objeto);
+
+        return await response.Content.ReadFromJsonAsync<Resultado>();
+    }
+
+    public async Task<Resultado> UpdCatalogoGrupoAsync(CatalogoGrupo objeto)
+    {
+        var response = await _httpClient.PutAsJsonAsync<CatalogoGrupo>("/Grupo/UpdGrupo", objeto);
+
+        return await response.Content.ReadFromJsonAsync<Resultado>();
+    }
+
+    public async Task<Resultado> DelCatalogoGrupoAsync(int idGrupo)
+    {
+        var response = await _httpClient.DeleteAsync("/Grupo/DelGrupo?idGrupo=" + idGrupo);
+
+        return await response.Content.ReadFromJsonAsync<Resultado>();
     }
 }

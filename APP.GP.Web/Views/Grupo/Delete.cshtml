@@ -1,0 +1,45 @@
+﻿@model APP.GP.Web.Model.CatalogoGrupo
+
+@{
+    ViewData["Title"] = "Eliminar Grupo";
+}
+
+<h1>Eliminar Grupo</h1>
+
+<h3>¿Estás seguro que deseas eliminar el grupo?</h3>
+<div>
+    <hr />
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <dl class="row">
+                <dt class="col-2">
+                    Nombre
+                </dt>
+                <dd class="col-10">
+                    @Html.DisplayFor(model => model.Nombre)
+                </dd>
+            </dl>
+            <dl class="row">
+                <dt class="col-2">
+                    Estatus
+                </dt>
+                <dd class="col-10">
+                    @Html.DisplayFor(model => model.EstatusDescripcion)
+                </dd>
+            </dl>
+        </div>
+        <div class="col-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <form asp-action="Delete">
+                <input name="idGrupo" value="@Model.IdGrupo" type="hidden" />
+                <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+                <a asp-action="Index">Regresar</a>
+            </form>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<APP.GP.Web.Model.CatalogoSubGrupo>
+
+@{
+    ViewData["Title"] = "Catálogo de SubGrupos";
+}
+
+<h1>Catálogo de SubGrupos</h1>
+<hr/>
+<div class="row">
+    <div class="col-12" style="text-align:right;">
+        <a asp-action="Create" class="btn btn-primary">Nuevo</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Grupo
+                    </th>
+                    <th>
+                        SubGrupo
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NombreGrupo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Editar", "Edit", new { id = item.IdSubGrupo })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

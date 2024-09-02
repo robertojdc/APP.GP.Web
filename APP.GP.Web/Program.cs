@@ -27,6 +27,12 @@ builder.Services.AddHttpClient<GrupoService>((serviceProvider, client) =>
     client.BaseAddress = new Uri(apiSettings.BaseUrl);
 });
 
+builder.Services.AddHttpClient<SubGrupoService>((serviceProvider, client) =>
+{
+    var apiSettings = serviceProvider.GetRequiredService<IOptions<ApiSettings>>().Value;
+    client.BaseAddress = new Uri(apiSettings.BaseUrl);
+});
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -63,7 +69,9 @@ app.UseCookiePolicy();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Usuario}/{action=Login}/{id?}");
+    //pattern: "{controller=Usuario}/{action=Login}/{id?}");
+    pattern: "{controller=SubGrupo}/{action=Index}/{id?}");
+
 
 // Asegúrate de no mapear Razor Pages si las has deshabilitado
 // app.MapRazorPages();
