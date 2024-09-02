@@ -5,8 +5,6 @@ VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APP.GP.Web", "APP.GP.Web\APP.GP.Web.csproj", "{107999FD-7ABD-4E38-9C77-DC241D76494F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APP.GP.Api", "APP.GP.Api\APP.GP.Api.csproj", "{FCD1EFCD-3A45-4687-B334-DE67E04A1B8D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{107999FD-7ABD-4E38-9C77-DC241D76494F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{107999FD-7ABD-4E38-9C77-DC241D76494F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{107999FD-7ABD-4E38-9C77-DC241D76494F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FCD1EFCD-3A45-4687-B334-DE67E04A1B8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FCD1EFCD-3A45-4687-B334-DE67E04A1B8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FCD1EFCD-3A45-4687-B334-DE67E04A1B8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FCD1EFCD-3A45-4687-B334-DE67E04A1B8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
