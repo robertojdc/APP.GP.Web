@@ -1,0 +1,114 @@
+﻿@model APP.GP.Web.Model.Categoria
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Categoria</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+
+            <!-- Combo de grupos -->
+            <select id="grupoSelect" class="form-control mt-2">
+                <option value="">Seleccione un grupo</option>
+                @foreach (var grupo in (IEnumerable<APP.GP.Web.Model.Grupo>)ViewBag.Grupos)
+                {
+                    <option value="@grupo.Id">@grupo.Nombre</option>
+                }
+            </select>
+
+            <!-- Combo de subgrupos -->
+
+            <select id="subGrupoSelect" asp-for="IdSubGrupo" class="form-control">
+                <option value="">Seleccione un subgrupo</option>
+            </select>
+            <div class="form-group">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <input asp-for="Descripcion" class="form-control" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Evento change para el select de grupos
+        $('#grupoSelect').change(function () {
+            var grupoId = $(this).val();
+
+            // Verificar que se haya seleccionado un grupo
+            if (grupoId) {
+                // Llamada AJAX para obtener subgrupos
+                $.ajax({
+                    url: '@Url.Action("GetSubGrupos", "Categoria")', // Cambia "YourControllerName" por el nombre de tu controlador
+                    type: 'GET',
+                    data: { grupoId: grupoId },
+                    success: function (subGrupos) {
+                        // Limpiar el select de subgrupos
+                        var subGrupoSelect = $('#subGrupoSelect');
+                        subGrupoSelect.empty();
+                        subGrupoSelect.append('<option value="">Seleccione un subgrupo</option>');
+
+                        // Llenar el select de subgrupos con los datos recibidos
+                        $.each(subGrupos, function (index, subGrupo) {
+                            subGrupoSelect.append($('<option>', {
+                                value: subGrupo.id,
+                                text: subGrupo.nombre
+                            }));
+                        });
+                    },
+                    error: function () {
+                        alert('Error al obtener los subgrupos.');
+                    }
+                });
+            } else {
+                // Si no se seleccionó un grupo, limpiar el select de subgrupos
+                $('#subGrupoSelect').empty();
+                $('#subGrupoSelect').append('<option value="">Seleccione un subgrupo</option>');
+            }
+        });
+
+        $('#subGrupoSelect').change(function () {
+            var subGrupoId = $(this).val();
+            $.ajax({
+                url: '@Url.Action("GetCategorias", "Categoria")', // Cambia "YourControllerName" al nombre de tu controlador
+                type: 'GET',
+                data: { subGrupoId: subGrupoId },
+                success: function (data) {
+                    var tbody = $('#categoriaTableBody');
+                    tbody.empty(); // Limpiar el cuerpo de la tabla antes de llenarlo
+
+                    // Recorrer los datos obtenidos y crear filas para la tabla
+                    $.each(data, function (index, item) {
+                        var row = '<tr>' +
+                            '<td>' + item.idCategoria + '</td>' +
+                            '<td>' + item.descripcion + '</td>' +
+                            '<td>' +
+                            '<a href="/Edit/' + item.idCategoria + '">Edit</a> | ' +
+                            '<a href="/Delete/' + item.idCategoria + '">Delete</a>' +
+                            '</td>' +
+                            '</tr>';
+                        tbody.append(row); // Agregar la fila al cuerpo de la tabla
+                    });
+                },
+                error: function () {
+                    alert('Error al cargar las categorías.');
+                }
+            });
+        });
+    });
+</script>

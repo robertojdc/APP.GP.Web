@@ -69,8 +69,8 @@ app.UseCookiePolicy();
 
 app.MapControllerRoute(
     name: "default",
-    //pattern: "{controller=Usuario}/{action=Login}/{id?}");
-    pattern: "{controller=SubGrupo}/{action=Index}/{id?}");
+    pattern: "{controller=Usuario}/{action=Login}/{id?}");
+    //pattern: "{controller=SubGrupo}/{action=Index}/{id?}");
 
 
 // Asegúrate de no mapear Razor Pages si las has deshabilitado

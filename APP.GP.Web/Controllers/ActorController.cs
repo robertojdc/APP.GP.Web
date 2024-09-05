@@ -40,10 +40,45 @@ public class ActorController : Controller
 
     public async Task<IActionResult> Create([FromForm] Actor actor, string categoriasJson)
     {
+        // Deserializar las categorías
         var categorias = JsonConvert.DeserializeObject<List<Categoria>>(categoriasJson);
         actor.SubCategorias = categorias;
+
+        // Manejar el archivo de foto si existe
+        if (actor.Foto != null && actor.Foto.Length > 0)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                // Copia el contenido del archivo al MemoryStream
+                await actor.Foto.CopyToAsync(memoryStream);
+
+                // Convierte el contenido del archivo a un arreglo de bytes
+                byte[] fileBytes = memoryStream.ToArray();
+
+                // Convierte el arreglo de bytes a una cadena Base64
+                actor.FotoBase64 = Convert.ToBase64String(fileBytes);
+            }
+        }
+
+        // Llama al servicio para guardar el actor con la imagen en Base64
         var resultado = await _grupoService.AddActorAsync(actor);
+
+        // Retorna la respuesta según el resultado
         return Ok();
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Details([FromQuery]int idActor)
+    {
+        var actor = await _grupoService.GetActorByIdAsync(idActor);
+
+        if (actor == null)
+        {
+            return NotFound(); // Manejo en caso de que no se encuentre el actor
+        }
+
+        // Devuelve la vista Details pasando el actor como modelo
+        return View(actor);
     }
 
     public async Task<IActionResult> ObtenerGrupos()

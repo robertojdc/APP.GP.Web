@@ -108,11 +108,13 @@
                             }
                         ],
                         dataBound: function (e) {
-                            // Asignar eventos click a los botones dentro del grid
                             e.sender.tbody.find(".btn-ver-detalle").on("click", function (ev) {
                                 ev.preventDefault();
+                              
                                 var dataItem = e.sender.dataItem($(this).closest("tr"));
-                                alert("Ver detalles de: " + dataItem.idActor);
+                                console.log("idActor:", dataItem.idActor);
+                                // Redirige a la acción Details del controlador Actor pasando el idActor
+                                window.location.href = `/Actor/Details?idActor=${dataItem.idActor}`;
                             });
 
                             e.sender.tbody.find(".btn-eliminar").on("click", function (ev) {

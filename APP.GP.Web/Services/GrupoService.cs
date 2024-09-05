@@ -1,5 +1,8 @@
 ﻿using APP.GP.Web.Model;
 using APP.GP.Web.Model.Filtros;
+using Newtonsoft.Json;
+using System.Net.Http.Json;
+using System.Text;
 
 namespace APP.GP.Web.Services;
 
@@ -30,24 +33,58 @@ public class GrupoService
         return response;
     }
 
-    public async Task<Resultado> AddActorAsync(Actor actor)
+    public async Task<HttpResponseMessage> AddActorAsync(Actor actor)
     {
-        var response = await _httpClient.PostAsJsonAsync("/Actor/AddActor", actor);
-        response.EnsureSuccessStatusCode();
+       
+        try
+        {
+            var json = JsonConvert.SerializeObject(actor);
 
-        var result = await response.Content.ReadFromJsonAsync<Resultado>();
-        return result;
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+            var response = await _httpClient.PostAsJsonAsync("/Actor/AddActor", actor);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Error en la solicitud: {errorContent}");
+            }
+
+            return response;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Excepción durante el envío: {ex.Message}");
+            throw;
+        }
+    }
+
+    public async Task<Actor> GetActorByIdAsync(int idActor)
+    {
+        try
+        {
+            var response = await _httpClient.GetFromJsonAsync<Resultado<Actor>>($"/Actor/GetActorById/{idActor}");
+
+            return response.Objeto;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al obtener el actor: {ex.Message}");
+            throw;
+        }
     }
 
     public async Task<List<Categoria>> GetCategoriasAsync(int idSubGrupo)
     {
-        var response = await _httpClient.GetFromJsonAsync<List<Categoria>>($"/Actor/GetCategorias/{idSubGrupo}");
+        var response = await _httpClient.GetFromJsonAsync<List<Categoria>>($"/Categoria/GetCategorias/{idSubGrupo}");
         return response;
     }
 
     public async Task<List<Categoria>> GetSubCategoriasAsync(int idCategoria)
     {
-        var response = await _httpClient.GetFromJsonAsync<List<Categoria>>($"/Actor/GetSubCategorias/{idCategoria}");
+        var response = await _httpClient.GetFromJsonAsync<List<Categoria>>($"/Categoria/GetSubCategorias/{idCategoria}");
         return response;
     }
 
@@ -56,7 +93,7 @@ public class GrupoService
         var response  = await _httpClient.GetFromJsonAsync<List<CatalogoGrupo>>("/Grupo/GetGrupos");
         return response;
     }
-
+    
     public async Task<Resultado<CatalogoGrupo>> GetGrupoByIdAsync(int idGrupo)
     {
         var response = await _httpClient.GetFromJsonAsync<Resultado<CatalogoGrupo>>("/Grupo/GetGrupoById?idGrupo=" + idGrupo);
@@ -109,6 +146,36 @@ public class GrupoService
     public async Task<Resultado> DelCatalogoGrupoAsync(int idGrupo)
     {
         var response = await _httpClient.DeleteAsync("/Grupo/DelGrupo?idGrupo=" + idGrupo);
+
+        return await response.Content.ReadFromJsonAsync<Resultado>();
+    }
+
+    public async Task<Resultado> InsCatalogoCategoria(Categoria categoria)
+    {
+        var response = await _httpClient.PostAsJsonAsync<Categoria>("/Categoria/AddCategoria", categoria);
+
+        return await response.Content.ReadFromJsonAsync<Resultado>();
+    }
+
+    // GetCategoriaByIdAsync
+    public async Task<Categoria> GetCategoriaByIdAsync(int idCat)
+    {
+        var response = await _httpClient.GetFromJsonAsync<Categoria>($"/Categoria/GetCategoriaById/{idCat}");
+        return response;
+    }
+
+    //Actualizar categoiria
+    public async Task<Resultado> UpdCatalogoCategoriaAsync(Categoria categoria)
+    {
+        var response = await _httpClient.PostAsJsonAsync<Categoria>("/Categoria/UpdCategoria", categoria);
+
+        return await response.Content.ReadFromJsonAsync<Resultado>();
+    }
+
+    //Borrar categoria
+    public async Task<Resultado> DelCatalogoCategoriaAsync(Categoria categoria)
+    {
+        var response = await _httpClient.PostAsJsonAsync<Categoria>("/Categoria/DelCategoria", categoria);
 
         return await response.Content.ReadFromJsonAsync<Resultado>();
     }

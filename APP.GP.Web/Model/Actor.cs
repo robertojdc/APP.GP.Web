@@ -45,7 +45,8 @@ public class Actor
 
     public string? Comentarios { get; set; }
 
-    public string? Foto { get; set; }
+    public IFormFile? Foto { get; set; }
+    public string? FotoBase64 { get; set; }
 
     public List<Categoria> SubCategorias { get; set; }
 }

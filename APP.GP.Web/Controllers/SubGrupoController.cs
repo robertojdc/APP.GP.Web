@@ -98,5 +98,32 @@ namespace APP.GP.Web.Controllers
                 return View();
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var categoria = await _subGrupoService.GetSubGrupoByIdAsync(id);
+            return View(categoria.Objeto);
+        }
+
+        //Borrar subgrupo
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id, IFormCollection collection)
+        {
+            try
+            {
+                Resultado resultado = await _subGrupoService.DelSubGrupoAsync(new CatalogoSubGrupo { IdSubGrupo = id});
+
+                if (resultado.ProcesoExitoso == 0)
+                    throw new ArgumentException(resultado.Mensaje);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("error", ex.Message);
+                return View();
+            }
+        }
     }
 }

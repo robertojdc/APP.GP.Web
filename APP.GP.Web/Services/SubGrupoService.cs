@@ -37,5 +37,11 @@ namespace APP.GP.Web.Services
             return await response.Content.ReadFromJsonAsync<Resultado>();
         }
 
+        public async Task<Resultado> DelSubGrupoAsync(CatalogoSubGrupo c)
+        {
+            var response = await _httpClient.PostAsJsonAsync("/SubGrupo/DelSubGrupo", c);
+
+            return await response.Content.ReadFromJsonAsync<Resultado>();
+        }
     }
 }

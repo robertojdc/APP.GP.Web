@@ -50,7 +50,7 @@
 <div class="container mt-4">
     <h3 class="text-center bg-danger text-white py-2">FICHA PERSONAL</h3>
 
-    <form id="personalForm" class="p-4 border">
+    <form id="personalForm" class="p-4 border" enctype="multipart/form-data">
         <div class="form-group row">
             <label class="col-3 col-form-label">NOMBRE(S)</label>
             <div class="col-9">
@@ -179,8 +179,10 @@
         $('#submitButton').on('click', function (e) {
             e.preventDefault();
 
-            var formData = $('#personalForm').serializeArray();
+            // Crear un objeto FormData y agregar los datos del formulario
+            var formData = new FormData($('#personalForm')[0]);
 
+            // Recoger las categorías de la tabla
             var categorias = [];
             $('#tablaCategorias tbody tr').each(function () {
                 var grupoId = $(this).data('grupoid');
@@ -192,26 +194,30 @@
                     IdGrupo: grupoId,
                     IdSubGrupo: idSubGrupo,
                     IdCategoria: idCategoria,
-                    IdSubcategoria: idSubcategoria 
+                    IdSubcategoria: idSubcategoria
                 });
             });
 
-            formData.push({ name: 'categoriasJson', value: JSON.stringify(categorias) });
+            // Agregar las categorías al FormData
+            formData.append('categoriasJson', JSON.stringify(categorias));
 
+            // Realizar la solicitud AJAX
             $.ajax({
                 url: '/Actor/Create',
                 type: 'POST',
                 data: formData,
+                contentType: false, // Importante para enviar los archivos
+                processData: false, // Evita que jQuery procese el FormData
                 success: function (response) {
                     alert('Actor creado exitosamente!');
-                    //Limpiar formulatio
-                    // $('#personalForm')[0].reset();
+                    // Limpiar formulario
+                    $('#personalForm')[0].reset();
                 },
                 error: function (xhr, status, error) {
                     alert('Ocurrió un error: ' + error);
                 }
             });
-        });
+        }); 
 
         $('#agregarCategoria').on('click', function (e) {
             e.preventDefault();
