@@ -9,115 +9,155 @@
     </script>
     <style>
         body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-}
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
 
-.background {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #79211F;
-    background-image: url('/img/login.png'); /* Ruta de la imagen de fondo */
-    background-size: cover; /* Asegura que la imagen cubra toda el área */
-    background-position: center;
-    background-repeat: no-repeat;
-}
+        .background {
+            height: 100%;
+            min-height: 700px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #79211F;
+            /* background-image: url('/img/login.png'); */
+            background-size: 70% auto;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            position: relative;
+        }
 
-.login-container {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100%;
-    padding: 20px;
-}
+        .imgFondoSmall {
+            display: none; /* Oculta la imagen de fondo pequeña por defecto */
+        }
 
-.login-form {
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
-}
+        .login-container {
+            display: flex;
+            justify-content: center; /* Centra el formulario */
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+            margin-left: 200px;
+        }
 
-.login-form h2 {
-    margin-bottom: 20px;
-    color: white;
-    font-size: 1.8rem;
-}
+        .login-form {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
 
-.login-form .form-control {
-    background-color: rgba(255, 255, 255, 0.2);
-    border: none;
-    color: white;
-    padding: 10px;
-}
+            .login-form h2 {
+                margin-bottom: 20px;
+                color: white;
+                font-size: 1.8rem;
+            }
 
-.login-form .form-control::placeholder {
-    color: rgba(255, 255, 255, 0.7);
-}
+            .login-form .form-control {
+                background-color: rgba(255, 255, 255, 0.2);
+                border: none;
+                color: white;
+                padding: 10px;
+            }
 
-.login-form .btn {
-    background-color: #E1563F;
-    border: none;
-    width: 100%;
-    padding: 10px;
-    color: white;
-    font-size: 18px;
-    border-radius: 5px;
-}
+                .login-form .form-control::placeholder {
+                    color: rgba(255, 255, 255, 0.7);
+                }
 
-.login-form .btn:hover {
-    background-color: #D14533;
-}
+            .login-form .btn {
+                background-color: #811C26;
+                border: none;
+                width: 100%;
+                padding: 10px;
+                color: white;
+                font-size: 18px;
+                border-radius: 5px;
+            }
 
-/* Media Queries para pantallas más pequeñas */
-@@media (max-width: 768px) {
-    .login-container {
-        justify-content: center; /* Centra el formulario en pantallas más pequeñas */
-        padding: 10px;
-    }
+                .login-form .btn:hover {
+                    background-color: #D14533;
+                }
 
-    .login-form {
-        max-width: 90%; /* Más pequeño para pantallas móviles */
-        padding: 20px; /* Reducir el relleno en pantallas más pequeñas */
-    }
+        /* Media queries para pantallas pequeñas */
+        @@media (max-width: 768px) {
+            .background {
+                background-image: none; /* Oculta la imagen de fondo grande */
+                background-color: transparent; /* Elimina el color de fondo */
+            }
 
-    .login-form h2 {
-        font-size: 1.5rem; /* Reducir tamaño de la fuente */
-    }
-}
+            .login-container {
+                margin-left: 0; /* Ajusta el margen para centrar mejor en pantallas pequeñas */
+            }
 
-@@media (max-width: 576px) {
-    .login-container {
-        padding: 10px;
-    }
+            .login-form h2 {
+                color: #93444E;
+            }
+            .login-form .form-control {
+                background-color: rgba(255, 255, 255, 0.2);
+                border: 1px solid #811C26; /* Añade un borde visible */
+                color: white;
+                padding: 10px;
+                border-radius: 5px; /* Añade un ligero redondeo a los bordes */
+                transition: border-color 0.3s ease; /* Transición suave para cambios en el borde */
+            }
+            .imgFondoSmall {
+                display: block; /* Muestra la imagen de fondo pequeña */
+                position: absolute;
+                top: 0; /* Posiciona la imagen en la parte superior de la pantalla */
+                left: 0;
+                width: 100%;
+                height: auto; /* Ajusta la altura automáticamente */
+                object-fit: contain; /* Asegura que la imagen se mantenga escalada correctamente */
+                z-index: -1; /* Coloca la imagen detrás del formulario */
+            }
+        }
 
-    .login-form {
-        max-width: 100%; /* Para pantallas muy pequeñas, usa todo el ancho */
-        padding: 15px; /* Aún más reducido el padding */
-    }
+        @@media (max-width: 576px) {
+            .background {
+                background-image: none; /* Oculta la imagen de fondo */
+                background-color: transparent; /* Elimina el color de fondo */
+            }
 
-    .login-form h2 {
-        font-size: 1.3rem;
-    }
+            .login-container {
+                margin-left: 0;
+                
+            }
 
-    .login-form .btn {
-        font-size: 16px;
-    }
-}
+            .login-form h2 {
+                color: #93444E;
+            }
+            .login-form .form-control {
+                background-color: rgba(255, 255, 255, 0.2);
+                border: 1px solid #811C26; /* Añade un borde visible */
+                color: white;
+                padding: 10px;
+                border-radius: 5px; /* Añade un ligero redondeo a los bordes */
+                transition: border-color 0.3s ease; /* Transición suave para cambios en el borde */
+            }
+            .imgFondoSmall {
+                display: block;
+                position: absolute;
+                top: -50pt; /* Posiciona la imagen en la parte superior de la pantalla */
+                left: 0;
+                width: 100%;
+                height: auto;
+                object-fit: contain;
+                z-index: -1;
+            }
+        }
 
-        
     </style>
 </head>
 <body>
     <div class="background">
+        @* <img src="/img/fondo.jpg" class="imgFondoSmall" alt="Imagen de fondo" /> *@
         <div class="login-container">
             <form class="login-form" action="/Usuario/Validate" method="post">
                 <h2 class="text-center">Inicio de Sesión</h2>
@@ -127,7 +167,7 @@
                 <div class="mb-3">
                     <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña">
                 </div>
-                <button type="submit" class="btn btn-primary">Entrar</button>
+                <button type="submit" class="btn">Entrar</button>
             </form>
         </div>
     </div>

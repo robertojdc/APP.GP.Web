@@ -34,8 +34,6 @@ public class Actor
     [EmailAddress]
     public string? CorreoElectronico { get; set; }
 
-    public string? RedesSociales { get; set; }
-
     [Url]
     public string? PaginaWeb { get; set; }
 
@@ -49,4 +47,7 @@ public class Actor
     public string? FotoBase64 { get; set; }
 
     public List<Categoria> SubCategorias { get; set; }
+    public string? inputRedSocial { get; set; }
+    public List<string>? RedesSociales { get; set; }
+    public string? Grupos { get; set; }
 }

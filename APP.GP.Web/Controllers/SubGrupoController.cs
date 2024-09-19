@@ -59,7 +59,7 @@ namespace APP.GP.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            try 
+            try
             {
                 Resultado<CatalogoSubGrupo> resultado = await _subGrupoService.GetSubGrupoByIdAsync(id);
 
@@ -112,7 +112,7 @@ namespace APP.GP.Web.Controllers
         {
             try
             {
-                Resultado resultado = await _subGrupoService.DelSubGrupoAsync(new CatalogoSubGrupo { IdSubGrupo = id});
+                Resultado resultado = await _subGrupoService.DelSubGrupoAsync(new CatalogoSubGrupo { IdSubGrupo = id });
 
                 if (resultado.ProcesoExitoso == 0)
                     throw new ArgumentException(resultado.Mensaje);

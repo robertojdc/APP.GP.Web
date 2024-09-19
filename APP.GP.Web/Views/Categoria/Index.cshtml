@@ -1,66 +1,236 @@
 ﻿@model APP.GP.Web.Model.Categoria
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Búsqueda de Actores";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div class="container-fluid py-4">
+    <div class="card shadow-sm mb-4">
+        <div class="card-header text-white text-center">
+            <h3 class="mb-0">ADMINISTRACIÓN DE CATEGORIAS</h3>
+        </div>
+        <div class="card-body bg-light">
+            <form id="consultaForm" class="row g-3">
+                <div class="col-md-6 col-lg-4">
+                    <label for="grupoSelect" class="form-label">GRUPO</label>
+                    <select id="grupoSelect" asp-for="IdSubGrupo" class="form-control">
+                        <option value="">Seleccione un grupo</option>
+                        @foreach (var grupo in (IEnumerable<APP.GP.Web.Model.Grupo>)ViewBag.Grupos)
+                        {
+                            <option value="@grupo.Id">@grupo.Nombre</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <label for="subGrupoSelect" class="form-label">SUBGRUPO</label>
+                    <select id="subGrupoSelect" class="form-control">
+                        <option value="">Seleccione un subgrupo</option>
+                    </select>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between align-items-center mb-1">
+        <button type="button" class="btn btn-outline-secondary ms-auto" id="crearNuevo">Agregar</button>
+    </div>
+    <div class="card-header text-white text-center">
+        <h3 class="mb-0">RESULTADOS</h3>
+    </div>
+    <div class="table-responsive mb-4">
+        <div id="gridCategoria"></div>
+    </div>
+</div>
 
-<!-- Combo de grupos -->
-<select id="grupoSelect" asp-for="IdSubGrupo" class="form-control">
-    <option value="">Seleccione un grupo</option>
-    @foreach (var grupo in (IEnumerable<APP.GP.Web.Model.Grupo>)ViewBag.Grupos)
-    {
-        <option value="@grupo.Id">@grupo.Nombre</option>
+<div id="window" style="display:none;">
+    <form asp-action="Create" id="frmCreate">
+        <div class="row">
+            <div class="col-md-12">
+
+                <label class="control-label">Grupo</label>
+                <select id="grupoSelectAdd" class="form-control mt-2">
+                    <option value="">Seleccione un grupo</option>
+                    @foreach (var grupo in (IEnumerable<APP.GP.Web.Model.Grupo>)ViewBag.Grupos)
+                    {
+                        <option value="@grupo.Id">@grupo.Nombre</option>
+                    }
+                </select>
+                <label class="control-label">Subgrupo</label>
+                <select id="subGrupoSelectAdd" asp-for="IdSubGrupo" class="form-control">
+                    <option value="">Seleccione un subgrupo</option>
+                </select>
+                <div class="form-group">
+                    <label asp-for="Descripcion" class="control-label"></label>
+                    <input asp-for="Descripcion" class="form-control" />
+                    <span asp-validation-for="Descripcion" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="button" id="btnCreate" value="Create" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="windowSubCategoria" style="display:none;">
+    <form asp-action="Create" id="frmCreate">
+        <div class="row">
+            <div class="col-md-12">
+                <input type="hidden" id="hidIdGrupo" />
+                <input type="hidden" id="hidIdSubGrupo" />
+                <input type="hidden" id="hidIdCategoria" />
+                <label class="control-label">Grupo</label>
+                <select id="grupoSelectIns" class="form-control mt-2">
+                    <option value="">Seleccione un grupo</option>
+                    @foreach (var grupo in (IEnumerable<APP.GP.Web.Model.Grupo>)ViewBag.Grupos)
+                    {
+                        <option value="@grupo.Id">@grupo.Nombre</option>
+                    }
+                </select>
+                <label class="control-label">Subgrupo</label>
+                <select id="subGrupoSelectIns" asp-for="IdSubGrupo" class="form-control">
+                    <option value="">Seleccione un subgrupo</option>
+                </select>
+                <label class="control-label">Categoria</label>
+                <select id="categoriaSelectIns" asp-for="IdCategoria" class="form-control">
+                    <option value="">Seleccione la categoria</option>
+                </select>
+                <div class="form-group">
+                    <label asp-for="Descripcion" class="control-label"></label>
+                    <input type="text" class="form-control" id="DescripcionIns" />
+                </div>
+                <div class="form-group">
+                    <input type="button" id="btnCreateCategoria" value="Create" class="btn btn-primary" />
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+<div id="editWindow" style="display:none;">
+    <label for="editDescripcion">Descripción:</label>
+    <input type="text" id="editDescripcion" name="descripcion" class="k-textbox form-control" style="width: 100%" />
+    <br />
+    <button id="btnGuardar" class="btn btn-outline-secondary ms-auto">Guardar</button>
+</div>
+<style>
+    :root {
+        --color-primary: #9F2241;
+        --color-secondary: #235B4E;
+        --color-accent: #DDC9A3;
+        --color-gray: #98989A;
+        --color-background: #F5F5F5;
     }
-</select>
 
-<!-- Combo de subgrupos -->
-<select id="subGrupoSelect" class="form-control mt-2">
-    <option value="">Seleccione un subgrupo</option>
-</select>
+    body {
+        background-color: var(--color-background);
+    }
 
+    .card-header {
+        background-color: var(--color-primary);
+        border-bottom: 2px solid var(--color-secondary);
+    }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.IdCategoria)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody id="categoriaTableBody">
-        <!-- Las filas se llenarán dinámicamente con JavaScript -->
-    </tbody>
-</table>
+    .btn-danger {
+        background-color: var(--color-primary);
+        border-color: var(--color-primary);
+        color: white;
+    }
+
+        .btn-danger:hover {
+            background-color: #691C32;
+            border-color: #691C32;
+        }
+
+    .btn-outline-secondary {
+        border-color: var(--color-secondary);
+        color: var(--color-secondary);
+    }
+
+        .btn-outline-secondary:hover {
+            background-color: var(--color-secondary);
+            color: white;
+        }
+
+    .k-icon-32 {
+        font-size: 14pt;
+    }
+</style>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        // Evento change para el select de grupos
+        $("#btnCreate").click(function () {
+            $.ajax({
+                url: '@Url.Action("Create", "Categoria")',
+                type: "POST",
+                data: {
+                    idSubGrupo: $("#subGrupoSelectAdd").val(),
+                    descripcion: $("#Descripcion").val()
+                },
+                success: function (response) {
+                    if (response.procesoExitoso > 0) {
+                        $("#window").data("kendoWindow").close();
+                        MensajeExito("Categoría creada correctamente.");
+                        ObtenerCategorias($("#subGrupoSelectAdd").val());
+                    }
+                },
+                error: function (error) {
+                    MensajeError("Error al crear la categoría.");
+                }
+            });
+        });
+        $("#btnCreateCategoria").click(function () {
+            agregarSubcategoria();
+        });
+        $("#grupoSelect").kendoDropDownList();
         $('#grupoSelect').change(function () {
             var grupoId = $(this).val();
-
-            // Verificar que se haya seleccionado un grupo
             if (grupoId) {
-                // Llamada AJAX para obtener subgrupos
                 $.ajax({
-                    url: '@Url.Action("GetSubGrupos", "Categoria")', // Cambia "YourControllerName" por el nombre de tu controlador
+                    url: '@Url.Action("GetSubGrupos", "Categoria")',
                     type: 'GET',
                     data: { grupoId: grupoId },
                     success: function (subGrupos) {
-                        // Limpiar el select de subgrupos
                         var subGrupoSelect = $('#subGrupoSelect');
                         subGrupoSelect.empty();
                         subGrupoSelect.append('<option value="">Seleccione un subgrupo</option>');
+                        $.each(subGrupos, function (index, subGrupo) {
+                            subGrupoSelect.append($('<option>', {
+                                value: subGrupo.id,
+                                text: subGrupo.nombre
+                            }));
+                        });
+                        $("#subGrupoSelect").kendoDropDownList();
+                    },
+                    error: function () {
+                        alert('Error al obtener los subgrupos.');
+                    }
+                });
+            } else {
+                $('#subGrupoSelect').empty();
+                $('#subGrupoSelect').append('<option value="">Seleccione un subgrupo</option>');
+            }
+        });
 
-                        // Llenar el select de subgrupos con los datos recibidos
+        $('#subGrupoSelect').change(function () {
+            var subGrupoId = $(this).val();
+            ObtenerCategorias(subGrupoId);
+        });
+
+        $('#grupoSelectAdd').change(function () {
+            var grupoId = $(this).val();
+            if (grupoId) {
+                $.ajax({
+                    url: '@Url.Action("GetSubGrupos", "Categoria")',
+                    type: 'GET',
+                    data: { grupoId: grupoId },
+                    success: function (subGrupos) {
+                        var subGrupoSelect = $('#subGrupoSelectAdd');
+                        subGrupoSelect.empty();
+                        subGrupoSelect.append('<option value="">Seleccione un subgrupo</option>');
                         $.each(subGrupos, function (index, subGrupo) {
                             subGrupoSelect.append($('<option>', {
                                 value: subGrupo.id,
@@ -73,33 +243,81 @@
                     }
                 });
             } else {
-                // Si no se seleccionó un grupo, limpiar el select de subgrupos
-                $('#subGrupoSelect').empty();
-                $('#subGrupoSelect').append('<option value="">Seleccione un subgrupo</option>');
+                $('#subGrupoSelectAdd').empty();
+                $('#subGrupoSelectAdd').append('<option value="">Seleccione un subgrupo</option>');
             }
         });
 
-        $('#subGrupoSelect').change(function () {
+        $('#grupoSelectIns').change(function () {
+            var grupoId = $("#grupoSelectIns").val();
+            if (grupoId) {
+                $.ajax({
+                    url: '@Url.Action("GetSubGrupos", "Categoria")',
+                    type: 'GET',
+                    data: { grupoId: grupoId },
+                    success: function (subGrupos) {
+                        var subGrupoSelect = $('#subGrupoSelectIns');
+                        subGrupoSelect.empty();
+                        subGrupoSelect.append('<option value="">Seleccione un subgrupo</option>');
+                        $.each(subGrupos, function (index, subGrupo) {
+                            subGrupoSelect.append($('<option>', {
+                                value: subGrupo.id,
+                                text: subGrupo.nombre
+                            }));
+                        });
+                        $('#subGrupoSelectIns').val($("#hidIdSubGrupo").val());
+                        $('#subGrupoSelectIns').change();
+                    },
+                    error: function () {
+                        alert('Error al obtener los subgrupos.');
+                    }
+                });
+            } else {
+                $('#subGrupoSelectAdd').empty();
+                $('#subGrupoSelectAdd').append('<option value="">Seleccione un subgrupo</option>');
+            }
+        });
+
+        $('#subGrupoSelectIns').change(function () {
+            $.ajax({
+                url: '@Url.Action("GetCategorias", "Categoria")',
+                type: 'GET',
+                data: { subGrupoId: $("#hidIdSubGrupo").val() },
+                success: function (subGrupos) {
+                    var subGrupoSelect = $('#categoriaSelectIns');
+                    subGrupoSelect.empty();
+                    subGrupoSelect.append('<option value="">Seleccione un subgrupo</option>');
+                    $.each(subGrupos, function (index, subGrupo) {
+                        subGrupoSelect.append($('<option>', {
+                            value: subGrupo.idCategoria,
+                            text: subGrupo.descripcion
+                        }));
+                    });
+                    $('#categoriaSelectIns').val($("#hidIdCategoria").val());
+
+                },
+                error: function () {
+                    alert('Error al obtener los subgrupos.');
+                }
+            });
+
+        });
+
+        $('#subGrupoSelectAdd').change(function () {
             var subGrupoId = $(this).val();
             $.ajax({
-                url: '@Url.Action("GetCategorias", "Categoria")', // Ajusta el nombre del controlador según sea necesario
+                url: '@Url.Action("GetCategorias", "Categoria")',
                 type: 'GET',
                 data: { subGrupoId: subGrupoId },
                 success: function (data) {
-                    var tbody = $('#categoriaTableBody');
-                    tbody.empty(); // Limpiar el cuerpo de la tabla antes de llenarlo
-
-                    // Recorrer los datos obtenidos y crear filas para la tabla
-                    $.each(data, function (index, item) {
-                        var row = '<tr>' +
-                            '<td>' + item.idCategoria + '</td>' +
-                            '<td>' + item.descripcion + '</td>' +
-                            '<td>' +
-                            '<a href="@Url.Action("Edit", "Categoria")/' + item.idCategoria + '">Edit</a> | ' +
-                            '<a href="@Url.Action("Delete", "Categoria")/' + item.idCategoria + '">Delete</a>' +
-                            '</td>' +
-                            '</tr>';
-                        tbody.append(row); // Agregar la fila al cuerpo de la tabla
+                    var subGrupoSelect = $('#categoriaSelectAdd');
+                    subGrupoSelect.empty();
+                    subGrupoSelect.append('<option value="">Seleccione una categoría</option>');
+                    $.each(subGrupos, function (index, subGrupo) {
+                        subGrupoSelect.append($('<option>', {
+                            value: subGrupo.id,
+                            text: subGrupo.nombre
+                        }));
                     });
                 },
                 error: function () {
@@ -108,4 +326,191 @@
             });
         });
     });
+
+    function detailInit(e) {
+        $("<div/>").appendTo(e.detailCell).kendoGrid({
+            dataSource: {
+                data: e.data.subCategorias,
+                pageSize: 10
+            },
+            scrollable: false,
+            detailInit: detailInit,
+            columns: [
+                { field: "descripcion", title: "Descripción", width: "85%" },
+                {
+                    title: "Acciones",
+                    width: "15%",
+                    template: `
+                                <button class="k-button btn-editar" title="Editar">
+                                    <span class="k-icon k-font-icon k-i-edit k-icon-32"></span>
+                                </button>
+                                <button class="k-button btn-eliminar" title="Eliminar">
+                                    <span class="k-icon k-font-icon k-i-trash k-icon-32 colored-icon"></span>
+                                </button>
+                            `
+                }
+            ],
+            dataBound: function (e) {
+                e.sender.tbody.find(".btn-editar").on("click", function (ev) {
+                    ev.preventDefault();
+                    var dataItem = e.sender.dataItem($(this).closest("tr"));
+
+                    $("#editWindow").kendoWindow({
+                        width: "400px",
+                        title: "Editar Descripción",
+                        visible: false,
+                        modal: true,
+                        actions: ["Close"]
+                    }).data("kendoWindow").center().open();
+
+                    $("#editDescripcion").val(dataItem.descripcion);
+
+                    $("#btnGuardar").off("click").on("click", function () {
+                        $.ajax({
+                            url: '/Categoria/Edit',
+                            type: 'POST',
+                            data: {
+                                idCategoria: dataItem.idCategoria,
+                                descripcion: $("#editDescripcion").val()
+                            },
+                            success: function () {
+                                $("#editWindow").data("kendoWindow").close();
+                                MensajeExito("Modificada!", 'La categoría ha sido actualizada.');
+                                ObtenerCategorias($('#subGrupoSelect').val());
+                            }
+                        });
+                    });
+                });
+
+                e.sender.tbody.find(".btn-eliminar").on("click", function (ev) {
+                    ev.preventDefault();
+                    var dataItem = e.sender.dataItem($(this).closest("tr"));
+                    MensajeConfirmacion('¿Estás seguro?', 'Esta acción no se puede deshacer.', function () {
+                        $.ajax({
+                            url: '/Categoria/Delete',
+                            type: 'POST',
+                            data: {
+                                id: dataItem.idCategoria
+                            },
+                            success: function () {
+                                MensajeExito("Eliminado!", 'La categoría ha sido eliminada.');
+                                ObtenerCategorias($('#subGrupoSelect').val());
+                            }
+                        });
+                    });
+                });
+            }
+
+        });
+    }
+
+    $('#crearNuevo').click(function () {
+
+        $("#window").kendoWindow({
+            width: "600px",
+            title: "Agregar nueva categoría",
+            visible: false,
+            actions: [
+                "Close"
+            ],
+        }).data("kendoWindow").center().open();
+    });
+
+
+    function ObtenerCategorias(idSub) {
+        $.ajax({
+            url: '@Url.Action("GetCategoriasGerarquico", "Categoria")',
+            type: 'GET',
+            data: { subGrupoId: idSub },
+            success: function (data) {
+                var dataSource = new kendo.data.DataSource({
+                    transport: {
+                        read: function (options) {
+                            options.success(data);
+                        },
+                    },
+                    batch: true,
+                    pageSize: 10,
+                    schema: {
+                        model: {
+                            id: "idCategoria",
+                            fields: {
+                                idSubGrupo: { editable: true },
+                                idCategoria: { editable: false },
+                                descripcion: { type: "string", validation: { required: true } }
+                            }
+                        }
+                    }
+                });
+
+                $("#gridCategoria").empty();
+                $("#gridCategoria").kendoGrid({
+                    dataSource: dataSource,
+                    sortable: true,
+                    pageable: true,
+                    scrollable: false,
+                    detailInit: detailInit,
+                    columns: [
+                        { field: "idSubGrupo", title: "SubGripo", with: "5%" },
+                        { field: "descripcion", title: "Descripción", width: "75%" },
+                        {
+                            command: {
+                                text: "Agregar",
+                                click: function (e) {
+                                    e.preventDefault();
+
+                                    var tr = $(e.target).closest("tr");
+                                    var dataItem = this.dataItem(tr);                                    
+                                    ventanaCategoria(dataItem);
+                                }
+                            },
+                            title: "Acciones",
+                            width: "20%"
+                        }
+                    ]
+                });
+            },
+            error: function () {
+                alert('Error al cargar las categorías.');
+            }
+        });
+    }
+
+    function ventanaCategoria(dataItem) {
+        $("#hidIdGrupo").val(dataItem.idGrupo);
+        $("#hidIdSubGrupo").val(dataItem.idSubGrupo);
+        $("#hidIdCategoria").val(dataItem.idCategoria);
+        $("#grupoSelectIns").val(dataItem.idGrupo);
+        $("#grupoSelectIns").change();
+        $("#windowSubCategoria").kendoWindow({
+            width: "600px",
+            title: "Agregar nueva categoría",
+            visible: false,
+            actions: [
+                "Close"
+            ],
+        }).data("kendoWindow").center().open();
+    }
+
+    function agregarSubcategoria(dataItem) {
+        $.ajax({
+            url: '@Url.Action("Create", "Categoria")',
+            type: "POST",
+            data: {
+                idCategoria: $("#hidIdCategoria").val(),
+                idSubGrupo: $("#hidIdSubGrupo").val(),
+                descripcion: $("#DescripcionIns").val()
+            },
+            success: function (response) {
+                if (response.procesoExitoso > 0) {
+                    MensajeExito("Categoría creada correctamente.");
+                    $("#windowSubCategoria").data("kendoWindow").close();
+                    $('#subGrupoSelect').change();
+                }
+            },
+            error: function (error) {
+                MensajeError("Error al crear la categoría.");
+            }
+        });
+    }
 </script>

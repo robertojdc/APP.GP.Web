@@ -5,9 +5,6 @@ using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Elimina o comenta la siguiente línea si no vas a usar Razor Pages
-// builder.Services.AddRazorPages();
-
 builder.Services.AddControllersWithViews()
                 .AddSessionStateTempDataProvider();
 
@@ -67,14 +64,7 @@ app.UseAuthorization();
 
 app.UseCookiePolicy();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Usuario}/{action=Login}/{id?}");
-    //pattern: "{controller=SubGrupo}/{action=Index}/{id?}");
-
-
-// Asegúrate de no mapear Razor Pages si las has deshabilitado
-// app.MapRazorPages();
+app.MapControllerRoute(name: "default", pattern: "{controller=Usuario}/{action=Login}/{id?}");
 
 app.MapControllers();
 app.Run();

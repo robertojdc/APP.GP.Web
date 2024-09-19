@@ -74,6 +74,14 @@ public class HomeController : Controller
         return Json(grupos);
     }
 
+    [HttpGet]
+    [AllowAnonymous]
+    public async Task<IActionResult> ObtenerActoresCategoria()
+    {
+        var grupos = await _grupoService.GetCatalogoGruposAsync();
+        return Json(grupos);
+    }
+
     public JsonResult GetContentData()
     {
         //Estructura inicial

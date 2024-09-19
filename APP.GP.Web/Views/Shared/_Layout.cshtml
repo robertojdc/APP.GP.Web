@@ -1,13 +1,15 @@
 ﻿<!DOCTYPE html>
-<!-- saved from url=(0037)https://www.consejonacionalmorena.mx/ -->
 <html class=" js " lang="es">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Gobierno del Estado de Puebla</title>
-    <link rel="icon" href="~/img/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/img/favicon/favicon-16x16.png">
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/lib/kendo/styles/material-lime.css" rel="stylesheet" />
     <script src="~/js/popper.min.js"></script>
+    <link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <link href="~/lib/kendo/styles/material-arctic.css" rel="stylesheet" />
+    <link href="~/css/kendoicons.css" rel="stylesheet" />
 </head>
 <body cz-shortcut-listen="true">
     <header>
@@ -32,29 +34,22 @@
                             <li><a class="dropdown-item" href="../Grupo/Index">Grupo</a></li>
                             <li><a class="dropdown-item" href="../SubGrupo/Index">Subgrupo</a></li>
                             <li><a class="dropdown-item" href="../Categoria/Index">Categoría</a></li>
-                            @* <li class="dropdown-submenu">
-                                <a class="dropdown-item dropdown-toggle" href="#">Catálogos</a>
-                                <ul class="dropdown-menu">
-                                    
-                                </ul>
-                            </li> *@
                         </ul>
                     </li>
                 </ul>
             </div>
         </nav>
     </header>
-
-
     <div class="container nav-header-container">
         <div class="col-auto header-content">
             <a href="#" title="Consejo Nacional Morena" class="logo"></a>
         </div>
     </div>
+    <script src="~/js/app/layout.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/kendo/js/kendo.all.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-
+    <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
     <div class="container-fluid">
         @RenderBody()
     </div>

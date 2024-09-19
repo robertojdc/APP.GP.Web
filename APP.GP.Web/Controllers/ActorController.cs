@@ -27,7 +27,8 @@ public class ActorController : Controller
 
     public async Task<IActionResult> Consultar(string nombre, string apellidoPaterno, string apellidoMaterno, int idGrupo, int idSubGrupo, int idCategoria)
     {
-        var grupos = await _grupoService.GetActoresAsync(new Model.Filtros.FiltroActor {
+        var grupos = await _grupoService.GetActoresAsync(new Model.Filtros.FiltroActor
+        {
             Nombre = nombre,
             ApellidoPaterno = apellidoPaterno,
             ApellidoMaterno = apellidoMaterno,
@@ -38,11 +39,31 @@ public class ActorController : Controller
         return Ok(grupos);
     }
 
+    public async Task<IActionResult> GetActores(int idSubCategoria)
+    {
+        var grupos = await _grupoService.GetActoresAsync(new Model.Filtros.FiltroActor
+        {
+            IdCategoria = idSubCategoria
+        });
+        return Ok(grupos);
+    }
+
     public async Task<IActionResult> Create([FromForm] Actor actor, string categoriasJson)
     {
         // Deserializar las categorías
         var categorias = JsonConvert.DeserializeObject<List<Categoria>>(categoriasJson);
         actor.SubCategorias = categorias;
+
+        if (actor.RedesSociales == null)
+        {
+            if (!string.IsNullOrEmpty(actor.inputRedSocial))
+            {
+                actor.RedesSociales = new List<string>
+                {
+                    actor.inputRedSocial
+                };
+            }
+        }
 
         // Manejar el archivo de foto si existe
         if (actor.Foto != null && actor.Foto.Length > 0)
@@ -64,11 +85,11 @@ public class ActorController : Controller
         var resultado = await _grupoService.AddActorAsync(actor);
 
         // Retorna la respuesta según el resultado
-        return Ok();
+        return Ok(resultado);
     }
 
     [HttpGet]
-    public async Task<IActionResult> Details([FromQuery]int idActor)
+    public async Task<IActionResult> Details([FromQuery] int idActor)
     {
         var actor = await _grupoService.GetActorByIdAsync(idActor);
 
@@ -103,5 +124,12 @@ public class ActorController : Controller
     {
         var subCategorias = await _grupoService.GetSubCategoriasAsync(idCategoria);
         return Ok(subCategorias);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Delete(int idActor)
+    {
+        var resultado = await _grupoService.DelActorAsync(idActor);
+        return Ok(resultado);
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace APP.GP.Web.Model
+﻿namespace APP.GP.Web.Model
 {
     public class CatalogoGrupo
     {
@@ -9,7 +7,7 @@ namespace APP.GP.Web.Model
         public string Nombre { get; set; }
 
         public bool Estatus { get; set; }
-        
+
         public string? EstatusDescripcion { get; set; }
 
 

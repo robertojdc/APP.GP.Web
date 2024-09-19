@@ -13,7 +13,6 @@
     <div class="col-md-4">
         <form asp-action="Create">
 
-            <!-- Combo de grupos -->
             <select id="grupoSelect" class="form-control mt-2">
                 <option value="">Seleccione un grupo</option>
                 @foreach (var grupo in (IEnumerable<APP.GP.Web.Model.Grupo>)ViewBag.Grupos)
@@ -21,8 +20,6 @@
                     <option value="@grupo.Id">@grupo.Nombre</option>
                 }
             </select>
-
-            <!-- Combo de subgrupos -->
 
             <select id="subGrupoSelect" asp-for="IdSubGrupo" class="form-control">
                 <option value="">Seleccione un subgrupo</option>

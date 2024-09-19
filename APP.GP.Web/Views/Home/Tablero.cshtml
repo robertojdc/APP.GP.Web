@@ -16,100 +16,114 @@
         <div id="combosCategoria">
             <select id="comboBox"></select>
         </div>
-      
-        <div style="background-color: #8B0000; color: white; padding: 10px; text-align: center; font-weight: bold; margin-top: 10px;">
-            EL SOL DE PUEBLA
+
+        <div id="listView"></div>
+
+        <script type="text/x-kendo-template" id="template">
+            <div class="actor">
+                # if (fotoBase64) { #
+                    <img src="data:image/jpeg;base64,#= fotoBase64 #" alt="Foto de #= nombre # #= apellidoPaterno #" />
+                # } else { #
+                    <img src="https://via.placeholder.com/110" alt="Foto no disponible" />
+                # } #
+                <h3>#: nombre # #: apellidoPaterno # #: apellidoMaterno #</h3>
+                <p>Cargo: #: cargoActual #</p>
+            </div>
+        </script>
+
+        @*         <div style="background-color: #8B0000; color: white; padding: 10px; text-align: center; font-weight: bold; margin-top: 10px;">
+        EL SOL DE PUEBLA
         </div>
 
         <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
-            <tr>
-                <td style="border: 1px solid #8B0000; padding: 10px;">DOMICILIO</td>
-                <td style="border: 1px solid #8B0000; padding: 10px;">3 Oriente 201, col. Centro</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #8B0000; padding: 10px;">TELÉFONO</td>
-                <td style="border: 1px solid #8B0000; padding: 10px;">79 75 14 33 00</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #8B0000; padding: 10px;">ANIVERSARIO</td>
-                <td style="border: 1px solid #8B0000; padding: 10px;">05 de Mayo</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #8B0000; padding: 10px;">SITIO WEB</td>
-                <td style="border: 1px solid #8B0000; padding: 1px;"><a href='https://www.elsoldepuebla.com.mx/'>https://www.elsoldepuebla.com.mx/</a></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #8B0000; padding: 10px;">REDES SOCIALES</td>
-                <td style="border: 1px solid #8B0000; padding: 10px;">Twitter: @@elsoldepuebla1<br />Facebook: elsoldpuebla</td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid #8B0000; padding: 10px;">COMENTARIOS</td>
-                <td style="border: 1px solid #8B0000; padding: 10px;"></td>
-            </tr>
+        <tr>
+        <td style="border: 1px solid #8B0000; padding: 10px;">DOMICILIO</td>
+        <td style="border: 1px solid #8B0000; padding: 10px;">3 Oriente 201, col. Centro</td>
+        </tr>
+        <tr>
+        <td style="border: 1px solid #8B0000; padding: 10px;">TELÉFONO</td>
+        <td style="border: 1px solid #8B0000; padding: 10px;">79 75 14 33 00</td>
+        </tr>
+        <tr>
+        <td style="border: 1px solid #8B0000; padding: 10px;">ANIVERSARIO</td>
+        <td style="border: 1px solid #8B0000; padding: 10px;">05 de Mayo</td>
+        </tr>
+        <tr>
+        <td style="border: 1px solid #8B0000; padding: 10px;">SITIO WEB</td>
+        <td style="border: 1px solid #8B0000; padding: 1px;"><a href='https://www.elsoldepuebla.com.mx/'>https://www.elsoldepuebla.com.mx/</a></td>
+        </tr>
+        <tr>
+        <td style="border: 1px solid #8B0000; padding: 10px;">REDES SOCIALES</td>
+        <td style="border: 1px solid #8B0000; padding: 10px;">Twitter: @@elsoldepuebla1<br />Facebook: elsoldpuebla</td>
+        </tr>
+        <tr>
+        <td style="border: 1px solid #8B0000; padding: 10px;">COMENTARIOS</td>
+        <td style="border: 1px solid #8B0000; padding: 10px;"></td>
+        </tr>
         </table>
 
         <div style="background-color: #8B0000; color: white; padding: 10px; text-align: center; font-weight: bold; margin-top: 20px;">
-            CONTACTOS
+        CONTACTOS
         </div>
 
         <div style="padding: 5px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px;">
-            <div class="teamMate">
-                <img src="~/img/1.png" alt="Kendo UI for jQuery PanelBar Andrew Fuller">
-                <div class="details">
-                    <label>Andrew Fuller</label>
-                    <p>Team Lead</p>
-                </div>
-            </div>
-            <div class="teamMate">
-                <img src="~/img/2.png" alt="Kendo UI for jQuery PanelBar Nancy Leverling">
-                <div class="details">
-                    <label>Nancy Leverling</label>
-                    <p>Sales Associate</p>
-                </div>
-            </div>
-            <div class="teamMate">
-                <img src="~/img/3.png" alt="Kendo UI for jQuery PanelBar Robert King">
-                <div class="details">
-                    <label>Robert King</label>
-                    <p>Business System Analyst</p>
-                </div>
-            </div>
-            <div class="teamMate">
-                <img src="~/img/4.png" alt="Kendo UI for jQuery PanelBar Laura Callahan">
-                <div class="details">
-                    <label>Laura Callahan</label>
-                    <p>HR Manager</p>
-                </div>
-            </div>
-            <div class="teamMate">
-                <img src="~/img/1.png" alt="Kendo UI for jQuery PanelBar Andrew Fuller">
-                <div class="details">
-                    <label>Andrew Fuller</label>
-                    <p>Team Lead</p>
-                </div>
-            </div>
-            <div class="teamMate">
-                <img src="~/img/2.png" alt="Kendo UI for jQuery PanelBar Nancy Leverling">
-                <div class="details">
-                    <label>Nancy Leverling</label>
-                    <p>Sales Associate</p>
-                </div>
-            </div>
-            <div class="teamMate">
-                <img src="~/img/3.png" alt="Kendo UI for jQuery PanelBar Robert King">
-                <div class="details">
-                    <label>Robert King</label>
-                    <p>Business System Analyst</p>
-                </div>
-            </div>
-            <div class="teamMate">
-                <img src="~/img/4.png" alt="Kendo UI for jQuery PanelBar Laura Callahan">
-                <div class="details">
-                    <label>Laura Callahan</label>
-                    <p>HR Manager</p>
-                </div>
-            </div>
+        <div class="teamMate">
+        <img src="~/img/1.png" alt="Kendo UI for jQuery PanelBar Andrew Fuller">
+        <div class="details">
+        <label>Andrew Fuller</label>
+        <p>Team Lead</p>
         </div>
+        </div>
+        <div class="teamMate">
+        <img src="~/img/2.png" alt="Kendo UI for jQuery PanelBar Nancy Leverling">
+        <div class="details">
+        <label>Nancy Leverling</label>
+        <p>Sales Associate</p>
+        </div>
+        </div>
+        <div class="teamMate">
+        <img src="~/img/3.png" alt="Kendo UI for jQuery PanelBar Robert King">
+        <div class="details">
+        <label>Robert King</label>
+        <p>Business System Analyst</p>
+        </div>
+        </div>
+        <div class="teamMate">
+        <img src="~/img/4.png" alt="Kendo UI for jQuery PanelBar Laura Callahan">
+        <div class="details">
+        <label>Laura Callahan</label>
+        <p>HR Manager</p>
+        </div>
+        </div>
+        <div class="teamMate">
+        <img src="~/img/1.png" alt="Kendo UI for jQuery PanelBar Andrew Fuller">
+        <div class="details">
+        <label>Andrew Fuller</label>
+        <p>Team Lead</p>
+        </div>
+        </div>
+        <div class="teamMate">
+        <img src="~/img/2.png" alt="Kendo UI for jQuery PanelBar Nancy Leverling">
+        <div class="details">
+        <label>Nancy Leverling</label>
+        <p>Sales Associate</p>
+        </div>
+        </div>
+        <div class="teamMate">
+        <img src="~/img/3.png" alt="Kendo UI for jQuery PanelBar Robert King">
+        <div class="details">
+        <label>Robert King</label>
+        <p>Business System Analyst</p>
+        </div>
+        </div>
+        <div class="teamMate">
+        <img src="~/img/4.png" alt="Kendo UI for jQuery PanelBar Laura Callahan">
+        <div class="details">
+        <label>Laura Callahan</label>
+        <p>HR Manager</p>
+        </div>
+        </div>
+        </div> *@
     </div>
 
     <div id="contactDetailWindow" style="display:none;">
@@ -183,9 +197,10 @@
 
     <div class="responsive-message"></div>
 
+
     <script>
         $(document).ready(function () {
-            obtenerGrupos();      
+            obtenerGrupos();
         });
 
         function obtenerGrupos() {
@@ -209,7 +224,7 @@
                             // Agregar el id del subGrupo como un atributo de datos
                             const subGroupDiv = $('<div>')
                                 .addClass(subGrupo.descripcion)
-                                .attr('data-id', item.id); // Añadir data-id con el id del subGrupo
+                                .attr('data-id', subGrupo.id); // Añadir data-id con el id del subGrupo
 
                             const subGroupContentDiv = $('<div>').text(subGrupo.nombre);
 
@@ -253,6 +268,12 @@
                         }
                     }).data("kendoWindow");
 
+                    var comboBox = $("#comboBox").data("kendoComboBox");
+                    if (comboBox) {
+                        comboBox.dataSource.data([]); // Limpia los datos
+                        comboBox.value(''); // Limpia el valor seleccionado
+                    }
+
                     $("#comboBox").kendoComboBox({
                         dataTextField: "descripcion", // Campo a mostrar
                         dataValueField: "idCategoria", // Campo de valor
@@ -281,7 +302,7 @@
                 type: 'GET',
                 dataType: 'json',
                 data: { idCategoria: id },
-                success: function (data) {  
+                success: function (data) {
                     // Verifica si la lista tiene valores
                     if (data && data.length > 0) {
                         // Crea un nuevo elemento select
@@ -300,7 +321,7 @@
                             change: function (e) {
                                 var value = this.value(); // Obtiene el valor seleccionado (idCategoria)
                                 console.log("Subcategoría seleccionada:", value);
-                                ObtenerSubCategoria(value);
+                                obtenerActores(value);
                             }
                         });
                     }
@@ -309,6 +330,41 @@
                     console.error('Error al obtener las subcategorías:', error);
                 }
             });
+        }
+
+        function obtenerActores(id) {
+            var container = $('#categorias-container'); // Define el contenedor donde quieres mostrar el loading
+
+            kendo.ui.progress(container, true);
+
+            $.ajax({
+                url: '@Url.Action("GetActores", "Actor")', // URL de la acción en el controlador
+                type: 'GET',
+                data: { idSubCategoria: id }, // Aquí pasas el parámetro idSubCategoria
+                dataType: 'json',
+                success: function (actors) {
+                    // data.forEach(actor => {
+                    //     console.log('Actor:', JSON.stringify(actor));
+                    // });
+
+                    $("#listView").kendoListView({
+                        dataSource: {
+                            data: actors,
+                            pageSize: 21
+                        },
+                        template: kendo.template($("#template").html()),
+                        pageable: true
+                    });
+
+                    kendo.ui.progress(container, false);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error al obtener los actores:', error);
+
+                    kendo.ui.progress(container, false);
+                }
+            });
+
         }
 
         function checkAndMaximizeWindow(kendoWindow) {
@@ -487,5 +543,68 @@
                 font-size: 14px;
             }
     </style>
+    <style>
+        #listView {
+            padding: 10px 5px;
+            margin-bottom: -1px;
+            min-height: 510px;
+        }
 
+        .k-listview-content {
+            overflow: hidden;
+        }
+
+        .actor {
+            float: left;
+            position: relative;
+            width: 111px;
+            height: 170px;
+            margin: 0 5px;
+            padding: 0;
+        }
+
+            .actor img {
+                width: 110px;
+                height: 110px;
+            }
+
+            .actor h3 {
+                margin: 0;
+                padding: 3px 5px 0 0;
+                max-width: 96px;
+                overflow: hidden;
+                line-height: 1.1em;
+                font-size: .9em;
+                font-weight: normal;
+                text-transform: uppercase;
+                color: #999;
+            }
+
+            .actor p {
+                visibility: hidden;
+            }
+
+            .actor:hover p {
+                visibility: visible;
+                position: absolute;
+                width: 110px;
+                height: 110px;
+                top: 0;
+                margin: 0;
+                padding: 0;
+                line-height: 110px;
+                vertical-align: middle;
+                text-align: center;
+                color: #fff;
+                background-color: rgba(0,0,0,0.75);
+            }
+
+        .k-listview:after {
+            content: ".";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+    </style>
 </div>

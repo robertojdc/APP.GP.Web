@@ -1,136 +1,101 @@
-﻿@{
-    ViewData["Title"] = "Consultar Actor";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<div class="container mt-4">
-    <h3 class="text-center bg-danger text-white py-2">BÚSQUEDA DE ACTORES</h3>
-    <form id="consultaForm" class="p-4 border">
-        <div class="form-group row">
-            <label class="col-3 col-form-label">NOMBRE(S)</label>
-            <div class="col-9">
-                <input id="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre(s)">
-            </div>
+﻿<div class="container-fluid py-4">
+    <!-- Búsqueda de Actores Section -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header text-white text-center">
+            <h3 class="mb-0">BÚSQUEDA DE ACTORES</h3>
         </div>
-
-        <div class="form-group row">
-            <label class="col-3 col-form-label">APELLIDO PATERNO</label>
-            <div class="col-9">
-                <input id="apellidoPaterno" name="apellidoPaterno" type="text" class="form-control" placeholder="Apellido paterno">
-            </div>
+        <div class="card-body bg-light">
+            <form id="consultaForm" class="row g-3">
+                <div class="col-md-6 col-lg-4">
+                    <label for="nombre" class="form-label">NOMBRE(S)</label>
+                    <input id="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre(s)">
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <label for="apellidoPaterno" class="form-label">APELLIDO PATERNO</label>
+                    <input id="apellidoPaterno" name="apellidoPaterno" type="text" class="form-control" placeholder="Apellido paterno">
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <label for="apellidoMaterno" class="form-label">APELLIDO MATERNO</label>
+                    <input id="apellidoMaterno" name="apellidoMaterno" type="text" class="form-control" placeholder="Apellido materno">
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <label for="grupo" class="form-label">GRUPO</label>
+                    <input id="grupo" name="grupo" class="form-control" placeholder="Seleccione un grupo">
+                    <input type="hidden" id="grupoId" name="grupoId">
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <label for="subgrupo" class="form-label">SUBGRUPO</label>
+                    <input id="subgrupo" name="subgrupo" class="form-control" placeholder="Seleccione un subgrupo">
+                    <input type="hidden" id="subgrupoId" name="subgrupoId">
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <label for="clasificacion" class="form-label">CLASIFICACIÓN</label>
+                    <input id="clasificacion" name="clasificacion" class="form-control" placeholder="Seleccione una clasificación">
+                    <input type="hidden" id="clasificacionId" name="clasificacionId">
+                </div>
+                <div class="col-12 text-center mt-4">
+                    <button type="button" class="btn btn-danger me-2" id="buscarActor">Buscar</button>
+                    <button type="button" class="btn btn-outline-secondary" id="crearActor">Crear</button>
+                </div>
+            </form>
         </div>
+    </div>
 
-        <div class="form-group row">
-            <label class="col-3 col-form-label">APELLIDO MATERNO</label>
-            <div class="col-9">
-                <input id="apellidoMaterno" name="apellidoMaterno" type="text" class="form-control" placeholder="Apellido materno">
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-3 col-form-label">GRUPO</label>
-            <div class="col-9">
-                <input id="grupo" name="grupo" class="form-control" placeholder="Seleccione un grupo">
-                <input type="hidden" id="grupoId" name="grupoId">
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-3 col-form-label">SUBGRUPO</label>
-            <div class="col-9">
-                <input id="subgrupo" name="subgrupo" class="form-control" placeholder="Seleccione un subgrupo">
-                <input type="hidden" id="subgrupoId" name="subgrupoId">
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-3 col-form-label">CLASIFICACIÓN</label>
-            <div class="col-9">
-                <input id="clasificacion" name="clasificacion" class="form-control" placeholder="Seleccione una clasificación">
-                <input type="hidden" id="clasificacionId" name="clasificacionId">
-            </div>
-        </div>
-
-        <div class="text-center mt-4">
-            <button type="button" class="btn" id="buscarActor">Buscar</button>
-            <button type="button" class="btn" id="crearActor">Crear</button>
-        </div>
-    </form>
-
-    <div id="gridResultados" class="mt-4"></div>
+    <!-- Resultados Grid -->
+    <div class="table-responsive mb-4">
+        <div id="gridResultados"></div>
+    </div>
 </div>
+
+<style>
+    /* Colores basados en los Pantones proporcionados */
+    :root {
+        --color-primary: #9F2241; /* Pantone 7420 C */
+        --color-secondary: #235B4E; /* Pantone 626 C */
+        --color-accent: #DDC9A3; /* Pantone 468 C */
+        --color-gray: #98989A; /* Pantone Cool Gray 7 C */
+        --color-background: #F5F5F5; /* Fondo neutro para claridad */
+    }
+
+    body {
+        background-color: var(--color-background);
+    }
+
+    .card-header {
+        background-color: var(--color-primary);
+        border-bottom: 2px solid var(--color-secondary);
+    }
+
+    .btn-danger {
+        background-color: var(--color-primary);
+        border-color: var(--color-primary);
+        color: white;
+    }
+
+        .btn-danger:hover {
+            background-color: #691C32; /* Un tono más oscuro para el hover */
+            border-color: #691C32;
+        }
+
+    .btn-outline-secondary {
+        border-color: var(--color-secondary);
+        color: var(--color-secondary);
+    }
+
+        .btn-outline-secondary:hover {
+            background-color: var(--color-secondary);
+            color: white;
+        }
+
+</style>
 
 <script>
     $(document).ready(function () {
         $('#buscarActor').on('click', function (e) {
             e.preventDefault();
-
-            var nombre = $('#nombre').val();
-            var apellidoPaterno = $('#apellidoPaterno').val();
-            var apellidoMaterno = $('#apellidoMaterno').val();
-            var clasificacionId = $('#grupo').data('kendoDropDownList').value();
-            $("#gridResultados").empty();
-            $.ajax({
-                url: '/Actor/Consultar',
-                type: 'GET',
-                data: {
-                    nombre: nombre,
-                    apellidoPaterno: apellidoPaterno,
-                    apellidoMaterno: apellidoMaterno,
-                    idGrupo: $("#grupo").data('kendoDropDownList') ? $("#grupo").data('kendoDropDownList').value() : 0,
-                    idSubGrupo: $("#subgrupo").data('kendoDropDownList') ? $("#subgrupo").data('kendoDropDownList').value() : 0,
-                    idCategoria: $("#clasificacion").data('kendoDropDownList') ? $("#clasificacion").data('kendoDropDownList').value() : 0
-                },
-                success: function (response) {
-                    $("#gridResultados").kendoGrid({
-                        dataSource: {
-                            data: response,
-                            pageSize: 10
-                        },
-                        height: 400,
-                        pageable: true,
-                        columns: [
-                            { field: "nombre", title: "Nombre" },
-                            { field: "apellidoPaterno", title: "Apellido Paterno" },
-                            { field: "apellidoMaterno", title: "Apellido Materno" },
-                            { field: "cargoActual", title: "Cargo Actual" },
-                            {
-                                title: "Acciones",
-                                width: "180px",
-                                template: `
-                                    <a href="\\#" class="btn-ver-detalle" title="Ver Detalles">
-                                        <i class="k-icon k-i-search"></i>Detalle
-                                    </a>
-                                    <a href="\\#" class="btn-eliminar" title="Eliminar">
-                                        <i class="k-icon k-i-delete"></i>Borrar
-                                    </a>
-                                `
-                            }
-                        ],
-                        dataBound: function (e) {
-                            e.sender.tbody.find(".btn-ver-detalle").on("click", function (ev) {
-                                ev.preventDefault();
-                              
-                                var dataItem = e.sender.dataItem($(this).closest("tr"));
-                                console.log("idActor:", dataItem.idActor);
-                                // Redirige a la acción Details del controlador Actor pasando el idActor
-                                window.location.href = `/Actor/Details?idActor=${dataItem.idActor}`;
-                            });
-
-                            e.sender.tbody.find(".btn-eliminar").on("click", function (ev) {
-                                ev.preventDefault();
-                                var dataItem = e.sender.dataItem($(this).closest("tr"));
-                                alert("Eliminar: " + dataItem.idActor);
-                            });
-                        }
-                    });
-
-                },
-                error: function (xhr, status, error) {
-                    alert('Ocurrió un error: ' + error);
-                }
-            });
+            buscarActor();
         });
+
         obtenerGrupos();
 
         $("#crearActor").on('click', function (e) {
@@ -138,6 +103,109 @@
             window.location.href = '/Actor/Index';
         });
     });
+
+    function buscarActor() {
+        var nombre = $('#nombre').val();
+        var apellidoPaterno = $('#apellidoPaterno').val();
+        var apellidoMaterno = $('#apellidoMaterno').val();
+
+        $("#gridResultados").empty();
+        $.ajax({
+            url: '/Actor/Consultar',
+            type: 'GET',
+            data: {
+                nombre: nombre,
+                apellidoPaterno: apellidoPaterno,
+                apellidoMaterno: apellidoMaterno,
+                idGrupo: $("#grupo").data('kendoDropDownList') ? $("#grupo").data('kendoDropDownList').value() : 0,
+                idSubGrupo: $("#subgrupo").data('kendoDropDownList') ? $("#subgrupo").data('kendoDropDownList').value() : 0,
+                idCategoria: $("#clasificacion").data('kendoDropDownList') ? $("#clasificacion").data('kendoDropDownList').value() : 0
+            },
+            success: function (response) {
+                $("#gridResultados").kendoGrid({
+                    dataSource: {
+                        data: response,
+                        pageSize: 10
+                    },
+                    height: 400,
+                    pageable: true,
+                    columns: [
+                        {
+                            field: "nombreCompleto",
+                            title: "Información del Contacto",
+                            width: "20%",
+                            template: function (dataItem) {
+                                var imgSrc = dataItem.fotoBase64
+                                    ? `data:image/jpeg;base64,${dataItem.fotoBase64}`
+                                    : "/path/to/default-image.jpg";
+                                return `
+                                        <div style="display: flex; align-items: center;">
+                                            <div class="customer-photo" style="background-image: url('${imgSrc}'); width: 50px; height: 50px; border-radius: 50%; background-size: cover; background-position: center; margin-right: 10px;"></div>
+                                            <div>
+                                                <div class="customer-name" style="font-weight: bold;">
+                                                    ${dataItem.nombre} ${dataItem.apellidoPaterno} ${dataItem.apellidoMaterno}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `;
+                            }
+                        },
+                        { field: "cargoActual", width: "15%", title: "Cargo Actual" },
+                        { field: "telefonoPersonal", width: "10%", title: "Teléfono" },
+                        {
+                            field: "informacionCombinada",
+                            title: "Grupos",
+                            width: "35%",
+                            template: function (dataItem) {
+                                return dataItem.grupos ? dataItem.grupos.replace(/;/g, '<br>') : 'N/A';
+                            }
+                        },
+                        {
+                            title: "Acciones",
+                            width: "12%",
+                            template: `
+                                     <button class="k-button btn-editar" title="Editar">
+                                        <span class="k-icon k-font-icon k-i-edit k-icon-32"></span>
+                                    </button>
+                                    <button class="k-button btn-eliminar" title="Eliminar">
+                                        <span class="k-icon k-font-icon k-i-trash k-icon-32 colored-icon"></span>
+                                    </button>
+                            `
+                        }
+                    ],
+                    dataBound: function (e) {
+                        e.sender.tbody.find(".btn-ver-detalle").on("click", function (ev) {
+                            ev.preventDefault();
+                            var dataItem = e.sender.dataItem($(this).closest("tr"));
+                            window.location.href = `/Actor/Details?idActor=${dataItem.idActor}`;
+                        });
+                        e.sender.tbody.find(".btn-eliminar").on("click", function (ev) {
+                            ev.preventDefault();
+                            var dataItem = e.sender.dataItem($(this).closest("tr"));
+                            MensajeConfirmacion('¿Eliminar registro?', 'Esta acción no se puede deshacer.', function () {
+                                $.ajax({
+                                    url: '/Actor/Delete?idActor=' + dataItem.idActor,
+                                    type: 'GET',
+                                    success: function (response) {
+                                        MensajeExito('Éxito', 'El actor ha sido eliminado correctamente.');
+                                        buscarActor();
+                                    },
+                                    error: function (xhr, status, error) {
+                                        console.log('Ocurrió un error: ' + error);
+                                    }
+                                });
+                            });
+                        });
+                    },
+                    resizable: true,
+                    scrollable: false
+                });
+            },
+            error: function (xhr, status, error) {
+                MensajeError('Error', 'Ocurrió un error al consultar los actores.');
+            }
+        });
+    }
 
     function obtenerGrupos() {
         $.ajax({
@@ -248,3 +316,8 @@
         });
     }
 </script>
+<style>
+    .k-icon-32 {
+        font-size: 14pt;
+    }
+</style>

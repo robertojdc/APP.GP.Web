@@ -1,188 +1,247 @@
-﻿<div class="container mt-4">
-    <h3 class="text-center bg-danger text-white py-2">CLASIFICACIÓN</h3>
-    <form id="clasificacionForm" class="p-4 border">
-        <div class="form-group row">
-            <label class="col-3 col-form-label">GRUPO</label>
-            <div class="col-9">
-                <input id="grupo" name="grupo" class="form-control" placeholder="Seleccione un grupo">
-                <input type="hidden" id="grupoId" name="grupoId">
-            </div>
+﻿<div class="container-fluid py-4">
+    <!-- Clasificación Section -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header text-white text-center">
+            <h3 class="mb-0">CLASIFICACIÓN</h3>
         </div>
-
-        <div class="form-group row">
-            <label class="col-3 col-form-label">SUBGRUPO</label>
-            <div class="col-9">
-                <input id="subgrupo" name="subgrupo" class="form-control" placeholder="Seleccione un subgrupo">
-                <input type="hidden" id="subgrupoId" name="subgrupoId">
-            </div>
+        <div class="card-body">
+            <form id="clasificacionForm" class="row g-3">
+                <div class="col-md-4">
+                    <label for="grupo" class="form-label">GRUPO</label>
+                    <input id="grupo" name="grupo" class="form-control" placeholder="Seleccione un grupo">
+                    <input type="hidden" id="grupoId" name="grupoId">
+                </div>
+                <div class="col-md-4">
+                    <label for="subgrupo" class="form-label">SUBGRUPO</label>
+                    <input id="subgrupo" name="subgrupo" class="form-control" placeholder="Seleccione un subgrupo">
+                    <input type="hidden" id="subgrupoId" name="subgrupoId">
+                </div>
+                <div class="col-md-4">
+                    <label for="clasificacion" class="form-label">CLASIFICACIÓN</label>
+                    <input id="clasificacion" name="clasificacion" class="form-control" placeholder="Seleccione una clasificación">
+                    <input type="hidden" id="clasificacionId" name="clasificacionId">
+                </div>
+                <div class="col-12 text-center">
+                    <button type="button" class="btn btn-danger w-100 mt-3" id="agregarCategoria">Agregar</button>
+                </div>
+            </form>
         </div>
-
-        <div class="form-group row">
-            <label class="col-3 col-form-label">CLASIFICACIÓN</label>
-            <div class="col-9">
-                <input id="clasificacion" name="clasificacion" class="form-control" placeholder="Seleccione una clasificación">
-                <input type="hidden" id="clasificacionId" name="clasificacionId">
-            </div>
-        </div>
-
-
-    </form>
-
-    <div class="text-center mt-4">
-        <button type="button" class="btn btn-danger" id="agregarCategoria">Agregar</button>
     </div>
-    <table class="table mt-4" id="tablaCategorias">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">Grupo</th>
-                <th scope="col">Subgrupo</th>
-                <th scope="col">Clasificación</th>
-                <th scope="col">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+
+    <!-- Tabla de Categorías -->
+    <div class="table-responsive mb-4">
+        <table class="table table-striped table-hover" id="tablaCategorias">
+            <thead class="table-dark">
+                <tr>
+                    <th>Grupo</th>
+                    <th>Subgrupo</th>
+                    <th>Clasificación</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- Ficha Personal Section -->
+    <div class="container-fluid py-4">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header text-white text-center">
+                <h3 class="mb-0">FICHA PERSONAL</h3>
+            </div>
+            <div class="card-body bg-light">
+                <form id="personalForm" class="row g-3" enctype="multipart/form-data">
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="Nombre" class="form-label">NOMBRE(S)</label>
+                        <input name="Nombre" type="text" class="form-control" placeholder="Nombre(s)">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="ApellidoPaterno" class="form-label">APELLIDO PATERNO</label>
+                        <input name="ApellidoPaterno" type="text" class="form-control" placeholder="Apellido paterno">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="ApellidoMaterno" class="form-label">APELLIDO MATERNO</label>
+                        <input name="ApellidoMaterno" type="text" class="form-control" placeholder="Apellido materno">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="Foto" class="form-label">FOTO</label>
+                        <input name="Foto" type="file" class="form-control">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="CargoActual" class="form-label">CARGO ACTUAL</label>
+                        <input name="CargoActual" type="text" class="form-control" placeholder="Ingrese cargo actual">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="FechaNacimiento" class="form-label">FECHA DE NACIMIENTO</label>
+                        <input name="FechaNacimiento" type="date" class="form-control">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="DomicilioLaboral" class="form-label">DOMICILIO LABORAL</label>
+                        <input name="DomicilioLaboral" type="text" class="form-control" placeholder="Ingrese domicilio laboral">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="DomicilioParticular" class="form-label">DOMICILIO PARTICULAR</label>
+                        <input name="DomicilioParticular" type="text" class="form-control" placeholder="Ingrese domicilio particular">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="TelefonoLaboral" class="form-label">TELÉFONO LABORAL</label>
+                        <input name="TelefonoLaboral" type="tel" class="form-control" placeholder="Ingrese teléfono laboral">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="TelefonoPersonal" class="form-label">TELÉFONO PERSONAL</label>
+                        <input name="TelefonoPersonal" type="tel" class="form-control" placeholder="Ingrese teléfono personal">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="CorreoElectronico" class="form-label">CORREO ELECTRÓNICO</label>
+                        <input name="CorreoElectronico" type="email" class="form-control" placeholder="Ingrese correo electrónico">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="inputRedSocial" class="form-label">REDES SOCIALES</label>
+                        <div class="input-group">
+                            <input id="inputRedSocial" name="inputRedSocial" type="text" class="form-control" placeholder="Ingrese red social">
+                            <button type="button" class="btn btn-primary" id="addRedSocial">Agregar</button>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <table class="table table-bordered table-striped mt-2" id="tablaRedesSociales">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Red Social</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="PaginaWeb" class="form-label">PÁGINA WEB</label>
+                        <input name="PaginaWeb" type="url" class="form-control" placeholder="Ingrese página web">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="Afinidad" class="form-label">AFINIDAD</label>
+                        <input name="Afinidad" type="text" class="form-control" placeholder="Ingrese afinidad">
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <label for="Compromiso" class="form-label">COMPROMISO</label>
+                        <input name="Compromiso" type="text" class="form-control" placeholder="Ingrese compromiso">
+                    </div>
+                    <div class="col-12">
+                        <label for="Comentarios" class="form-label">COMENTARIOS</label>
+                        <textarea name="Comentarios" class="form-control" placeholder="Ingrese comentarios"></textarea>
+                    </div>
+                    <div class="col-12 text-center mt-4">
+                        <button type="button" class="btn btn-danger me-2" id="submitButton">Guardar</button>
+                        <button type="button" class="btn btn-outline-secondary" id="regresarActor">Regresar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
+<style>
+    /* Colores basados en los Pantones proporcionados */
+    :root {
+        --color-primary: #9F2241; /* Pantone 7420 C */
+        --color-secondary: #235B4E; /* Pantone 626 C */
+        --color-accent: #DDC9A3; /* Pantone 468 C */
+        --color-gray: #98989A; /* Pantone Cool Gray 7 C */
+        --color-background: #F5F5F5; /* Fondo neutro para claridad */
+    }
 
+    body {
+        background-color: var(--color-background);
+    }
 
-<div class="container mt-4">
-    <h3 class="text-center bg-danger text-white py-2">FICHA PERSONAL</h3>
+    .card-header {
+        background-color: var(--color-primary);
+        border-bottom: 2px solid var(--color-secondary);
+    }
 
-    <form id="personalForm" class="p-4 border" enctype="multipart/form-data">
-        <div class="form-group row">
-            <label class="col-3 col-form-label">NOMBRE(S)</label>
-            <div class="col-9">
-                <input name="Nombre" type="text" class="form-control" placeholder="Nombre(s)">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-3 col-form-label">APELLIDO PATERNO</label>
-            <div class="col-9">
-                <input name="ApellidoPaterno" type="text" class="form-control" placeholder="Apellido paterno">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-3 col-form-label">APELLIDO MATERNO</label>
-            <div class="col-9">
-                <input name="ApellidoMaterno" type="text" class="form-control" placeholder="Apellido materno">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-3 col-form-label">FOTO</label>
-            <div class="col-9">
-                <input name="Foto" type="file" class="form-control-file">
-            </div>
-        </div>
+    .btn-danger {
+        background-color: var(--color-primary);
+        border-color: var(--color-primary);
+        color: white;
+    }
 
-        <div class="form-group row">
-            <label class="col-3 col-form-label">CARGO ACTUAL</label>
-            <div class="col-9">
-                <input name="CargoActual" type="text" class="form-control" placeholder="Ingrese cargo actual">
-            </div>
-        </div>
+        .btn-danger:hover {
+            background-color: #691C32; /* Un tono más oscuro para el hover */
+            border-color: #691C32;
+        }
 
-        <div class="form-group row">
-            <label class="col-3 col-form-label">FECHA DE NACIMIENTO</label>
-            <div class="col-9">
-                <input name="FechaNacimiento" type="date" class="form-control">
-            </div>
-        </div>
+    .btn-outline-secondary {
+        border-color: var(--color-secondary);
+        color: var(--color-secondary);
+    }
 
-        <div class="form-group row">
-            <label class="col-3 col-form-label">DOMICILIO LABORAL</label>
-            <div class="col-9">
-                <input name="DomicilioLaboral" type="text" class="form-control" placeholder="Ingrese domicilio laboral">
-            </div>
-        </div>
+        .btn-outline-secondary:hover {
+            background-color: var(--color-secondary);
+            color: white;
+        }
 
-        <div class="form-group row">
-            <label class="col-3 col-form-label">DOMICILIO PARTICULAR</label>
-            <div class="col-9">
-                <input name="DomicilioParticular" type="text" class="form-control" placeholder="Ingrese domicilio particular">
-            </div>
-        </div>
+    .table thead {
+        background-color: var(--color-secondary);
+        color: white;
+    }
 
-        <div class="form-group row">
-            <label class="col-3 col-form-label">TELÉFONO LABORAL</label>
-            <div class="col-9">
-                <input name="TelefonoLaboral" type="tel" class="form-control" placeholder="Ingrese teléfono laboral">
-            </div>
-        </div>
+    .table tbody tr:hover {
+        background-color: var(--color-accent);
+    }
 
-        <div class="form-group row">
-            <label class="col-3 col-form-label">TELÉFONO PERSONAL</label>
-            <div class="col-9">
-                <input name="TelefonoPersonal" type="tel" class="form-control" placeholder="Ingrese teléfono personal">
-            </div>
-        </div>
+    .form-label {
+        color: var(--color-secondary);
+    }
 
-        <div class="form-group row">
-            <label class="col-3 col-form-label">CORREO ELECTRÓNICO</label>
-            <div class="col-9">
-                <input name="CorreoElectronico" type="email" class="form-control" placeholder="Ingrese correo electrónico">
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-3 col-form-label">REDES SOCIALES</label>
-            <div class="col-9">
-                <input name="RedesSociales" type="text" class="form-control" placeholder="Ingrese redes sociales">
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-3 col-form-label">PÁGINA WEB</label>
-            <div class="col-9">
-                <input name="PaginaWeb" type="url" class="form-control" placeholder="Ingrese página web">
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-3 col-form-label">AFINIDAD</label>
-            <div class="col-9">
-                <input name="Afinidad" type="text" class="form-control" placeholder="Ingrese afinidad">
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-3 col-form-label">COMPROMISO</label>
-            <div class="col-9">
-                <input name="Compromiso" type="text" class="form-control" placeholder="Ingrese compromiso">
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label class="col-3 col-form-label">COMENTARIOS</label>
-            <div class="col-9">
-                <textarea name="Comentarios" class="form-control" placeholder="Ingrese comentarios"></textarea>
-            </div>
-        </div>
-
-        <div class="text-center mt-4">
-            <button type="button" class="btn btn-danger" id="submitButton">Guardar</button>
-            <button type="button" class="btn" id="regresarActor">Regresar</button>
-        </div>
-    </form>
-
-</div>
-
-
+    .form-control:focus {
+        border-color: var(--color-secondary);
+        box-shadow: 0 0 0 0.2rem rgba(35, 91, 78, 0.25); /* Pantone 626 C */
+    }
+</style>
 <script>
+
+    let callDepth = 0; 
+    const MAX_CALL_DEPTH = 5; 
+    let isFetchingSubCategoria = false; 
+
     $(document).ready(function () {
         $("#regresarActor").click(function (e) {
             e.preventDefault();
-            window.location.href = '/Actor/Index';
+            window.location.href = '/Actor/Select';
+        });
+
+        $('#addRedSocial').on('click', function () {
+            const redSocial = $('#inputRedSocial').val().trim();
+
+            if (redSocial === '') {
+                alert('Por favor, ingrese una red social.');
+                return;
+            }
+
+            const nuevaFila = `
+                <tr>
+                    <td>
+                        <input type="hidden" name="RedesSociales[]" value="${redSocial}">
+                        ${redSocial}
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm removeRedSocial">Eliminar</button>
+                    </td>
+                </tr>`;
+
+            $('#tablaRedesSociales tbody').append(nuevaFila);
+
+            $('#inputRedSocial').val('');
+        });
+
+        $(document).on('click', '.removeRedSocial', function () {
+            $(this).closest('tr').remove();
         });
 
         $('#submitButton').on('click', function (e) {
             e.preventDefault();
 
-            // Crear un objeto FormData y agregar los datos del formulario
             var formData = new FormData($('#personalForm')[0]);
 
-            // Recoger las categorías de la tabla
             var categorias = [];
             $('#tablaCategorias tbody tr').each(function () {
                 var grupoId = $(this).data('grupoid');
@@ -198,19 +257,19 @@
                 });
             });
 
-            // Agregar las categorías al FormData
             formData.append('categoriasJson', JSON.stringify(categorias));
 
-            // Realizar la solicitud AJAX
             $.ajax({
                 url: '/Actor/Create',
                 type: 'POST',
                 data: formData,
-                contentType: false, // Importante para enviar los archivos
-                processData: false, // Evita que jQuery procese el FormData
+                contentType: false, 
+                processData: false, 
                 success: function (response) {
-                    alert('Actor creado exitosamente!');
-                    // Limpiar formulario
+                    MensajeExito('Guardado', 'Actor creado exitosamente!');
+
+                    $('#tablaCategorias tbody').empty();
+
                     $('#personalForm')[0].reset();
                 },
                 error: function (xhr, status, error) {
@@ -222,30 +281,25 @@
         $('#agregarCategoria').on('click', function (e) {
             e.preventDefault();
 
-            // Captura los valores de los inputs y sus IDs
             var grupo = $('#grupo').data('kendoDropDownList').text();
-            var grupoId = $('#grupo').data('kendoDropDownList').value(); // Obtener el valor correcto del kendoDropDownList
+            var grupoId = $('#grupo').data('kendoDropDownList').value(); 
             var subgrupo = $('#subgrupo').data('kendoDropDownList').text();
             var subgrupoId = $('#subgrupo').data('kendoDropDownList').value();
             var clasificacion = $('#clasificacion').data('kendoDropDownList').text();
             var clasificacionId = $('#clasificacion').data('kendoDropDownList').value();
 
-            // Validar que los campos no estén vacíos antes de agregar
             if (!grupoId || !subgrupoId || !clasificacionId) {
                 alert('Todos los campos deben estar llenos y seleccionados correctamente.');
                 return;
             }
 
-            // Selecciona solo la última subcategoría agregada dinámicamente
             var ultimaSubcategoria = $('.subcategoria-container input').last();
             if (ultimaSubcategoria.data('kendoDropDownList') != null) {
 
                 var subcategoriaText = ultimaSubcategoria.data('kendoDropDownList').text();
                 var subcategoriaId = ultimaSubcategoria.data('kendoDropDownList').value();
 
-                // Evitar agregar subcategorías sin seleccionar
                 if (subcategoriaId) {
-                    // Agrega una nueva fila a la tabla con los IDs
                     var nuevaFila = `
                         <tr data-grupoid="${grupoId}" data-subgrupoid="${subgrupoId}" data-clasificacionid="${clasificacionId}" data-subcategoriaid="${subcategoriaId}">
                             <td>${grupo}</td>
@@ -259,7 +313,6 @@
                     $('#tablaCategorias tbody').append(nuevaFila);
                 }
             } else {
-                                // Agrega una nueva fila a la tabla con los IDs
                 var nuevaFila = `
                     <tr data-grupoid="${grupoId}" data-subgrupoid="${subgrupoId}" data-clasificacionid="${clasificacionId}">
                         <td>${grupo}</td>
@@ -272,7 +325,6 @@
                 `;
                 $('#tablaCategorias tbody').append(nuevaFila);
             }
-            // Limpia los campos después de agregar la fila
             $('#grupo').data('kendoDropDownList').value('');
             $('#subgrupo').data('kendoDropDownList').value('');
             $('#clasificacion').data('kendoDropDownList').value('');
@@ -280,7 +332,6 @@
             $('#subgrupoId').val('');
             $('#clasificacionId').val('');
 
-            // Elimina todas las subcategorías dinámicas después de agregar a la tabla
             $('.subcategoria-container').remove();
         });
 
@@ -289,7 +340,6 @@
             $(this).closest('tr').remove();
         });
 
-        // Carga inicial de grupos
         obtenerGrupos();
     });
 
@@ -306,7 +356,14 @@
                     change: function (e) {
                         var idGrupo = this.value();
                         if (idGrupo) {
+                            limpiarSubcategorias();
+                            reiniciarDropdown("#subgrupo");
+                            reiniciarDropdown("#clasificacion");
                             obtenerSubGrupos(idGrupo);
+                        } else {
+                            limpiarSubcategorias();
+                            reiniciarDropdown("#subgrupo");
+                            reiniciarDropdown("#clasificacion");
                         }
                     }
                 });
@@ -315,6 +372,21 @@
                 console.log('Ocurrió un error: ' + error);
             }
         });
+    }
+
+    function reiniciarDropdown(selector) {
+        const dropdown = $(selector).data("kendoDropDownList");
+
+        if (dropdown) { 
+            dropdown.dataSource.data([]); 
+            dropdown.value('');
+        } else {
+            console.log(`El dropdown ${selector} no está inicializado o no se encontró.`);
+        }
+    }
+
+    function limpiarSubcategorias() {
+        $('.subcategoria-container').remove();
     }
 
     function obtenerSubGrupos(idGrupo) {
@@ -368,34 +440,52 @@
     }
 
     function obtenerSubCategoria(idSubCategoria) {
+        if (isFetchingSubCategoria || callDepth >= MAX_CALL_DEPTH) {
+            console.log('Se detuvo la recursión para evitar un ciclo infinito.');
+            return;
+        }
+
+        isFetchingSubCategoria = true;
+        callDepth++;
+
         $.ajax({
             url: '/Actor/ObtenerSubCategorias',
             type: 'POST',
             data: { idCategoria: idSubCategoria },
             success: function (response) {
-                if (response && response.length > 0) {
-                    var subCategoriaContainer = $('<div class="form-group row subcategoria-container">')
-                        .append('<label class="col-3 col-form-label">SUBCATEGORÍA</label>')
-                        .append('<div class="col-9"><input id="subcategoria' + idSubCategoria + '" name="subcategoria" class="form-control"></div>');
-
-                    $('#clasificacionForm').append(subCategoriaContainer);
-
-                    $("#subcategoria" + idSubCategoria).kendoDropDownList({
-                        dataTextField: "descripcion",
-                        dataValueField: "idCategoria",
-                        dataSource: response,
-                        optionLabel: "Seleccione una subcategoría",
-                        change: function (e) {
-                            var idSubCategoria = this.value();
-                            if (idSubCategoria) {
-                                obtenerSubCategoria(idSubCategoria);
-                            }
-                        }
-                    });
+                isFetchingSubCategoria = false;
+                
+                if (!response || response.length === 0) {
+                    console.log('No se encontraron subcategorías.');
+                    return;
                 }
+
+                const subCategoriaContainer = $('<div class="form-group row subcategoria-container">')
+                    .append('<label class="col-3 col-form-label">SUBCATEGORÍA</label>')
+                    .append('<div class="col-9"><input id="subcategoria' + idSubCategoria + '" name="subcategoria" class="form-control"></div>');
+
+                $('#clasificacionForm').append(subCategoriaContainer);
+
+                $("#subcategoria" + idSubCategoria).kendoDropDownList({
+                    dataTextField: "descripcion",
+                    dataValueField: "idCategoria",
+                    dataSource: response,
+                    optionLabel: "Seleccione una subcategoría",
+                    change: function (e) {
+                        const newSubCategoriaId = this.value();
+
+                        if (newSubCategoriaId && newSubCategoriaId !== idSubCategoria) {
+                            obtenerSubCategoria(newSubCategoriaId);
+                        }
+                    }
+                });
             },
             error: function (xhr, status, error) {
+                isFetchingSubCategoria = false;
                 console.log('Ocurrió un error: ' + error);
+            },
+            complete: function () {
+                callDepth--;
             }
         });
     }
