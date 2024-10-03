@@ -1,4 +1,14 @@
-﻿// Función para mostrar mensajes de éxito
+﻿//$(document).ready(function () {
+//    $("#loadingModal").kendoWindow({
+//        modal: true,
+//        visible: false,
+//        width: "300px",
+//        height: "150px",        
+//        actions: []
+//    });
+//});
+
+// Función para mostrar mensajes de éxito
 function MensajeExito(titulo = '¡Éxito!', mensaje = 'Operación realizada con éxito.') {
     Swal.fire({
         icon: 'success',
@@ -46,3 +56,15 @@ function MensajeConfirmacion(titulo = '¿Estás seguro?', mensaje = 'Esta acció
         }
     });
 }
+
+//// Función global para mostrar el modal de cargando
+//function mostrarCargando() {
+//    var loadingModal = $("#loadingModal").data("kendoWindow");
+//    loadingModal.center().open(); // Centrar y abrir el modal
+//}
+
+//// Función global para ocultar el modal de cargando
+//function ocultarCargando() {
+//    var loadingModal = $("#loadingModal").data("kendoWindow");
+//    loadingModal.close(); // Cerrar el modal
+//}

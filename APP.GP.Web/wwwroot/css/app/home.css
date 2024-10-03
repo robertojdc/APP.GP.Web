@@ -1,7 +1,24 @@
-﻿body {
-    font-size: 9px !important;
-    margin: 0;
-    padding: 0;
+﻿:root {
+    --color-primary: #9F2241; /* Pantone 7420 C */
+    --color-secondary: #235B4E; /* Pantone 626 C */
+    --color-accent: #DDC9A3; /* Pantone 468 C */
+    --color-gray: #98989A; /* Pantone Cool Gray 7 C */
+    --color-background: #F5F5F5; /* Fondo neutro para claridad */
+}
+
+body {
+    background-color: var(--color-background);
+}
+
+.card-header {
+    background-color: var(--color-primary);
+    border-bottom: 2px solid var(--color-secondary);
+}
+
+.btn-danger {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
 }
 
 details {
@@ -255,3 +272,19 @@ tr:nth-child(even) {
     clear: both;
     visibility: hidden;
 }
+
+
+    .btn-danger:hover {
+        background-color: #691C32; /* Un tono más oscuro para el hover */
+        border-color: #691C32;
+    }
+
+.btn-outline-secondary {
+    border-color: var(--color-secondary);
+    color: var(--color-secondary);
+}
+
+    .btn-outline-secondary:hover {
+        background-color: var(--color-secondary);
+        color: white;
+    }

@@ -1,6 +1,7 @@
 ﻿using APP.GP.Web.Model;
 using APP.GP.Web.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 
 namespace APP.GP.Web.Controllers;
@@ -39,11 +40,12 @@ public class ActorController : Controller
         return Ok(grupos);
     }
 
-    public async Task<IActionResult> GetActores(int idSubCategoria)
+    public async Task<IActionResult> GetActores(int idSubCategoria, int tipo)
     {
         var grupos = await _grupoService.GetActoresAsync(new Model.Filtros.FiltroActor
         {
-            IdCategoria = idSubCategoria
+            IdCategoria = idSubCategoria,
+            Tipo = tipo
         });
         return Ok(grupos);
     }
@@ -132,4 +134,50 @@ public class ActorController : Controller
         var resultado = await _grupoService.DelActorAsync(idActor);
         return Ok(resultado);
     }
+    //GET Edit
+    public async Task<IActionResult> Edit(int idActor)
+    {
+        var actor = await _grupoService.GetActorByIdAsync(idActor);
+        ViewBag.Afinidades = (await _grupoService.GetAfinidades())
+             .Select(a => new SelectListItem
+             {
+                 Value = a.Id.ToString(),
+                 Text = a.Nombre
+             }).ToList();
+        return View(actor);
+    }
+
+    public async Task<IActionResult> GetActorDetalle(int id)
+    {
+        var actor = await _grupoService.GetActorByIdAsync(id);
+
+        if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+        {
+            return PartialView("_ActorDetailPartial", actor);
+        }
+
+        return View(actor);
+    }
+    public async Task<IActionResult> GetAfinidades()
+    {
+        var afinidades = await _grupoService.GetAfinidades();
+        return Json(afinidades);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(Actor actor, IFormFile Foto)
+    {
+        if (Foto != null && Foto.Length > 0)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                await Foto.CopyToAsync(memoryStream);
+                actor.FotoBase64 = Convert.ToBase64String(memoryStream.ToArray());
+            }
+        }
+
+        var resultado = await _grupoService.EditActorAsync(actor);
+        return Ok(resultado);
+    }
+
 }

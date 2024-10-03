@@ -21,27 +21,30 @@
                     <input id="clasificacion" name="clasificacion" class="form-control" placeholder="Seleccione una clasificación">
                     <input type="hidden" id="clasificacionId" name="clasificacionId">
                 </div>
-                <div class="col-12 text-center">
-                    <button type="button" class="btn btn-danger w-100 mt-3" id="agregarCategoria">Agregar</button>
-                </div>
             </form>
+            <br />
+            <div class="col-12 text-center">
+                <button type="button" class="btn btn-danger w-10 mt-3" id="agregarCategoria">Agregar</button>
+            </div>
+            <br />
+            <!-- Tabla de Categorías -->
+            <div class="table-responsive mb-4">
+                <table class="table table-striped table-hover" id="tablaCategorias" style="display:none;">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Grupo</th>
+                            <th>Subgrupo</th>
+                            <th>Clasificación</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
     </div>
 
-    <!-- Tabla de Categorías -->
-    <div class="table-responsive mb-4">
-        <table class="table table-striped table-hover" id="tablaCategorias">
-            <thead class="table-dark">
-                <tr>
-                    <th>Grupo</th>
-                    <th>Subgrupo</th>
-                    <th>Clasificación</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
+
 
     <!-- Ficha Personal Section -->
     <div class="container-fluid py-4">
@@ -119,7 +122,7 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg-4">
                         <label for="Afinidad" class="form-label">AFINIDAD</label>
-                        <input name="Afinidad" type="text" class="form-control" placeholder="Ingrese afinidad">
+                        <input id="afinidad" name="Afinidad" class="form-control" placeholder="Ingrese afinidad">
                     </div>
                     <div class="col-12 col-md-6 col-lg-4">
                         <label for="Compromiso" class="form-label">COMPROMISO</label>
@@ -138,7 +141,7 @@
         </div>
     </div>
 </div>
-
+@* 
 <style>
     /* Colores basados en los Pantones proporcionados */
     :root {
@@ -180,7 +183,7 @@
         }
 
     .table thead {
-        background-color: var(--color-secondary);
+        /* background-color: var(--color-secondary); */
         color: white;
     }
 
@@ -196,19 +199,19 @@
         border-color: var(--color-secondary);
         box-shadow: 0 0 0 0.2rem rgba(35, 91, 78, 0.25); /* Pantone 626 C */
     }
-</style>
+</style> *@
 <script>
 
-    let callDepth = 0; 
-    const MAX_CALL_DEPTH = 5; 
-    let isFetchingSubCategoria = false; 
+    let callDepth = 0;
+    const MAX_CALL_DEPTH = 5;
+    let isFetchingSubCategoria = false;
 
     $(document).ready(function () {
         $("#regresarActor").click(function (e) {
             e.preventDefault();
             window.location.href = '/Actor/Select';
         });
-
+        obtenerAfinidad();
         $('#addRedSocial').on('click', function () {
             const redSocial = $('#inputRedSocial').val().trim();
 
@@ -218,15 +221,15 @@
             }
 
             const nuevaFila = `
-                <tr>
-                    <td>
-                        <input type="hidden" name="RedesSociales[]" value="${redSocial}">
-                        ${redSocial}
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-danger btn-sm removeRedSocial">Eliminar</button>
-                    </td>
-                </tr>`;
+                                <tr>
+                                    <td>
+                                        <input type="hidden" name="RedesSociales[]" value="${redSocial}">
+                                        ${redSocial}
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-sm removeRedSocial">Eliminar</button>
+                                    </td>
+                                </tr>`;
 
             $('#tablaRedesSociales tbody').append(nuevaFila);
 
@@ -263,8 +266,8 @@
                 url: '/Actor/Create',
                 type: 'POST',
                 data: formData,
-                contentType: false, 
-                processData: false, 
+                contentType: false,
+                processData: false,
                 success: function (response) {
                     MensajeExito('Guardado', 'Actor creado exitosamente!');
 
@@ -276,55 +279,57 @@
                     alert('Ocurrió un error: ' + error);
                 }
             });
-        }); 
+        });
 
         $('#agregarCategoria').on('click', function (e) {
             e.preventDefault();
-
+            debugger;
             var grupo = $('#grupo').data('kendoDropDownList').text();
-            var grupoId = $('#grupo').data('kendoDropDownList').value(); 
+            var grupoId = $('#grupo').data('kendoDropDownList').value();
             var subgrupo = $('#subgrupo').data('kendoDropDownList').text();
             var subgrupoId = $('#subgrupo').data('kendoDropDownList').value();
             var clasificacion = $('#clasificacion').data('kendoDropDownList').text();
             var clasificacionId = $('#clasificacion').data('kendoDropDownList').value();
 
+            // Validar que todos los campos estén llenos
             if (!grupoId || !subgrupoId || !clasificacionId) {
-                alert('Todos los campos deben estar llenos y seleccionados correctamente.');
+                MensajeAdvertencia('Todos los campos deben estar llenos y seleccionados correctamente.');
                 return;
             }
 
-            var ultimaSubcategoria = $('.subcategoria-container input').last();
-            if (ultimaSubcategoria.data('kendoDropDownList') != null) {
+            // Obtener los inputs en la subcategoria-container
+            var subcategoriaInputs = $('.subcategoria-container input');
+            var ultimaSubcategoria = subcategoriaInputs.last(); // Obtener el último input
 
-                var subcategoriaText = ultimaSubcategoria.data('kendoDropDownList').text();
-                var subcategoriaId = ultimaSubcategoria.data('kendoDropDownList').value();
-
-                if (subcategoriaId) {
-                    var nuevaFila = `
-                        <tr data-grupoid="${grupoId}" data-subgrupoid="${subgrupoId}" data-clasificacionid="${clasificacionId}" data-subcategoriaid="${subcategoriaId}">
-                            <td>${grupo}</td>
-                            <td>${subgrupo}</td>
-                            <td>${subcategoriaText}</td>
-                            <td>
-                                <button type="button" class="btn btn-danger btn-sm eliminarFila">Eliminar</button>
-                            </td>
-                        </tr>
-                    `;
-                    $('#tablaCategorias tbody').append(nuevaFila);
-                }
-            } else {
-                var nuevaFila = `
-                    <tr data-grupoid="${grupoId}" data-subgrupoid="${subgrupoId}" data-clasificacionid="${clasificacionId}">
-                        <td>${grupo}</td>
-                        <td>${subgrupo}</td>
-                        <td>${clasificacion}</td>
-                        <td>
-                            <button type="button" class="btn btn-danger btn-sm eliminarFila">Eliminar</button>
-                        </td>
-                    </tr>
-                `;
-                $('#tablaCategorias tbody').append(nuevaFila);
+            // Si el último input no tiene valor seleccionado, usar el penúltimo
+            if (!ultimaSubcategoria.data('kendoDropDownList') || !ultimaSubcategoria.data('kendoDropDownList').value()) {
+                ultimaSubcategoria = subcategoriaInputs.eq(-2); // Cambiar al penúltimo input si el último no está seleccionado
             }
+
+            var subcategoriaText = '';
+            var subcategoriaId = '';
+
+            if (ultimaSubcategoria.data('kendoDropDownList') != null) {
+                subcategoriaText = ultimaSubcategoria.data('kendoDropDownList').text();
+                subcategoriaId = ultimaSubcategoria.data('kendoDropDownList').value();
+            }
+
+            // Crear la nueva fila con o sin subcategoría
+            var nuevaFila = `
+                <tr data-grupoid="${grupoId}" data-subgrupoid="${subgrupoId}" data-clasificacionid="${clasificacionId}" ${subcategoriaId ? `data-subcategoriaid="${subcategoriaId}"` : ''}>
+                    <td>${grupo}</td>
+                    <td>${subgrupo}</td>
+                    <td>${subcategoriaId ? subcategoriaText : clasificacion}</td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm eliminarFila">Eliminar</button>
+                    </td>
+                </tr>
+            `;
+
+            $('#tablaCategorias tbody').append(nuevaFila);
+
+            // Mostrar la tabla y limpiar los campos
+            $("#tablaCategorias").show();
             $('#grupo').data('kendoDropDownList').value('');
             $('#subgrupo').data('kendoDropDownList').value('');
             $('#clasificacion').data('kendoDropDownList').value('');
@@ -332,8 +337,10 @@
             $('#subgrupoId').val('');
             $('#clasificacionId').val('');
 
+            // Eliminar las subcategorías para evitar duplicados
             $('.subcategoria-container').remove();
         });
+
 
 
         $(document).on('click', '.eliminarFila', function () {
@@ -342,6 +349,24 @@
 
         obtenerGrupos();
     });
+
+    function obtenerAfinidad() {
+        $.ajax({
+            url: '/Actor/GetAfinidades',
+            type: 'GET',
+            success: function (response) {
+                $("#afinidad").kendoDropDownList({
+                    dataTextField: "nombre",
+                    dataValueField: "id",
+                    dataSource: response,
+                    optionLabel: "Seleccione una afinidad"
+                });
+            },
+            error: function (xhr, status, error) {
+                console.log('Ocurrió un error: ' + error);
+            }
+        });
+    }
 
     function obtenerGrupos() {
         $.ajax({
@@ -355,13 +380,12 @@
                     optionLabel: "Seleccione un grupo",
                     change: function (e) {
                         var idGrupo = this.value();
+                        limpiarSubcategorias();
                         if (idGrupo) {
-                            limpiarSubcategorias();
                             reiniciarDropdown("#subgrupo");
                             reiniciarDropdown("#clasificacion");
                             obtenerSubGrupos(idGrupo);
                         } else {
-                            limpiarSubcategorias();
                             reiniciarDropdown("#subgrupo");
                             reiniciarDropdown("#clasificacion");
                         }
@@ -377,8 +401,8 @@
     function reiniciarDropdown(selector) {
         const dropdown = $(selector).data("kendoDropDownList");
 
-        if (dropdown) { 
-            dropdown.dataSource.data([]); 
+        if (dropdown) {
+            dropdown.dataSource.data([]);
             dropdown.value('');
         } else {
             console.log(`El dropdown ${selector} no está inicializado o no se encontró.`);
@@ -415,6 +439,9 @@
     }
 
     function obtenerCategoria(idSubGrupo) {
+        // Eliminar subcategorías previas antes de agregar nuevas
+        limpiarSubcategorias();
+
         $.ajax({
             url: '/Actor/ObtenerCategorias',
             type: 'POST',
@@ -428,6 +455,8 @@
                     change: function (e) {
                         var idSubCategoria = this.value();
                         if (idSubCategoria) {
+                            // Limpiar subcategorías anteriores
+                            limpiarSubcategorias();
                             obtenerSubCategoria(idSubCategoria);
                         }
                     }
@@ -435,9 +464,10 @@
             },
             error: function (xhr, status, error) {
                 console.log('Ocurrió un error: ' + error);
-            }   
+            }
         });
     }
+
 
     function obtenerSubCategoria(idSubCategoria) {
         if (isFetchingSubCategoria || callDepth >= MAX_CALL_DEPTH) {
@@ -454,18 +484,21 @@
             data: { idCategoria: idSubCategoria },
             success: function (response) {
                 isFetchingSubCategoria = false;
-                
+
                 if (!response || response.length === 0) {
                     console.log('No se encontraron subcategorías.');
                     return;
                 }
 
-                const subCategoriaContainer = $('<div class="form-group row subcategoria-container">')
-                    .append('<label class="col-3 col-form-label">SUBCATEGORÍA</label>')
-                    .append('<div class="col-9"><input id="subcategoria' + idSubCategoria + '" name="subcategoria" class="form-control"></div>');
+                // Crear un contenedor con la misma estructura que tu formulario
+                const subCategoriaContainer = $('<div class="col-md-4 subcategoria-container">')
+                    .append('<label for="subcategoria' + idSubCategoria + '" class="form-label">SUBCATEGORÍA</label>')
+                    .append('<input id="subcategoria' + idSubCategoria + '" name="subcategoria" class="form-control" placeholder="Seleccione una subcategoría">');
 
+                // Insertar el contenedor en el formulario
                 $('#clasificacionForm').append(subCategoriaContainer);
 
+                // Inicializar el KendoDropDownList para el nuevo input de subcategoría
                 $("#subcategoria" + idSubCategoria).kendoDropDownList({
                     dataTextField: "descripcion",
                     dataValueField: "idCategoria",
@@ -489,4 +522,5 @@
             }
         });
     }
+
 </script>

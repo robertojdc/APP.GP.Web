@@ -30,6 +30,12 @@ builder.Services.AddHttpClient<SubGrupoService>((serviceProvider, client) =>
     client.BaseAddress = new Uri(apiSettings.BaseUrl);
 });
 
+builder.Services.AddHttpClient<EventoService>((serviceProvider, client) =>
+{
+    var apiSettings = serviceProvider.GetRequiredService<IOptions<ApiSettings>>().Value;
+    client.BaseAddress = new Uri(apiSettings.BaseUrl);
+});
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {

@@ -50,11 +50,11 @@ public class CategoriaController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(int idCategoria, int idSubGrupo, string descripcion)
+    public async Task<IActionResult> CreateCat(int idCategoria, int idSubGrupo, string descripcion)
     {
         try
         {
-            var result = await _grupoService.InsCatalogoCategoria(new Categoria { IdSubGrupo = idCategoria, Descripcion = descripcion, IdSubcategoria = idCategoria });
+            var result = await _grupoService.InsCatalogoCategoria(new Categoria { IdSubGrupo = idSubGrupo, Descripcion = descripcion, IdSubcategoria = idCategoria });
 
             return Json(result);
         }
@@ -64,7 +64,20 @@ public class CategoriaController : Controller
         }
     }
 
+    [HttpPost]
+    public async Task<IActionResult> CreateSub(int idCategoria, int idSubGrupo, string descripcion)
+    {
+        try
+        {
+            var result = await _grupoService.InsCatalogoCategoria(new Categoria { IdSubGrupo = 0, Descripcion = descripcion, IdSubcategoria = idCategoria });
 
+            return Json(result);
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
 
     [HttpGet]
     public async Task<IActionResult> Edit(int id)

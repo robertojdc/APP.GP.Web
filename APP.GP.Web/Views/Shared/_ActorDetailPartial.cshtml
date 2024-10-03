@@ -1,0 +1,89 @@
+﻿@model APP.GP.Web.Model.Actor
+
+@{
+    Layout = null;
+}
+
+<div class="row g-3">
+    <!-- Fila para la imagen -->
+    <div class="col-12 col-md-4 text-center">
+        <img src="data:image/png;base64,@Model.FotoBase64" class="img-thumbnail mb-3" width="150" alt="Foto del actor político" />
+    </div>
+
+    <!-- Fila para los campos de solo texto usando <span> -->
+    <div class="col-12 col-md-8">
+        <div class="row">
+            <div class="col-6">
+                <label class="form-label">Nombre(s)</label>
+            </div>
+            <div class="col-6">
+                <span>@Model.Nombre</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <label class="form-label">Apellido Paterno</label>
+            </div>
+            <div class="col-6">
+                <span>@Model.ApellidoPaterno</span>
+            </div>
+        </div>
+        <!-- Otros campos en filas separadas -->
+        <div class="row">
+            <div class="col-6">
+                <label class="form-label">Apellido Materno</label>
+            </div>
+            <div class="col-6">
+                <span>@Model.ApellidoMaterno</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <label class="form-label">Fecha de Nacimiento</label>
+            </div>
+            <div class="col-6">
+                <span>@Model.FechaNacimiento.Value.ToString("dd/MM/yyyy")</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Continúa con los demás campos en nuevas filas -->
+    <div class="col-3">
+        <label class="form-label">Domicilio Laboral</label>
+        <span>@Model.DomicilioLaboral</span>
+    </div>
+    <div class="col-3">
+        <label class="form-label">Teléfono Laboral</label>
+        <span>@Model.TelefonoLaboral</span>
+    </div>
+    <div class="col-3">
+        <label class="form-label">Teléfono Personal</label>
+        <span>@Model.TelefonoPersonal</span>
+    </div>
+    <div class="col-3">
+        <label class="form-label">Correo Electrónico</label>
+        <span>@Model.CorreoElectronico</span>
+    </div>
+    <div class="col-3">
+        <label class="form-label">Redes Sociales</label>
+        <span>@Model.inputRedSocial</span>
+    </div>
+    <div class="col-3">
+        <label class="form-label">Página Web</label>
+        <span>@Model.PaginaWeb</span>
+    </div>
+    <div class="col-3">
+        <label class="form-label">Afinidad</label>
+        <span>@Model.Afinidad</span>
+    </div>
+    <div class="col-3">
+        <label class="form-label">Compromiso</label>
+        <span>@Model.Compromiso</span>
+    </div>
+    <div class="col-12">
+        <label class="form-label">Comentarios</label>
+        <span>@Model.Comentarios</span>
+    </div>
+</div>

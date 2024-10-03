@@ -1,0 +1,603 @@
+﻿<div class="container-fluid py-4">
+    <div class="card shadow-sm mb-4">
+        <div class="card-header text-white text-center">
+            <h3 class="mb-0">ADMINISTRACIÓN DE EVENTOS</h3>
+        </div>
+        <div class="card-body">
+            <form id="clasificacionForm" class="row g-3">
+                <div class="col-md-4">
+                    <label for="ddlGrupo" class="form-label">EVENTO</label>
+                    <input id="ddlGrupo" class="form-control" placeholder="Seleccione un grupo">
+                </div>
+                <div class="col-md-4">
+                    <label for="subgrupo" class="form-label">ESCENARIO</label>
+                    <input id="subgrupo" name="subgrupo" class="form-control" placeholder="Seleccione un subgrupo">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="parent-container" style="display:none;">
+    <input type="hidden" id="idSelected" />
+
+    <div class="center-left">
+        <div id="selectableLeft" class="selectable">
+            <div class="row row-1">
+                <div id="cuadro-1-1" data-fila="1" data-columna="1"></div>
+            </div>
+            <div class="row row-2">
+                <div id="cuadro-2-1" data-fila="2" data-columna="1"></div>
+                <div id="cuadro-2-2" data-fila="2" data-columna="2"></div>
+            </div>
+            <div class="row row-3">
+                <div id="cuadro-3-1" data-fila="3" data-columna="1"></div>
+                <div id="cuadro-3-2" data-fila="3" data-columna="2"></div>
+            </div>
+            <div class="row row-4">
+                <div id="cuadro-4-1" data-fila="4" data-columna="1"></div>
+                <div id="cuadro-4-2" data-fila="4" data-columna="2"></div>
+            </div>
+            <div class="row row-5">
+                <div id="cuadro-5-1" data-fila="5" data-columna="1"></div>
+                <div id="cuadro-5-2" data-fila="5" data-columna="2"></div>
+            </div>
+            <div class="row row-6">
+                <div id="cuadro-6-1" data-fila="6" data-columna="1"></div>
+                <div id="cuadro-6-2" data-fila="6" data-columna="2"></div>
+            </div>
+            <div class="row row-7">
+                <div id="cuadro-7-1" data-fila="7" data-columna="1"></div>
+                <div id="cuadro-7-2" data-fila="7" data-columna="2"></div>
+            </div>
+            <div class="row row-8">
+                <div id="cuadro-8-8" data-fila="8" data-columna="1"></div>
+                <div id="cuadro-8-8" data-fila="8" data-columna="2"></div>
+            </div>
+            <div class="row row-9">
+                <div id="cuadro-9-1" data-fila="9" data-columna="1"></div>
+                <div id="cuadro-9-2" data-fila="9" data-columna="2"></div>
+            </div>
+            <div class="row row-10">
+                <div id="cuadro-10-1" data-fila="10" data-columna="1"></div>
+                <div id="cuadro-10-2" data-fila="10" data-columna="2"></div>
+            </div>
+
+            <div class="row row-11">
+                <div id="cuadro-11-1" data-fila="11" data-columna="1"></div>
+                <div id="cuadro-11-2" data-fila="11" data-columna="2"></div>
+            </div>
+            <div class="row row-12">
+                <div id="cuadro-12-1" data-fila="12" data-columna="1"></div>
+                <div id="cuadro-12-2" data-fila="12" data-columna="2"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="selectableCongL" class="center-container selectable" style="margin-top:100px;">
+        <div class="row row-1">
+            <div id="cuadro-1-3" data-fila="1" data-columna="3"></div>
+            <div id="cuadro-1-4" data-fila="1" data-columna="4"></div>
+            <div id="cuadro-1-5" data-fila="1" data-columna="5"></div>
+        </div>
+        <div class="row row-2">
+            <div id="cuadro-2-3" data-fila="2" data-columna="3"></div>
+            <div id="cuadro-2-4" data-fila="2" data-columna="4"></div>
+            <div id="cuadro-2-5" data-fila="2" data-columna="5"></div>
+            <div id="cuadro-2-6" data-fila="2" data-columna="6"></div>
+        </div>
+        <div class="row row-3">
+            <div id="cuadro-3-3" data-fila="3" data-columna="3"></div>
+            <div id="cuadro-3-4" data-fila="3" data-columna="4"></div>
+            <div id="cuadro-3-5" data-fila="3" data-columna="5"></div>
+            <div id="cuadro-3-6" data-fila="3" data-columna="6"></div>
+            <div id="cuadro-3-7" data-fila="3" data-columna="7"></div>
+        </div>
+        <div class="row row-4">
+            <div id="cuadro-4-3" data-fila="4" data-columna="3"></div>
+            <div id="cuadro-4-4" data-fila="4" data-columna="4"></div>
+            <div id="cuadro-4-5" data-fila="4" data-columna="5"></div>
+            <div id="cuadro-4-6" data-fila="4" data-columna="6"></div>
+        </div>
+        <div class="row row-5">
+            <div id="cuadro-5-3" data-fila="5" data-columna="3"></div>
+            <div id="cuadro-5-4" data-fila="5" data-columna="4"></div>
+            <div id="cuadro-5-5" data-fila="5" data-columna="5"></div>
+            <div id="cuadro-5-6" data-fila="5" data-columna="6"></div>
+        </div>
+    </div>
+
+    <div class="center-container selectable" style="margin-top:500px;">
+        <div class="row row-6">
+            <div id="cuadro-6-7" data-fila="6" data-columna="7"></div>
+        </div>
+    </div>
+
+    <div id="selectableCongR" class="center-container selectable" style="margin-top:100px;">
+        <div class="row row-7">
+            <div id="cuadro-7-8" data-fila="7" data-columna="3"></div>
+            <div id="cuadro-7-9" data-fila="7" data-columna="4"></div>
+            <div id="cuadro-7-10" data-fila="7" data-columna="5"></div>
+        </div>
+        <div class="row row-8">
+            <div id="cuadro-8-8" data-fila="8" data-columna="3"></div>
+            <div id="cuadro-8-9" data-fila="8" data-columna="4"></div>
+            <div id="cuadro-8-10" data-fila="8" data-columna="5"></div>
+            <div id="cuadro-8-11" data-fila="8" data-columna="6"></div>
+        </div>
+        <div class="row row-9">
+            <div id="cuadro-9-8" data-fila="9" data-columna="3"></div>
+            <div id="cuadro-9-9" data-fila="9" data-columna="4"></div>
+            <div id="cuadro-9-10" data-fila="9" data-columna="5"></div>
+            <div id="cuadro-9-11" data-fila="9" data-columna="6"></div>
+            <div id="cuadro-9-12" data-fila="9" data-columna="7"></div>
+        </div>
+        <div class="row row-10">
+            <div id="cuadro-10-8" data-fila="10" data-columna="3"></div>
+            <div id="cuadro-10-9" data-fila="10" data-columna="4"></div>
+            <div id="cuadro-10-10" data-fila="10" data-columna="5"></div>
+            <div id="cuadro-10-11" data-fila="10" data-columna="6"></div>
+        </div>
+        <div class="row row-11">
+            <div id="cuadro-11-8" data-fila="11" data-columna="3"></div>
+            <div id="cuadro-11-9" data-fila="11" data-columna="4"></div>
+            <div id="cuadro-11-10" data-fila="11" data-columna="5"></div>
+            <div id="cuadro-11-11" data-fila="11" data-columna="6"></div>
+        </div>
+    </div>
+
+    <div class="center-right">
+        <div id="selectableRight" class="selectable">
+            <div class="row row-12">
+                <div id="cuadro-12-12" data-fila="12" data-columna="1"></div>
+            </div>
+            <div class="row row-13">
+                <div id="cuadro-13-12" data-fila="13" data-columna="1"></div>
+                <div id="cuadro-13-13" data-fila="13" data-columna="2"></div>
+            </div>
+            <!-- Más filas -->
+            <div class="row row-14">
+                <div id="cuadro-14-1" data-fila="14" data-columna="1"></div>
+                <div id="cuadro-14-2" data-fila="14" data-columna="2"></div>
+            </div>
+            <div class="row row-15">
+                <div id="cuadro-15-1" data-fila="15" data-columna="1"></div>
+                <div id="cuadro-15-2" data-fila="15" data-columna="2"></div>
+            </div>
+            <div class="row row-16">
+                <div id="cuadro-16-1" data-fila="16" data-columna="1"></div>
+                <div id="cuadro-16-2" data-fila="16" data-columna="2"></div>
+            </div>
+            <div class="row row-17">
+                <div id="cuadro-17-1" data-fila="17" data-columna="1"></div>
+                <div id="cuadro-17-2" data-fila="17" data-columna="2"></div>
+            </div>
+            <div class="row row-18">
+                <div id="cuadro-18-8" data-fila="18" data-columna="1"></div>
+                <div id="cuadro-18-8" data-fila="18" data-columna="2"></div>
+            </div>
+            <div class="row row-19">
+                <div id="cuadro-19-1" data-fila="19" data-columna="1"></div>
+                <div id="cuadro-19-2" data-fila="19" data-columna="2"></div>
+            </div>
+            <div class="row row-20">
+                <div id="cuadro-20-1" data-fila="20" data-columna="1"></div>
+                <div id="cuadro-20-2" data-fila="20" data-columna="2"></div>
+            </div>
+            <div class="row row-21">
+                <div id="cuadro-21-1" data-fila="21" data-columna="1"></div>
+                <div id="cuadro-21-2" data-fila="21" data-columna="2"></div>
+            </div>
+            <div class="row row-22">
+                <div id="cuadro-22-1" data-fila="22" data-columna="1"></div>
+                <div id="cuadro-22-2" data-fila="22" data-columna="2"></div>
+            </div>
+            <div class="row row-23">
+                <div id="cuadro-23-1" data-fila="23" data-columna="1"></div>
+                <div id="cuadro-23-2" data-fila="23" data-columna="2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="windowInstitucional" style="border: 2px solid #8B0000; padding: 20px; background-color: #FFFFFF; display:none; min-height:500px;">
+
+    <input id="actorAutoComplete" style="width: 100%;" />
+
+    <div id="listView"></div>
+</div>
+
+<script type="text/x-kendo-template" id="template">
+    <div class="actor" onclick="asignarActor(#= idActor #)">
+        # if (fotoBase64) { #
+            <img src="data:image/jpeg;base64,#= fotoBase64 #" alt="Foto de #= nombre # #= apellidoPaterno #" />
+        # } else { #
+            <img src="https://via.placeholder.com/110" alt="Foto no disponible" />
+        # } #
+        <h2>#: cargoActual #</h2>
+        <h3>#: nombre # #: apellidoPaterno # #: apellidoMaterno #</h3>
+    </div>
+</script>
+
+<script>
+    var allActors = [];
+    $(document).ready(function () {
+        // obtenerAllActores();
+        obtenerEventos();
+        // obtenerDisposiciones();
+        $(".selectable .row div").click(function () {
+            $("#idSelected").val($(this).attr("id"));
+            mostrarVentanaKendo("#windowInstitucional", "600px", "BÚsqueda de actores", 1);
+        });
+    });
+
+    function obtenerEventos() {
+        $.ajax({
+            url: '/Eventos/GetEventos',
+            type: 'GET',
+            success: function (response) {
+                $("#ddlGrupo").kendoDropDownList({
+                    dataTextField: "nombreEvento",
+                    dataValueField: "idEvento",
+                    dataSource: response,
+                    optionLabel: "Seleccione un evento",
+                    change: function (e) {
+                        var idGrupo = this.value();
+                        obtenerEscenarios(idGrupo);
+                    }
+                });
+            },
+            error: function (xhr, status, error) {
+                console.log('Ocurrió un error: ' + error);
+            }
+        });
+    }
+
+    function obtenerEscenarios() {
+        $.ajax({
+            url: '/Eventos/GetEscenariosByEvento',
+            type: 'GET',
+            data: { idEvento: 1 },
+            success: function (response) {
+                $("#subgrupo").kendoDropDownList({
+                    dataTextField: "nombreEscenario",
+                    dataValueField: "idEscenario",
+                    dataSource: response,
+                    optionLabel: "Seleccione un escenario",
+                    change: function (e) {
+                        var idEscenario = this.value();
+                        obtenerDisposiciones(idEscenario);
+                        $(".parent-container").show();
+                    }
+                });
+            },
+            error: function (xhr, status, error) {
+                console.log('Ocurrió un error: ' + error);
+            }
+        });
+    }
+
+    function obtenerAllActores() {
+        if (allActors.length === 0) {
+            $.ajax({
+                url: '@Url.Action("GetAllActores", "Eventos")',
+                type: 'GET',
+                dataType: 'json',
+                success: function (actors) {
+                    allActors = actors;
+                    inicializarAutoComplete(allActors);  // Inicializa el AutoComplete con todos los actores
+                },
+                error: function (xhr, status, error) {
+
+                    console.error('Error al obtener los actores:', error);
+                }
+            });
+        }
+    }
+
+    function mostrarVentanaKendo(selector, ancho, titulo, id) {
+        var listView = $("#listView").data("kendoListView");
+
+        // Si el ListView no ha sido inicializado, inicialízalo ahora
+        if (!listView) {
+            console.log("Inicializando ListView...");
+            $("#listView").kendoListView({
+                dataSource: [],
+                template: kendo.template($("#template").html())
+            });
+            console.log("ListView inicializado: ", $("#listView").data("kendoListView"));
+            listView = $("#listView").data("kendoListView");
+        }
+
+        if (listView) {
+            listView.dataSource.data([]); // Resetea los datos antes de abrir la ventana
+        }
+
+        var $kendoWindow = $(selector).kendoWindow({
+            width: ancho,
+            title: titulo,
+            visible: false,
+            modal: true,
+            actions: ["Close"],
+            close: function () {
+                $("#actorAutoComplete").val("");
+            }
+        }).data("kendoWindow");
+
+        $kendoWindow.center().open();
+    }
+
+
+    function inicializarAutoComplete(actors) {
+        $("#actorAutoComplete").kendoAutoComplete({
+            dataTextField: "nombre",  // Campo para mostrar en la lista
+            placeholder: 'Por favor, seleccione un actor...',
+            filter: "contains",       // Filtrado local
+            dataSource: actors,       // Usa todos los actores como origen de datos
+            suggest: true,
+            template: function (dataItem) {
+                // Resaltar las coincidencias en el texto
+                let nombreCompleto = [
+                    dataItem.nombre,
+                    dataItem.apellidoPaterno,
+                    dataItem.apellidoMaterno
+                ].filter(Boolean).join(" ");
+
+                let additionalInfo = [
+                    dataItem.cargoActual,
+                    dataItem.grupos,
+                    dataItem.subGrupo,
+                    dataItem.categoria
+                ].filter(Boolean).join(" - ");
+
+                return `${nombreCompleto} (${additionalInfo})`;
+            },
+            select: function (e) {
+                var dataItem = this.dataItem(e.item.index());
+                obtenerActor(dataItem.idActor);  // Asigna el actor seleccionado
+            }
+        });
+    }
+
+    // Filtrado local basado en el input del usuario
+    $("#actorAutoComplete").on("input", function () {
+        var searchText = $(this).val().toLowerCase();
+        if (searchText.length >= 3) {
+            filtrarActores(searchText);
+        }
+    });
+
+    // Función de filtrado local
+    function filtrarActores(searchText) {
+        var filteredActors = allActors.filter(function (actor) {
+            let nombreCompleto = [
+                actor.nombre,
+                actor.apellidoPaterno,
+                actor.apellidoMaterno
+            ].filter(Boolean).join(" ").toLowerCase();
+
+            let additionalInfo = [
+                actor.cargoActual,
+                actor.grupos,
+                actor.subGrupo,
+                actor.categoria
+            ].filter(Boolean).join(" - ").toLowerCase();
+
+            // Filtrar por coincidencia parcial en nombre o información adicional
+            return nombreCompleto.includes(searchText) || additionalInfo.includes(searchText);
+        });
+
+        // Actualiza el AutoComplete con los actores filtrados
+        var autoComplete = $("#actorAutoComplete").data("kendoAutoComplete");
+        if (autoComplete) {
+            autoComplete.setDataSource(filteredActors);
+        }
+    }
+
+    function obtenerActor(idActor) {
+        $.ajax({
+            url: '@Url.Action("GetActorById", "Eventos")',
+            type: 'GET',
+            data: { id: idActor },
+            success: function (actor) {
+                var listView = $("#listView").data("kendoListView");
+                if (listView) listView.dataSource.data([actor]);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error al obtener el actor:', error);
+            }
+        });
+    }
+
+    function obtenerDisposiciones() {
+        $.ajax({
+            url: '/Eventos/GetDisposicionesForEscenario',
+            type: 'GET',
+            data: { idEvento: 1, idEscenario: 1 },
+            success: function (data) {
+                renderizarDisposiciones(data);
+            },
+            error: function (error) {
+                console.error('Error al cargar las disposiciones:', error);
+            }
+        });
+    }
+
+    function renderizarDisposiciones(disposiciones) {
+        disposiciones.forEach(function (disposicion) {
+            var fila = disposicion.fila;
+            var columna = disposicion.columna;
+            var idActor = disposicion.idActor;
+            var fotoBase64 = disposicion.fotoBase64;
+
+            // Busca el div con los atributos data-fila y data-columna correspondientes
+            var $cuadro = $('div[data-fila="' + fila + '"][data-columna="' + columna + '"]');
+
+            if ($cuadro.length && idActor && fotoBase64) {
+                // Si el cuadro existe y el actor tiene una foto, aplica la imagen de fondo
+                $cuadro.css({
+                    "background-image": "url('data:image/jpeg;base64," + fotoBase64 + "')",
+                    "background-size": "cover",
+                    "background-position": "center",
+                    "background-repeat": "no-repeat"
+                });
+                // Guarda el id del actor en el atributo data-actor-id
+                $cuadro.attr('data-actor-id', idActor);
+            }
+        });
+
+        // Agrega un evento click a todos los cuadros que tengan un actor asignado
+        $('div[data-fila][data-columna]').click(function () {
+            var idActor = $(this).data('actor-id');
+            if (idActor) {
+                mostrarVentanaKendo("#windowInstitucional", "600px", "Detalle de Actor", idActor);
+            }
+        });
+    }
+
+
+    function asignarActor(idActor) {
+        var idDisposicion = $("#idSelected").val(); // Este es el div seleccionado
+        var fila = obtenerFilaSeleccionada(); // Implementa lógica para obtener la fila
+        var columna = obtenerColumnaSeleccionada(); // Implementa lógica para obtener la columna
+
+        $.ajax({
+            url: '/Eventos/AddDisposicion',
+            type: 'POST',
+            data: {
+                IdActor: idActor,
+                IdEscenario: 1,
+                IdDisposicion: idDisposicion,
+                Fila: fila,
+                Columna: columna
+            },
+            success: function (data) {
+                obtenerDisposiciones(); // Refresca la vista
+                $("#windowInstitucional").data("kendoWindow").close();
+            },
+            error: function (error) {
+                console.error('Error al asignar el actor:', error);
+            }
+        });
+    }
+
+    function obtenerFilaSeleccionada() {
+        debugger;
+        var idSelected = $("#idSelected").val();  // El id del div seleccionado
+        var $selectedDiv = $("#" + idSelected);
+
+        // Obtén el valor del atributo data-fila
+        var fila = $selectedDiv.data("fila");
+
+        return fila;
+    }
+
+    function obtenerColumnaSeleccionada() {
+        var idSelected = $("#idSelected").val();  // El id del div seleccionado
+        var $selectedDiv = $("#" + idSelected);
+
+        // Obtén el valor del atributo data-columna
+        var columna = $selectedDiv.data("columna");
+
+        return columna;
+    }
+
+</script>
+
+<style>
+    .parent-container {
+        display: flex;
+        justify-content: space-around;
+        height: auto;
+    }
+
+    .center-container,
+    .center-left,
+    .center-right {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .parent-container .row {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 5px;
+    }
+
+        .parent-container .row div {
+            text-align: center;
+            padding: 8px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2px;
+        }
+
+    .group-red {
+        background-color: #ff9999;
+    }
+
+    .group-blue {
+        background-color: #9999ff;
+    }
+
+    .ui-selected {
+        background-color: #9F2241 !important;
+        color: rebeccapurple;
+    }
+
+    .actor {
+        width: 110px;
+        height: 170px;
+        margin: 0 5px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+        .actor img {
+            width: 110px;
+            height: 110px;
+        }
+
+        .actor h2, .actor h3 {
+            margin: 0;
+            padding: 3px 0;
+            max-width: 110px;
+            overflow: hidden;
+            font-size: 0.8em;
+            font-weight: normal;
+            line-height: 1.1em;
+            text-transform: uppercase;
+            color: #222;
+        }
+
+        .actor h3 {
+            color: #444;
+        }
+
+        .actor:hover h2, .actor:hover h3 {
+            color: #000;
+        }
+
+    .k-listview-content {
+        overflow: hidden;
+    }
+
+    #listView {
+        padding: 10px 5px;
+        min-height: 510px;
+    }
+
+    .k-state-selected {
+        background-color: #9F2241 !important;
+        color: white;
+        border: 2px solid #000;
+    }
+
+</style>

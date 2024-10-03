@@ -68,6 +68,14 @@ public class HomeController : Controller
 
     [HttpGet]
     [AllowAnonymous]
+    public async Task<IActionResult> ObtenerCategoriaGrupoTablero(int idSubGrupo)
+    {
+        var grupos = await _grupoService.GetCategoriasTablero(idSubGrupo);
+        return Json(grupos);
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> ObtenerSubCategoria(int idCategoria)
     {
         var grupos = await _grupoService.GetSubCategoriasAsync(idCategoria);

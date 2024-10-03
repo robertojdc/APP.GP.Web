@@ -1,4 +1,5 @@
 ﻿using APP.GP.Web.Model;
+using APP.GP.Web.Model.DTO;
 using APP.GP.Web.Model.Filtros;
 using Newtonsoft.Json;
 using System.Text;
@@ -63,6 +64,30 @@ public class GrupoService
         }
     }
 
+    public async Task<HttpResponseMessage> EditActorAsync(Actor actor)
+    {
+
+        try
+        {
+            var json = JsonConvert.SerializeObject(actor);
+
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+            var response = await _httpClient.PostAsJsonAsync("/Actor/UpdActor", actor);
+
+            if (!response.IsSuccessStatusCode)
+                Console.WriteLine($"Error en la solicitud: {await response.Content.ReadAsStringAsync()}");
+
+            return response;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Excepción durante el envío: {ex.Message}");
+            throw;
+        }
+    }
     public async Task<Actor> GetActorByIdAsync(int idActor)
     {
         try
@@ -78,9 +103,20 @@ public class GrupoService
         }
     }
 
+    public async Task<List<AfinidadDto>> GetAfinidades()
+    {
+        var response = await _httpClient.GetFromJsonAsync<List<AfinidadDto>>("/Actor/Afinidad");
+        return response;
+    }
     public async Task<List<Categoria>> GetCategoriasAsync(int idSubGrupo)
     {
         var response = await _httpClient.GetFromJsonAsync<List<Categoria>>($"/Categoria/GetCategorias/{idSubGrupo}");
+        return response;
+    }
+
+    public async Task<List<Categoria>> GetCategoriasTablero(int idSubGrupo)
+    {
+        var response = await _httpClient.GetFromJsonAsync<List<Categoria>>($"/Categoria/GetCategoriasTablero/{idSubGrupo}");
         return response;
     }
 
@@ -129,6 +165,9 @@ public class GrupoService
 
         if (filtro.IdCategoria.HasValue)
             query.Add("IdCategoria", filtro.IdCategoria.Value.ToString());
+
+        if (filtro.Tipo.HasValue)
+            query.Add("Tipo", filtro.Tipo.Value.ToString());
 
         var queryString = string.Join("&", query.Select(kv => $"{kv.Key}={Uri.EscapeDataString(kv.Value)}"));
 

@@ -47,48 +47,11 @@
     </div>
 </div>
 
-<style>
-    /* Colores basados en los Pantones proporcionados */
-    :root {
-        --color-primary: #9F2241; /* Pantone 7420 C */
-        --color-secondary: #235B4E; /* Pantone 626 C */
-        --color-accent: #DDC9A3; /* Pantone 468 C */
-        --color-gray: #98989A; /* Pantone Cool Gray 7 C */
-        --color-background: #F5F5F5; /* Fondo neutro para claridad */
-    }
-
-    body {
-        background-color: var(--color-background);
-    }
-
-    .card-header {
-        background-color: var(--color-primary);
-        border-bottom: 2px solid var(--color-secondary);
-    }
-
-    .btn-danger {
-        background-color: var(--color-primary);
-        border-color: var(--color-primary);
-        color: white;
-    }
-
-        .btn-danger:hover {
-            background-color: #691C32; /* Un tono más oscuro para el hover */
-            border-color: #691C32;
-        }
-
-    .btn-outline-secondary {
-        border-color: var(--color-secondary);
-        color: var(--color-secondary);
-    }
-
-        .btn-outline-secondary:hover {
-            background-color: var(--color-secondary);
-            color: white;
-        }
-
-</style>
-
+<div id="loadingModal" style="display:none;">
+    <div style="text-align: center; padding: 20px;">
+        <span class="k-icon k-i-loading"></span>&nbsp;&nbsp;Cargando...
+    </div>
+</div>
 <script>
     $(document).ready(function () {
         $('#buscarActor').on('click', function (e) {
@@ -109,6 +72,18 @@
         var apellidoPaterno = $('#apellidoPaterno').val();
         var apellidoMaterno = $('#apellidoMaterno').val();
 
+        // Inicializar el modal de loading
+        var loadingModal = $("#loadingModal").kendoWindow({
+            modal: true,
+            visible: false,
+            width: "300px",
+            height: "150px",
+            actions: []
+        }).data("kendoWindow");
+
+        // Mostrar el modal de loading
+        loadingModal.center().open();
+
         $("#gridResultados").empty();
         $.ajax({
             url: '/Actor/Consultar',
@@ -122,6 +97,7 @@
                 idCategoria: $("#clasificacion").data('kendoDropDownList') ? $("#clasificacion").data('kendoDropDownList').value() : 0
             },
             success: function (response) {
+                loadingModal.close();
                 $("#gridResultados").kendoGrid({
                     dataSource: {
                         data: response,
@@ -179,6 +155,11 @@
                             var dataItem = e.sender.dataItem($(this).closest("tr"));
                             window.location.href = `/Actor/Details?idActor=${dataItem.idActor}`;
                         });
+                        e.sender.tbody.find(".btn-editar").on("click", function (ev) {
+                            ev.preventDefault();
+                            var dataItem = e.sender.dataItem($(this).closest("tr"));
+                            window.location.href = `/Actor/Edit?idActor=${dataItem.idActor}`;
+                        });
                         e.sender.tbody.find(".btn-eliminar").on("click", function (ev) {
                             ev.preventDefault();
                             var dataItem = e.sender.dataItem($(this).closest("tr"));
@@ -202,6 +183,7 @@
                 });
             },
             error: function (xhr, status, error) {
+                loadingModal.close();
                 MensajeError('Error', 'Ocurrió un error al consultar los actores.');
             }
         });

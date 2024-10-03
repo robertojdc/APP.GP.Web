@@ -14,116 +14,25 @@
 
     <div id="windowInstitucional" style="border: 2px solid #8B0000; padding: 20px; background-color: #FFFFFF; display:none;">
         <div id="combosCategoria">
-            <select id="comboBox"></select>
+            <select id="comboBox" onchange="handleSelectChange(this)" class="form-control">
+                <option value="" disabled selected>Selecciona una opción...</option>
+            </select>
         </div>
 
         <div id="listView"></div>
 
         <script type="text/x-kendo-template" id="template">
-            <div class="actor">
+            <div class="actor" onclick="verDetalleActor(#= idActor #, '#= cargoActual #')">
                 # if (fotoBase64) { #
                     <img src="data:image/jpeg;base64,#= fotoBase64 #" alt="Foto de #= nombre # #= apellidoPaterno #" />
                 # } else { #
                     <img src="https://via.placeholder.com/110" alt="Foto no disponible" />
                 # } #
+                <h2>#: cargoActual #</h2>
                 <h3>#: nombre # #: apellidoPaterno # #: apellidoMaterno #</h3>
-                <p>Cargo: #: cargoActual #</p>
             </div>
         </script>
 
-        @*         <div style="background-color: #8B0000; color: white; padding: 10px; text-align: center; font-weight: bold; margin-top: 10px;">
-        EL SOL DE PUEBLA
-        </div>
-
-        <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
-        <tr>
-        <td style="border: 1px solid #8B0000; padding: 10px;">DOMICILIO</td>
-        <td style="border: 1px solid #8B0000; padding: 10px;">3 Oriente 201, col. Centro</td>
-        </tr>
-        <tr>
-        <td style="border: 1px solid #8B0000; padding: 10px;">TELÉFONO</td>
-        <td style="border: 1px solid #8B0000; padding: 10px;">79 75 14 33 00</td>
-        </tr>
-        <tr>
-        <td style="border: 1px solid #8B0000; padding: 10px;">ANIVERSARIO</td>
-        <td style="border: 1px solid #8B0000; padding: 10px;">05 de Mayo</td>
-        </tr>
-        <tr>
-        <td style="border: 1px solid #8B0000; padding: 10px;">SITIO WEB</td>
-        <td style="border: 1px solid #8B0000; padding: 1px;"><a href='https://www.elsoldepuebla.com.mx/'>https://www.elsoldepuebla.com.mx/</a></td>
-        </tr>
-        <tr>
-        <td style="border: 1px solid #8B0000; padding: 10px;">REDES SOCIALES</td>
-        <td style="border: 1px solid #8B0000; padding: 10px;">Twitter: @@elsoldepuebla1<br />Facebook: elsoldpuebla</td>
-        </tr>
-        <tr>
-        <td style="border: 1px solid #8B0000; padding: 10px;">COMENTARIOS</td>
-        <td style="border: 1px solid #8B0000; padding: 10px;"></td>
-        </tr>
-        </table>
-
-        <div style="background-color: #8B0000; color: white; padding: 10px; text-align: center; font-weight: bold; margin-top: 20px;">
-        CONTACTOS
-        </div>
-
-        <div style="padding: 5px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px;">
-        <div class="teamMate">
-        <img src="~/img/1.png" alt="Kendo UI for jQuery PanelBar Andrew Fuller">
-        <div class="details">
-        <label>Andrew Fuller</label>
-        <p>Team Lead</p>
-        </div>
-        </div>
-        <div class="teamMate">
-        <img src="~/img/2.png" alt="Kendo UI for jQuery PanelBar Nancy Leverling">
-        <div class="details">
-        <label>Nancy Leverling</label>
-        <p>Sales Associate</p>
-        </div>
-        </div>
-        <div class="teamMate">
-        <img src="~/img/3.png" alt="Kendo UI for jQuery PanelBar Robert King">
-        <div class="details">
-        <label>Robert King</label>
-        <p>Business System Analyst</p>
-        </div>
-        </div>
-        <div class="teamMate">
-        <img src="~/img/4.png" alt="Kendo UI for jQuery PanelBar Laura Callahan">
-        <div class="details">
-        <label>Laura Callahan</label>
-        <p>HR Manager</p>
-        </div>
-        </div>
-        <div class="teamMate">
-        <img src="~/img/1.png" alt="Kendo UI for jQuery PanelBar Andrew Fuller">
-        <div class="details">
-        <label>Andrew Fuller</label>
-        <p>Team Lead</p>
-        </div>
-        </div>
-        <div class="teamMate">
-        <img src="~/img/2.png" alt="Kendo UI for jQuery PanelBar Nancy Leverling">
-        <div class="details">
-        <label>Nancy Leverling</label>
-        <p>Sales Associate</p>
-        </div>
-        </div>
-        <div class="teamMate">
-        <img src="~/img/3.png" alt="Kendo UI for jQuery PanelBar Robert King">
-        <div class="details">
-        <label>Robert King</label>
-        <p>Business System Analyst</p>
-        </div>
-        </div>
-        <div class="teamMate">
-        <img src="~/img/4.png" alt="Kendo UI for jQuery PanelBar Laura Callahan">
-        <div class="details">
-        <label>Laura Callahan</label>
-        <p>HR Manager</p>
-        </div>
-        </div>
-        </div> *@
     </div>
 
     <div id="contactDetailWindow" style="display:none;">
@@ -197,7 +106,7 @@
 
     <div class="responsive-message"></div>
 
-
+    <div id="detalleActorModal"></div>
     <script>
         $(document).ready(function () {
             obtenerGrupos();
@@ -205,166 +114,219 @@
 
         function obtenerGrupos() {
             $.ajax({
-                url: '@Url.Action("ObtenerGrupos", "Home")', // URL de la acción en el controlador
+                url: '@Url.Action("ObtenerGrupos", "Home")',
                 type: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    const container = $('#categorias-container'); // Usar jQuery para seleccionar el contenedor
+                dataType: 'json'
+            }).done(function (data) {
+                const $container = $('#categorias-container').empty();
 
-                    data.forEach(item => {
-                        const colDiv = $('<div>').addClass(item.descripcion);
+                $('.subcategory-row').remove();
+                $.each(data, function (index, item) {
+                    const $colDiv = $('<div>').addClass(item.descripcion);
+                    const $categoryDiv = $('<div>').addClass('category').text(item.nombre);
+                    const $subCategoryRowDiv = $('<div>').addClass('subcategory-row');
 
-                        const categoryDiv = $('<div>').addClass('category').text(item.nombre);
+                    $.each(item.subGrupoList, function (subIndex, subGrupo) {
+                        const $subGroupDiv = $('<div>')
+                            .addClass(subGrupo.descripcion)
+                            .attr('data-id', subGrupo.id)
+                            .append($('<div>').text(subGrupo.nombre));
 
-                        colDiv.append(categoryDiv);
-
-                        const subCategoryRowDiv = $('<div>').addClass('subcategory-row');
-
-                        item.subGrupoList.forEach(subGrupo => {
-                            // Agregar el id del subGrupo como un atributo de datos
-                            const subGroupDiv = $('<div>')
-                                .addClass(subGrupo.descripcion)
-                                .attr('data-id', subGrupo.id); // Añadir data-id con el id del subGrupo
-
-                            const subGroupContentDiv = $('<div>').text(subGrupo.nombre);
-
-                            subGroupDiv.append(subGroupContentDiv);
-                            subCategoryRowDiv.append(subGroupDiv);
-                        });
-
-                        colDiv.append(subCategoryRowDiv);
-
-                        container.append(colDiv);
+                        $subCategoryRowDiv.append($subGroupDiv);
                     });
 
-                    // Asignar el evento click a las subcategorías
-                    $(".subcategory").click(function () {
-                        const idSubGrupo = $(this).data("id"); // Obtener el id del subgrupo desde data-id
-                        mostrarVentanaKendo("#windowInstitucional", "600px", "FICHA INSTITUCIONAL", idSubGrupo);
-                    });
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error al obtener los grupos:', error);
-                }
+                    $colDiv.append($categoryDiv).append($subCategoryRowDiv);
+                    $container.append($colDiv);
+                });
+
+                $container.on('click', '.subcategory', function () {
+                    const idSubGrupo = $(this).data('id');
+                    mostrarVentanaKendo("#windowInstitucional", "600px", "FICHA INSTITUCIONAL", idSubGrupo);
+                });
+            }).fail(function (xhr, status, error) {
+                console.error('Error al obtener los grupos:', error);
             });
         }
 
-
         function mostrarVentanaKendo(selector, ancho, titulo, id) {
+            var listView = $("#listView").data("kendoListView");
+            if (listView) listView.dataSource.data([]);
+
+            let selectElement = document.getElementById("comboBoxSubCategoria");
+
+            if (selectElement) {
+                selectElement.style.display = "none";
+                selectElement.innerHTML = '<option value="" disabled selected>Selecciona una opción...</option>';
+            }
+
             $.ajax({
-                url: '@Url.Action("ObtenerCategoriaGrupo", "Home")',
+                url: '@Url.Action("ObtenerCategoriaGrupoTablero", "Home")',
                 type: 'GET',
                 dataType: 'json',
-                data: { idSubGrupo: id }, // Aquí pasas el parámetro idCatalogo
-                success: function (data) {
-                    var kendoWindow = $(selector).kendoWindow({
-                        width: ancho,
-                        title: titulo,
-                        visible: false,
-                        modal: true,
-                        actions: ["Close"],
-                        activate: function () {
-                            checkAndMaximizeWindow(kendoWindow);
-                        }
-                    }).data("kendoWindow");
+                data: { idSubGrupo: id }
+            }).done(function (data) {
+                // Limpiar las opciones existentes
+                const selectElement = document.getElementById("comboBox");
+                selectElement.innerHTML = '<option value="" disabled selected>Selecciona una opción...</option>';
 
-                    var comboBox = $("#comboBox").data("kendoComboBox");
-                    if (comboBox) {
-                        comboBox.dataSource.data([]); // Limpia los datos
-                        comboBox.value(''); // Limpia el valor seleccionado
+                // Agregar las nuevas opciones
+                data.forEach(function (item) {
+                    const option = document.createElement("option");
+                    option.value = item.idCategoria;
+                    option.text = item.descripcion;
+                    selectElement.classList.add("form-control");
+                    selectElement.appendChild(option);
+                });
+
+                // Mostrar la ventana modal
+                var $kendoWindow = $(selector).kendoWindow({
+                    width: ancho,
+                    title: titulo,
+                    visible: false,
+                    modal: true,
+                    actions: ["Close"],
+                    activate: function () {
+                        checkAndMaximizeWindow($kendoWindow);
                     }
+                }).data("kendoWindow");
 
-                    $("#comboBox").kendoComboBox({
-                        dataTextField: "descripcion", // Campo a mostrar
-                        dataValueField: "idCategoria", // Campo de valor
-                        dataSource: data, // Los datos obtenidos del servidor
-                        placeholder: "Selecciona una opción...",
-                        change: function (e) {
-                            var value = this.value(); // Obtiene el valor seleccionado (idCategoria)
-                            if (value) {
-                                ObtenerSubCategoria(value); // Invoca la función pasando el idCategoria seleccionado
-                            }
-                        }
-                    });
-
-                    kendoWindow.center().open();
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error al obtener los grupos:', error);
-                }
+                $kendoWindow.center().open();
+            }).fail(function (xhr, status, error) {
+                console.error('Error al obtener los grupos:', error);
             });
+        }
+
+        function mostrarVentanaKendo2(selector, ancho, titulo, id) {
+
+            var listView = $("#listView").data("kendoListView");
+
+            if (listView) listView.dataSource.data([]);
+
+            $.ajax({
+                url: '@Url.Action("ObtenerCategoriaGrupoTablero", "Home")',
+                type: 'GET',
+                dataType: 'json',
+                data: { idSubGrupo: id }
+            }).done(function (data) {
+                var $kendoWindow = $(selector).kendoWindow({
+                    width: ancho,
+                    title: titulo,
+                    visible: false,
+                    modal: true,
+                    actions: ["Close"],
+                    activate: function () {
+                        checkAndMaximizeWindow($kendoWindow);
+                    }
+                }).data("kendoWindow");
+
+                var $comboBox = $("#comboBox").data("kendoComboBox");
+
+                if ($comboBox) {
+                    $comboBox.dataSource.data([]);
+                    $comboBox.value('');
+                }
+
+                $("#comboBox").kendoComboBox({
+                    dataTextField: "descripcion",
+                    dataValueField: "idCategoria",
+                    dataSource: data,
+                    placeholder: "Selecciona una opción...",
+                    filter: "contains",
+                    suggest: true,
+                    autoBind: true,
+                    change: function () {
+                        var value = this.value();
+                        if (value) {
+                            obtenerActores(value, 1);
+                            ObtenerSubCategoria(value);
+                        }
+                    }
+                });
+
+                $kendoWindow.center().open();
+            }).fail(function (xhr, status, error) {
+                console.error('Error al obtener los grupos:', error);
+            });
+        }
+
+        function handleSelectChange(select) {
+            const value = select.value;
+            if (value) {                
+                ObtenerSubCategoria(value);
+                obtenerActores(value, 1);
+            }
         }
 
         function ObtenerSubCategoria(id) {
-            $('#combosCategoria span.k-combobox:not(:first)').remove();
-            $.ajax({
-                url: '@Url.Action("ObtenerSubCategoria", "Home")',
-                type: 'GET',
-                dataType: 'json',
-                data: { idCategoria: id },
-                success: function (data) {
-                    // Verifica si la lista tiene valores
-                    if (data && data.length > 0) {
-                        // Crea un nuevo elemento select
-                        var newComboBoxId = "comboBoxSubCategoria" + id; // ID único para cada nuevo ComboBox
-                        var selectElement = $('<select>').attr('id', newComboBoxId);
+            if (isNumber(id)) {
+                $.ajax({
+                    url: '@Url.Action("ObtenerSubCategoria", "Home")',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { idCategoria: id },
+                    success: function (data) {
+                        let selectElement = document.getElementById("comboBoxSubCategoria");
 
-                        // Agrega el select al DOM (por ejemplo, debajo del ComboBox existente)
-                        $('#combosCategoria').append(selectElement);
+                        if (!selectElement) {
+                            selectElement = document.createElement("select");
+                            selectElement.id = "comboBoxSubCategoria";
+                            selectElement.classList.add("form-control");
+                            selectElement.onchange = function () {
+                                obtenerActores(this.value, 2);
+                            };
+                            document.getElementById("combosCategoria").appendChild(selectElement);
+                        }
+                        if (data.length > 0)
+                            selectElement.style.display = "block";
+                        else
+                            selectElement.style.display = "none";
+                        selectElement.innerHTML = '<option value="" disabled selected>Selecciona una opción...</option>';
 
-                        // Inicializa el nuevo ComboBox con los datos obtenidos
-                        $("#" + newComboBoxId).kendoComboBox({
-                            dataTextField: "descripcion", // Campo a mostrar
-                            dataValueField: "idCategoria", // Campo de valor
-                            dataSource: data, // Los datos obtenidos del servidor
-                            placeholder: "Selecciona una opción...",
-                            change: function (e) {
-                                var value = this.value(); // Obtiene el valor seleccionado (idCategoria)
-                                console.log("Subcategoría seleccionada:", value);
-                                obtenerActores(value);
-                            }
+                        data.forEach(function (item) {
+                            const option = document.createElement("option");
+                            option.value = item.idCategoria;
+                            option.text = item.descripcion;
+                            selectElement.appendChild(option);
                         });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error al obtener las subcategorías:', error);
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error al obtener las subcategorías:', error);
-                }
-            });
+                });
+            }
         }
 
-        function obtenerActores(id) {
-            var container = $('#categorias-container'); // Define el contenedor donde quieres mostrar el loading
+        function obtenerActores(id, tipo) {
+            if (isNumber(id)) {
+                $.ajax({
+                    url: '@Url.Action("GetActores", "Actor")',
+                    type: 'GET',
+                    data: { idSubCategoria: id, tipo: tipo },
+                    dataType: 'json',
+                    success: function (actors) {
+                        var listView = $("#listView").data("kendoListView");
+                        if (listView) {
+                            listView.destroy();
+                            $("#listView").empty();
+                        }
 
-            kendo.ui.progress(container, true);
+                        $("#listView").kendoListView({
+                            dataSource: {
+                                data: actors,
+                                pageSize: 9
+                            },
+                            template: kendo.template($("#template").html()),
+                            pageable: true
+                        });
+                    }, error: function (xhr, status, error) {
+                        console.error('Error al obtener los actores:', error);
+                    }
+                });
+            }
+        }
 
-            $.ajax({
-                url: '@Url.Action("GetActores", "Actor")', // URL de la acción en el controlador
-                type: 'GET',
-                data: { idSubCategoria: id }, // Aquí pasas el parámetro idSubCategoria
-                dataType: 'json',
-                success: function (actors) {
-                    // data.forEach(actor => {
-                    //     console.log('Actor:', JSON.stringify(actor));
-                    // });
-
-                    $("#listView").kendoListView({
-                        dataSource: {
-                            data: actors,
-                            pageSize: 21
-                        },
-                        template: kendo.template($("#template").html()),
-                        pageable: true
-                    });
-
-                    kendo.ui.progress(container, false);
-                },
-                error: function (xhr, status, error) {
-                    console.error('Error al obtener los actores:', error);
-
-                    kendo.ui.progress(container, false);
-                }
-            });
-
+        function isNumber(n) {
+            return !isNaN(parseFloat(n)) && isFinite(n);
         }
 
         function checkAndMaximizeWindow(kendoWindow) {
@@ -373,6 +335,30 @@
                 kendoWindow.maximize();
             else
                 kendoWindow.restore();
+        }
+
+        function verDetalleActor(actorId, cargoActual) {
+            var detalleModal = $("#detalleActorModal").kendoWindow({
+                title: cargoActual,
+                modal: true,
+                visible: false,
+                width: "600px",
+                height: "500px",
+                actions: ["Close"]
+            }).data("kendoWindow");
+
+            $.ajax({
+                url: '@Url.Action("GetActorDetalle", "Actor")',
+                type: 'GET',
+                data: { id: actorId },
+                success: function (response) {
+                    detalleModal.content(response);
+                    detalleModal.center().open();
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error al obtener los detalles del actor:', error);
+                }
+            });
         }
     </script>
 
@@ -542,8 +528,7 @@
                 color: #555;
                 font-size: 14px;
             }
-    </style>
-    <style>
+
         #listView {
             padding: 10px 5px;
             margin-bottom: -1px;
@@ -561,6 +546,8 @@
             height: 170px;
             margin: 0 5px;
             padding: 0;
+            cursor: pointer;
+            text-align: center;
         }
 
             .actor img {
@@ -568,35 +555,36 @@
                 height: 110px;
             }
 
+            .actor h2 {
+                margin: 0;
+                padding: 3px 5px 0 0;
+                max-width: 110px;
+                overflow: hidden;
+                line-height: 1.1em;
+                font-size: .8em;
+                font-weight: normal;
+                text-transform: uppercase;
+                color: #222;
+            }
+
             .actor h3 {
                 margin: 0;
                 padding: 3px 5px 0 0;
-                max-width: 96px;
+                max-width: 110px;
                 overflow: hidden;
                 line-height: 1.1em;
-                font-size: .9em;
+                font-size: .8em;
                 font-weight: normal;
                 text-transform: uppercase;
-                color: #999;
+                color: #444;
             }
 
             .actor p {
                 visibility: hidden;
             }
 
-            .actor:hover p {
-                visibility: visible;
-                position: absolute;
-                width: 110px;
-                height: 110px;
-                top: 0;
-                margin: 0;
-                padding: 0;
-                line-height: 110px;
-                vertical-align: middle;
-                text-align: center;
-                color: #fff;
-                background-color: rgba(0,0,0,0.75);
+            .actor:hover h2 h3 {
+                color: #000;
             }
 
         .k-listview:after {
