@@ -40,12 +40,13 @@ public class ActorController : Controller
         return Ok(grupos);
     }
 
-    public async Task<IActionResult> GetActores(int idSubCategoria, int tipo)
+    public async Task<IActionResult> GetActores(int idSubCategoria, int tipo, int idSubGrupo)
     {
         var grupos = await _grupoService.GetActoresAsync(new Model.Filtros.FiltroActor
         {
             IdCategoria = idSubCategoria,
-            Tipo = tipo
+            Tipo = tipo,
+            IdSubGrupo = idSubGrupo
         });
         return Ok(grupos);
     }

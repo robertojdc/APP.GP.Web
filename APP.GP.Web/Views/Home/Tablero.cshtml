@@ -7,9 +7,7 @@
 
     <div class="row">
         <center><h4 style="margin-top: 60px;">Tablero de actores</h4></center>
-        <div class="row" id="categorias-container"></div>
-
-
+        <div class="row" id="categorias-container"></div>       
     </div>
 
     <div id="windowInstitucional" style="border: 2px solid #8B0000; padding: 20px; background-color: #FFFFFF; display:none;">
@@ -18,7 +16,7 @@
                 <option value="" disabled selected>Selecciona una opción...</option>
             </select>
         </div>
-
+        <input type="hidden" id="hidSubGrupo" />
         <div id="listView"></div>
 
         <script type="text/x-kendo-template" id="template">
@@ -151,7 +149,7 @@
         function mostrarVentanaKendo(selector, ancho, titulo, id) {
             var listView = $("#listView").data("kendoListView");
             if (listView) listView.dataSource.data([]);
-
+            $("#hidSubGrupo").val(id);
             let selectElement = document.getElementById("comboBoxSubCategoria");
 
             if (selectElement) {
@@ -197,11 +195,11 @@
         }
 
         function mostrarVentanaKendo2(selector, ancho, titulo, id) {
-
+            
             var listView = $("#listView").data("kendoListView");
 
             if (listView) listView.dataSource.data([]);
-
+            $("#hidSubGrupo").val(id);
             $.ajax({
                 url: '@Url.Action("ObtenerCategoriaGrupoTablero", "Home")',
                 type: 'GET',
@@ -301,7 +299,7 @@
                 $.ajax({
                     url: '@Url.Action("GetActores", "Actor")',
                     type: 'GET',
-                    data: { idSubCategoria: id, tipo: tipo },
+                    data: { idSubCategoria: id, tipo: tipo, idSubGrupo: $("#hidSubGrupo").val() },
                     dataType: 'json',
                     success: function (actors) {
                         var listView = $("#listView").data("kendoListView");
