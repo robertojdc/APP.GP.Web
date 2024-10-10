@@ -244,20 +244,20 @@
             getCategoriasIns();
         });
 
-        $('#subGrupoSelectAdd').change(function () {
-            var subGrupoId = $(this).val();
-            obtenerCategoriasAdd(subGrupoId);
-        });
+        // $('#subGrupoSelectAdd').change(function () {
+        //     var subGrupoId = $(this).val();
+        //     obtenerCategoriasAdd(subGrupoId);
+        // });
 
-        $("#btnCreate").click(function () {
-            var form = document.querySelector('#frmCreate');
+        // $("#btnCreate").click(function () {
+        //     var form = document.querySelector('#frmCreate');
 
-            if (!form.checkValidity()) {
-                form.classList.add('was-validated');
-            } else {
-                agregarCategoria(); 
-            }
-        });
+        //     if (!form.checkValidity()) {
+        //         form.classList.add('was-validated');
+        //     } else {
+        //         agregarCategoria(); 
+        //     }
+        // });
     });
 
     function agregarCategoria() {
