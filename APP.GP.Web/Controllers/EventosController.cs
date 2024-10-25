@@ -1,9 +1,10 @@
 ﻿using APP.GP.Web.Model.Eventos;
 using APP.GP.Web.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APP.GP.Web.Controllers;
-
+[Authorize]
 public class EventosController : Controller
 {
     private readonly EventoService _eventoService;
@@ -15,6 +16,11 @@ public class EventosController : Controller
         _grupoService = grupoService;
     }
     public IActionResult Index()
+    {
+        return View();
+    }
+
+    public IActionResult Asignacion()
     {
         return View();
     }

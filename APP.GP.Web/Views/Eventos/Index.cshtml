@@ -225,7 +225,6 @@
     $(document).ready(function () {
         obtenerAllActores();
         obtenerEventos();
-        // obtenerDisposiciones();
         $(".selectable .row div").click(function () {
             $("#idSelected").val($(this).attr("id"));
             mostrarVentanaKendo("#windowInstitucional", "600px", "BÚsqueda de actores", 1);
@@ -285,21 +284,27 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function (actors) {
-                    allActors = actors;
-                    inicializarAutoComplete(allActors);  // Inicializa el AutoComplete con todos los actores
+                    allActors = actors.map(actor => ({
+                        ...actor,
+                        nombreCompleto: [
+                            actor.nombre,
+                            actor.apellidoPaterno,
+                            actor.apellidoMaterno
+                        ].filter(Boolean).join(' ')
+                    }));
+                    inicializarAutoComplete(allActors);
                 },
                 error: function (xhr, status, error) {
-
                     console.error('Error al obtener los actores:', error);
                 }
             });
         }
     }
 
+
     function mostrarVentanaKendo(selector, ancho, titulo, id) {
         var listView = $("#listView").data("kendoListView");
 
-        // Si el ListView no ha sido inicializado, inicialízalo ahora
         if (!listView) {
             console.log("Inicializando ListView...");
             $("#listView").kendoListView({
@@ -311,7 +316,7 @@
         }
 
         if (listView) {
-            listView.dataSource.data([]); // Resetea los datos antes de abrir la ventana
+            listView.dataSource.data([]); 
         }
 
         var $kendoWindow = $(selector).kendoWindow({
@@ -331,36 +336,29 @@
 
     function inicializarAutoComplete(actors) {
         $("#actorAutoComplete").kendoAutoComplete({
-            dataTextField: "nombre",  // Campo para mostrar en la lista
+            dataTextField: "nombreCompleto", 
             placeholder: 'Por favor, seleccione un actor...',
-            filter: "contains",       // Filtrado local
-            dataSource: actors,       // Usa todos los actores como origen de datos
+            filter: "contains",
+            dataSource: actors,
             suggest: true,
             template: function (dataItem) {
-                // Resaltar las coincidencias en el texto
-                let nombreCompleto = [
-                    dataItem.nombre,
-                    dataItem.apellidoPaterno,
-                    dataItem.apellidoMaterno
-                ].filter(Boolean).join(" ");
-
+                let nombreCompleto = dataItem.nombreCompleto;
                 let additionalInfo = [
                     dataItem.cargoActual,
                     dataItem.grupos,
                     dataItem.subGrupo,
                     dataItem.categoria
-                ].filter(Boolean).join(" - ");
+                ].filter(Boolean).join(' - ');
 
                 return `${nombreCompleto} (${additionalInfo})`;
             },
             select: function (e) {
                 var dataItem = this.dataItem(e.item.index());
-                obtenerActor(dataItem.idActor);  // Asigna el actor seleccionado
+                obtenerActor(dataItem.idActor);
             }
         });
     }
 
-    // Filtrado local basado en el input del usuario
     $("#actorAutoComplete").on("input", function () {
         var searchText = $(this).val().toLowerCase();
         if (searchText.length >= 3) {
@@ -368,7 +366,6 @@
         }
     });
 
-    // Función de filtrado local
     function filtrarActores(searchText) {
         var filteredActors = allActors.filter(function (actor) {
             let nombreCompleto = [
@@ -384,11 +381,9 @@
                 actor.categoria
             ].filter(Boolean).join(" - ").toLowerCase();
 
-            // Filtrar por coincidencia parcial en nombre o información adicional
             return nombreCompleto.includes(searchText) || additionalInfo.includes(searchText);
         });
 
-        // Actualiza el AutoComplete con los actores filtrados
         var autoComplete = $("#actorAutoComplete").data("kendoAutoComplete");
         if (autoComplete) {
             autoComplete.setDataSource(filteredActors);
@@ -431,23 +426,19 @@
             var idActor = disposicion.idActor;
             var fotoBase64 = disposicion.fotoBase64;
 
-            // Busca el div con los atributos data-fila y data-columna correspondientes
             var $cuadro = $('div[data-fila="' + fila + '"][data-columna="' + columna + '"]');
 
             if ($cuadro.length && idActor && fotoBase64) {
-                // Si el cuadro existe y el actor tiene una foto, aplica la imagen de fondo
                 $cuadro.css({
                     "background-image": "url('data:image/jpeg;base64," + fotoBase64 + "')",
                     "background-size": "cover",
                     "background-position": "center",
                     "background-repeat": "no-repeat"
                 });
-                // Guarda el id del actor en el atributo data-actor-id
                 $cuadro.attr('data-actor-id', idActor);
             }
         });
 
-        // Agrega un evento click a todos los cuadros que tengan un actor asignado
         $('div[data-fila][data-columna]').click(function () {
             var idActor = $(this).data('actor-id');
             if (idActor) {
@@ -458,9 +449,9 @@
 
 
     function asignarActor(idActor) {
-        var idDisposicion = $("#idSelected").val(); // Este es el div seleccionado
-        var fila = obtenerFilaSeleccionada(); // Implementa lógica para obtener la fila
-        var columna = obtenerColumnaSeleccionada(); // Implementa lógica para obtener la columna
+        var idDisposicion = $("#idSelected").val(); 
+        var fila = obtenerFilaSeleccionada();
+        var columna = obtenerColumnaSeleccionada(); 
 
         $.ajax({
             url: '/Eventos/AddDisposicion',
@@ -473,7 +464,7 @@
                 Columna: columna
             },
             success: function (data) {
-                obtenerDisposiciones(); // Refresca la vista
+                obtenerDisposiciones();
                 $("#windowInstitucional").data("kendoWindow").close();
             },
             error: function (error) {
@@ -484,20 +475,18 @@
 
     function obtenerFilaSeleccionada() {
         debugger;
-        var idSelected = $("#idSelected").val();  // El id del div seleccionado
+        var idSelected = $("#idSelected").val(); 
         var $selectedDiv = $("#" + idSelected);
 
-        // Obtén el valor del atributo data-fila
         var fila = $selectedDiv.data("fila");
 
         return fila;
     }
 
     function obtenerColumnaSeleccionada() {
-        var idSelected = $("#idSelected").val();  // El id del div seleccionado
+        var idSelected = $("#idSelected").val(); 
         var $selectedDiv = $("#" + idSelected);
 
-        // Obtén el valor del atributo data-columna
         var columna = $selectedDiv.data("columna");
 
         return columna;

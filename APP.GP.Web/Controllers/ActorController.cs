@@ -1,16 +1,16 @@
 ﻿using APP.GP.Web.Model;
 using APP.GP.Web.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 
 namespace APP.GP.Web.Controllers;
-
+[Authorize]
 public class ActorController : Controller
 {
     private readonly GrupoService _grupoService;
 
-    // Inyección de dependencias del GrupoService
     public ActorController(GrupoService grupoService)
     {
         _grupoService = grupoService;
@@ -53,7 +53,6 @@ public class ActorController : Controller
 
     public async Task<IActionResult> Create([FromForm] Actor actor, string categoriasJson)
     {
-        // Deserializar las categorías
         var categorias = JsonConvert.DeserializeObject<List<Categoria>>(categoriasJson);
         actor.SubCategorias = categorias;
 
@@ -68,26 +67,20 @@ public class ActorController : Controller
             }
         }
 
-        // Manejar el archivo de foto si existe
         if (actor.Foto != null && actor.Foto.Length > 0)
         {
             using (var memoryStream = new MemoryStream())
             {
-                // Copia el contenido del archivo al MemoryStream
                 await actor.Foto.CopyToAsync(memoryStream);
 
-                // Convierte el contenido del archivo a un arreglo de bytes
                 byte[] fileBytes = memoryStream.ToArray();
 
-                // Convierte el arreglo de bytes a una cadena Base64
                 actor.FotoBase64 = Convert.ToBase64String(fileBytes);
             }
         }
 
-        // Llama al servicio para guardar el actor con la imagen en Base64
         var resultado = await _grupoService.AddActorAsync(actor);
 
-        // Retorna la respuesta según el resultado
         return Ok(resultado);
     }
 
@@ -95,13 +88,10 @@ public class ActorController : Controller
     public async Task<IActionResult> Details([FromQuery] int idActor)
     {
         var actor = await _grupoService.GetActorByIdAsync(idActor);
-
         if (actor == null)
-        {
-            return NotFound(); // Manejo en caso de que no se encuentre el actor
-        }
+            return NotFound();
 
-        // Devuelve la vista Details pasando el actor como modelo
+
         return View(actor);
     }
 
@@ -135,7 +125,7 @@ public class ActorController : Controller
         var resultado = await _grupoService.DelActorAsync(idActor);
         return Ok(resultado);
     }
-    //GET Edit
+
     public async Task<IActionResult> Edit(int idActor)
     {
         var actor = await _grupoService.GetActorByIdAsync(idActor);

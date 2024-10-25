@@ -1,9 +1,10 @@
 ﻿using APP.GP.Web.Model;
 using APP.GP.Web.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APP.GP.Web.Controllers;
-
+[Authorize]
 public class CategoriaController : Controller
 {
     private readonly GrupoService _grupoService;

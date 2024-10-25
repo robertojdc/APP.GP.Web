@@ -14,34 +14,23 @@ public class EventoService
 
     public async Task<List<Disposicion>> GetDisposicionesForEscenario(int idEvento, int idEscenatio)
     {
-        var response = await _httpClient.GetFromJsonAsync<List<Disposicion>>($"/Eventos/GetDisposicionesForEscenario/{idEvento}/{idEscenatio}");
-        return response;
+        return await _httpClient.GetFromJsonAsync<List<Disposicion>>($"/Eventos/GetDisposicionesForEscenario/{idEvento}/{idEscenatio}");
     }
 
     public async Task<List<Actor>> GetBusquedaActor(string searchTerm)
     {
-        var response = await _httpClient.GetFromJsonAsync<List<Actor>>($"/Actor/GetBusquedaActor");
-        return response;
+        return await _httpClient.GetFromJsonAsync<List<Actor>>($"/Actor/GetBusquedaActor");
     }
 
     public async Task<HttpResponseMessage> AddActorEscenario(ActorEscenario request)
     {
-        var response = await _httpClient.PostAsJsonAsync("/Eventos/AddActorEscenario", request);
-        return response;
+        return await _httpClient.PostAsJsonAsync("/Eventos/AddActorEscenario", request);
     }
+
     public async Task<Resultado> AddDisposicion(Disposicion request)
     {
-        try
-        {
-            var response = await _httpClient.PostAsJsonAsync<Disposicion>("/Eventos/AddDisposicion", request);
-
-            return await response.Content.ReadFromJsonAsync<Resultado>();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error al obtener el actor: {ex.Message}");
-            throw;
-        }
+        var response = await _httpClient.PostAsJsonAsync("/Eventos/AddDisposicion", request);
+        return await response.Content.ReadFromJsonAsync<Resultado>();
     }
 
     public async Task<List<Evento>> GetEventos()
