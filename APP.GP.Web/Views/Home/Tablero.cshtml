@@ -10,7 +10,7 @@
         <div class="row" id="categorias-container"></div>       
     </div>
 
-    <div id="windowInstitucional" style="border: 2px solid #8B0000; padding: 20px; background-color: #FFFFFF; display:none;">
+    <div id="windowInstitucional" style="border: 2px solid #8B0000; padding: 10px; background-color: #FFFFFF; display:none;">
         <div id="combosCategoria">
             <select id="comboBox" onchange="handleSelectChange(this)" class="form-control">
                 <option value="" disabled selected>Selecciona una opción...</option>
@@ -139,7 +139,7 @@
 
                 $container.on('click', '.subcategory', function () {
                     const idSubGrupo = $(this).data('id');
-                    mostrarVentanaKendo("#windowInstitucional", "600px", "FICHA INSTITUCIONAL", idSubGrupo);
+                    mostrarVentanaKendo("#windowInstitucional", "700px", "FICHA INSTITUCIONAL", idSubGrupo);
                 });
             }).fail(function (xhr, status, error) {
                 console.error('Error al obtener los grupos:', error);
@@ -311,7 +311,7 @@
                         $("#listView").kendoListView({
                             dataSource: {
                                 data: actors,
-                                pageSize: 9
+                                pageSize: 10
                             },
                             template: kendo.template($("#template").html()),
                             pageable: true
@@ -340,8 +340,8 @@
                 title: cargoActual,
                 modal: true,
                 visible: false,
-                width: "600px",
-                height: "500px",
+                width: "650px",
+                height: "550px",
                 actions: ["Close"]
             }).data("kendoWindow");
 
@@ -540,9 +540,9 @@
         .actor {
             float: left;
             position: relative;
-            width: 111px;
-            height: 170px;
-            margin: 0 5px;
+            width: 112px;
+            height: 172px;
+            margin: 10px;
             padding: 0;
             cursor: pointer;
             text-align: center;

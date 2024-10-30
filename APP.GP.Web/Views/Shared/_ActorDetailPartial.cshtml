@@ -4,86 +4,57 @@
     Layout = null;
 }
 
-<div class="row g-3">
-    <!-- Fila para la imagen -->
-    <div class="col-12 col-md-4 text-center">
-        <img src="data:image/png;base64,@Model.FotoBase64" class="img-thumbnail mb-3" width="150" alt="Foto del actor político" />
-    </div>
-
-    <!-- Fila para los campos de solo texto usando <span> -->
-    <div class="col-12 col-md-8">
-        <div class="row">
-            <div class="col-6">
-                <label class="form-label">Nombre(s)</label>
-            </div>
-            <div class="col-6">
-                <span>@Model.Nombre</span>
-            </div>
+<div class="container mt-4 p-4 border rounded bg-light shadow-sm">
+    <!-- Encabezado con la imagen del actor y nombre completo -->
+    <div class="row mb-4">
+        <div class="col-12 col-md-4 text-center">
+            <img src="data:image/png;base64,@Model.FotoBase64" class="rounded-circle img-fluid mb-3" alt="Foto del actor político" style="width: 150px; height: 150px; object-fit: cover;">
         </div>
-        <div class="row">
-            <div class="col-6">
-                <label class="form-label">Apellido Paterno</label>
-            </div>
-            <div class="col-6">
-                <span>@Model.ApellidoPaterno</span>
-            </div>
-        </div>
-        <!-- Otros campos en filas separadas -->
-        <div class="row">
-            <div class="col-6">
-                <label class="form-label">Apellido Materno</label>
-            </div>
-            <div class="col-6">
-                <span>@Model.ApellidoMaterno</span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <label class="form-label">Fecha de Nacimiento</label>
-            </div>
-            <div class="col-6">
-                <span>@Model.FechaNacimiento.Value.ToString("dd/MM/yyyy")</span>
+        <div class="col-12 col-md-8 d-flex align-items-center">
+            <div>
+                <h3 class="fw-bold">@Model.Nombre @Model.ApellidoPaterno @Model.ApellidoMaterno</h3>
+                <p class="text-muted">Teléfono Personal @Model.TelefonoPersonal</p>
             </div>
         </div>
     </div>
-</div>
-
-<div class="row g-4">
-    <!-- Continúa con los demás campos en nuevas filas -->
-    <div class="col-3">
-        <label class="form-label">Domicilio Laboral</label>
-        <span>@Model.DomicilioLaboral</span>
-    </div>
-    <div class="col-3">
-        <label class="form-label">Teléfono Laboral</label>
-        <span>@Model.TelefonoLaboral</span>
-    </div>
-    <div class="col-3">
-        <label class="form-label">Teléfono Personal</label>
-        <span>@Model.TelefonoPersonal</span>
-    </div>
-    <div class="col-3">
-        <label class="form-label">Correo Electrónico</label>
-        <span>@Model.CorreoElectronico</span>
-    </div>
-    <div class="col-3">
-        <label class="form-label">Redes Sociales</label>
-        <span>@Model.inputRedSocial</span>
-    </div>
-    <div class="col-3">
-        <label class="form-label">Página Web</label>
-        <span>@Model.PaginaWeb</span>
-    </div>
-    <div class="col-3">
-        <label class="form-label">Afinidad</label>
-        <span>@Model.Afinidad</span>
-    </div>
-    <div class="col-3">
-        <label class="form-label">Compromiso</label>
-        <span>@Model.Compromiso</span>
-    </div>
-    <div class="col-12">
-        <label class="form-label">Comentarios</label>
-        <span>@Model.Comentarios</span>
+    <div id="cargo" style="display: none;">@Model.CargoActual</div>
+    <!-- Información de contacto y datos adicionales -->
+    <div class="row gy-3">
+        <div class="col-md-6">
+            <label class="fw-semibold text-primary">Domicilio Laboral</label>
+            <div class="text-secondary">@Model.DomicilioLaboral</div>
+        </div>
+        <div class="col-md-6">
+            <label class="fw-semibold text-primary">Teléfono Laboral</label>
+            <div class="text-secondary">@Model.TelefonoLaboral</div>
+        </div>
+        <div class="col-md-6">
+            <label class="fw-semibold text-primary">Fecha de Nacimiento</label>
+            <div class="text-secondary">@Model.FechaNacimiento?.ToString("dd/MM/yyyy")</div>
+        </div>
+        <div class="col-md-6">
+            <label class="fw-semibold text-primary">Correo Electrónico</label>
+            <div class="text-secondary">@Model.CorreoElectronico</div>
+        </div>
+        <div class="col-md-6">
+            <label class="fw-semibold text-primary">Redes Sociales</label>
+            <div class="text-secondary">@Model.inputRedSocial</div>
+        </div>
+        <div class="col-md-6">
+            <label class="fw-semibold text-primary">Página Web</label>
+            <div class="text-secondary">@Model.PaginaWeb</div>
+        </div>
+        <div class="col-md-6">
+            <label class="fw-semibold text-primary">Afinidad</label>
+            <div class="text-secondary">@Model.Afinidad</div>
+        </div>
+        <div class="col-md-6">
+            <label class="fw-semibold text-primary">Compromiso</label>
+            <div class="text-secondary">@Model.Compromiso</div>
+        </div>
+        <div class="col-12">
+            <label class="fw-semibold text-primary">Comentarios</label>
+            <div class="text-secondary">@Model.Comentarios</div>
+        </div>
     </div>
 </div>

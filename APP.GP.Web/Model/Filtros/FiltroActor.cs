@@ -9,4 +9,6 @@ public class FiltroActor
     public int? IdSubGrupo { get; set; }
     public int? IdCategoria { get; set; }
     public int? Tipo { get; set; }
+    public int? Afinidad { get; set; }
+    public int? Compromiso { get; set; }
 }

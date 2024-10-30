@@ -50,4 +50,8 @@ public class Actor
     public string? inputRedSocial { get; set; }
     public List<string>? RedesSociales { get; set; }
     public string? Grupos { get; set; }
+
+    public int AfinidadId { get; set; }
+
+    public int CompromisoId { get; set; }
 }

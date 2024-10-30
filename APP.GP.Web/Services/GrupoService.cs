@@ -66,7 +66,6 @@ public class GrupoService
 
     public async Task<HttpResponseMessage> EditActorAsync(Actor actor)
     {
-
         try
         {
             var json = JsonConvert.SerializeObject(actor);
@@ -108,6 +107,13 @@ public class GrupoService
         var response = await _httpClient.GetFromJsonAsync<List<AfinidadDto>>("/Actor/Afinidad");
         return response;
     }
+
+    public async Task<List<AfinidadDto>> GetCompromisos()
+    {
+        var response = await _httpClient.GetFromJsonAsync<List<AfinidadDto>>("/Actor/Compromiso");
+        return response;
+    }
+
     public async Task<List<Categoria>> GetCategoriasAsync(int idSubGrupo)
     {
         var response = await _httpClient.GetFromJsonAsync<List<Categoria>>($"/Categoria/GetCategorias/{idSubGrupo}");
@@ -166,8 +172,13 @@ public class GrupoService
         if (filtro.IdCategoria.HasValue)
             query.Add("IdCategoria", filtro.IdCategoria.Value.ToString());
 
-        if (filtro.Tipo.HasValue)
-            query.Add("Tipo", filtro.Tipo.Value.ToString());
+        if (filtro.Afinidad.HasValue)
+            query.Add("Afinidad", filtro.Afinidad.Value.ToString());
+
+        if (filtro.Compromiso.HasValue)
+            query.Add("Compromiso", filtro.Compromiso.Value.ToString());
+
+
 
         var queryString = string.Join("&", query.Select(kv => $"{kv.Key}={Uri.EscapeDataString(kv.Value)}"));
 

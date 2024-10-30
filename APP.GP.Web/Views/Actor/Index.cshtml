@@ -126,7 +126,7 @@
                     </div>
                     <div class="col-12 col-md-6 col-lg-4">
                         <label for="Compromiso" class="form-label">COMPROMISO</label>
-                        <input name="Compromiso" type="text" class="form-control" placeholder="Ingrese compromiso">
+                        <input id="compromiso" name="Compromiso" type="text" class="form-control" placeholder="Ingrese compromiso">
                     </div>
                     <div class="col-12">
                         <label for="Comentarios" class="form-label">COMENTARIOS</label>
@@ -141,65 +141,7 @@
         </div>
     </div>
 </div>
-@* 
-<style>
-    /* Colores basados en los Pantones proporcionados */
-    :root {
-        --color-primary: #9F2241; /* Pantone 7420 C */
-        --color-secondary: #235B4E; /* Pantone 626 C */
-        --color-accent: #DDC9A3; /* Pantone 468 C */
-        --color-gray: #98989A; /* Pantone Cool Gray 7 C */
-        --color-background: #F5F5F5; /* Fondo neutro para claridad */
-    }
 
-    body {
-        background-color: var(--color-background);
-    }
-
-    .card-header {
-        background-color: var(--color-primary);
-        border-bottom: 2px solid var(--color-secondary);
-    }
-
-    .btn-danger {
-        background-color: var(--color-primary);
-        border-color: var(--color-primary);
-        color: white;
-    }
-
-        .btn-danger:hover {
-            background-color: #691C32; /* Un tono más oscuro para el hover */
-            border-color: #691C32;
-        }
-
-    .btn-outline-secondary {
-        border-color: var(--color-secondary);
-        color: var(--color-secondary);
-    }
-
-        .btn-outline-secondary:hover {
-            background-color: var(--color-secondary);
-            color: white;
-        }
-
-    .table thead {
-        /* background-color: var(--color-secondary); */
-        color: white;
-    }
-
-    .table tbody tr:hover {
-        background-color: var(--color-accent);
-    }
-
-    .form-label {
-        color: var(--color-secondary);
-    }
-
-    .form-control:focus {
-        border-color: var(--color-secondary);
-        box-shadow: 0 0 0 0.2rem rgba(35, 91, 78, 0.25); /* Pantone 626 C */
-    }
-</style> *@
 <script>
 
     let callDepth = 0;
@@ -212,6 +154,7 @@
             window.location.href = '/Actor/Select';
         });
         obtenerAfinidad();
+        obtenerCompromisos();
         $('#addRedSocial').on('click', function () {
             const redSocial = $('#inputRedSocial').val().trim();
 
@@ -283,7 +226,6 @@
 
         $('#agregarCategoria').on('click', function (e) {
             e.preventDefault();
-            debugger;
             var grupo = $('#grupo').data('kendoDropDownList').text();
             var grupoId = $('#grupo').data('kendoDropDownList').value();
             var subgrupo = $('#subgrupo').data('kendoDropDownList').text();
@@ -360,6 +302,24 @@
                     dataValueField: "id",
                     dataSource: response,
                     optionLabel: "Seleccione una afinidad"
+                });
+            },
+            error: function (xhr, status, error) {
+                console.log('Ocurrió un error: ' + error);
+            }
+        });
+    }
+
+    function obtenerCompromisos() {
+        $.ajax({
+            url: '/Actor/GetCompromisos',
+            type: 'GET',
+            success: function (response) {
+                $("#compromiso").kendoDropDownList({
+                    dataTextField: "nombre",
+                    dataValueField: "id",
+                    dataSource: response,
+                    optionLabel: "Seleccione nivel de compromiso"
                 });
             },
             error: function (xhr, status, error) {

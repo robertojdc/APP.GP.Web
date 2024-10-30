@@ -33,6 +33,16 @@
                     <input id="clasificacion" name="clasificacion" class="form-control" placeholder="Seleccione una clasificación">
                     <input type="hidden" id="clasificacionId" name="clasificacionId">
                 </div>
+                <div class="col-md-4">
+                    <label for="afinidad" class="form-label">AFINIDAD</label>
+                    <input id="afinidad" name="afinidad" class="form-control" placeholder="Seleccione afinidad">
+                    <input type="hidden" id="afinidadId" name="subcategoriaId">
+                </div>
+                <div class="col-md-4">
+                    <label for="compromiso" class="form-label">COMPROMISO</label>
+                    <input id="compromiso" name="compromiso" class="form-control" placeholder="Seleccione compromiso">
+                    <input type="hidden" id="compromisoId" name="compromisoId">
+                </div>
                 <div class="col-12 text-center mt-4">
                     <button type="button" class="btn btn-danger me-2" id="buscarActor">Buscar</button>
                     <button type="button" class="btn btn-outline-secondary" id="crearActor">Crear</button>
@@ -52,6 +62,7 @@
         <span class="k-icon k-i-loading"></span>&nbsp;&nbsp;Cargando...
     </div>
 </div>
+<div id="detalleActorModal"></div>
 <script>
     $(document).ready(function () {
         $('#buscarActor').on('click', function (e) {
@@ -65,6 +76,8 @@
             e.preventDefault();
             window.location.href = '/Actor/Index';
         });
+        obtenerAfinidad();
+        obtenerCompromisos();
     });
 
     function buscarActor() {
@@ -94,7 +107,9 @@
                 apellidoMaterno: apellidoMaterno,
                 idGrupo: $("#grupo").data('kendoDropDownList') ? $("#grupo").data('kendoDropDownList').value() : 0,
                 idSubGrupo: $("#subgrupo").data('kendoDropDownList') ? $("#subgrupo").data('kendoDropDownList').value() : 0,
-                idCategoria: $("#clasificacion").data('kendoDropDownList') ? $("#clasificacion").data('kendoDropDownList').value() : 0
+                idCategoria: $("#clasificacion").data('kendoDropDownList') ? $("#clasificacion").data('kendoDropDownList').value() : 0,
+                afinidad: $("#afinidad").data('kendoDropDownList') ? $("#afinidad").data('kendoDropDownList').value() : 0,
+                compromiso: $("#compromiso").data('kendoDropDownList') ? $("#compromiso").data('kendoDropDownList').value() : 0
             },
             success: function (response) {
                 loadingModal.close();
@@ -103,7 +118,6 @@
                         data: response,
                         pageSize: 10
                     },
-                    height: 400,
                     pageable: true,
                     columns: [
                         {
@@ -115,15 +129,15 @@
                                     ? `data:image/jpeg;base64,${dataItem.fotoBase64}`
                                     : "/path/to/default-image.jpg";
                                 return `
-                                        <div style="display: flex; align-items: center;">
-                                            <div class="customer-photo" style="background-image: url('${imgSrc}'); width: 50px; height: 50px; border-radius: 50%; background-size: cover; background-position: center; margin-right: 10px;"></div>
-                                            <div>
-                                                <div class="customer-name" style="font-weight: bold;">
-                                                    ${dataItem.nombre} ${dataItem.apellidoPaterno} ${dataItem.apellidoMaterno}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    `;
+                                                        <div style="display: flex; align-items: center;">
+                                                            <div class="customer-photo" style="background-image: url('${imgSrc}'); width: 50px; height: 50px; border-radius: 50%; background-size: cover; background-position: center; margin-right: 10px;"></div>
+                                                            <div>
+                                                                <div class="customer-name" style="font-weight: bold;">
+                                                                    ${dataItem.nombre} ${dataItem.apellidoPaterno} ${dataItem.apellidoMaterno}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    `;
                             }
                         },
                         { field: "cargoActual", width: "15%", title: "Cargo Actual" },
@@ -140,20 +154,23 @@
                             title: "Acciones",
                             width: "12%",
                             template: `
-                                     <button class="k-button btn-editar" title="Editar">
-                                        <span class="k-icon k-font-icon k-i-edit k-icon-32"></span>
-                                    </button>
-                                    <button class="k-button btn-eliminar" title="Eliminar">
-                                        <span class="k-icon k-font-icon k-i-trash k-icon-32 colored-icon"></span>
-                                    </button>
-                            `
+                                                     <button class="k-button btn-editar" title="Editar">
+                                                        <span class="k-icon k-font-icon k-i-edit k-icon-32"></span>
+                                                    </button>
+                                                    <button class="k-button btn-eliminar" title="Eliminar">
+                                                        <span class="k-icon k-font-icon k-i-trash k-icon-32 colored-icon"></span>
+                                                    </button>
+                                                    <button class="k-button btn-ver-detalle" title="Ver Detalle">
+                                                        <span class="k-icon k-font-icon k-i-search k-icon-32"></span>
+                                                    </button>
+                                            `
                         }
                     ],
                     dataBound: function (e) {
                         e.sender.tbody.find(".btn-ver-detalle").on("click", function (ev) {
                             ev.preventDefault();
                             var dataItem = e.sender.dataItem($(this).closest("tr"));
-                            window.location.href = `/Actor/Details?idActor=${dataItem.idActor}`;
+                            verDetalleActor(dataItem.idActor, dataItem.cargoActual);
                         });
                         e.sender.tbody.find(".btn-editar").on("click", function (ev) {
                             ev.preventDefault();
@@ -185,6 +202,30 @@
             error: function (xhr, status, error) {
                 loadingModal.close();
                 MensajeError('Error', 'Ocurrió un error al consultar los actores.');
+            }
+        });
+    }
+
+    function verDetalleActor(actorId, cargoActual) {
+        var detalleModal = $("#detalleActorModal").kendoWindow({
+            title: cargoActual,
+            modal: true,
+            visible: false,
+            width: "600px",
+            height: "500px",
+            actions: ["Close"]
+        }).data("kendoWindow");
+
+        $.ajax({
+            url: '@Url.Action("GetActorDetalle", "Actor")',
+            type: 'GET',
+            data: { id: actorId },
+            success: function (response) {
+                detalleModal.content(response);
+                detalleModal.center().open();
+            },
+            error: function (xhr, status, error) {
+                console.error('Error al obtener los detalles del actor:', error);
             }
         });
     }
@@ -291,6 +332,42 @@
                 } else {
                     alert('No hay subcategorías disponibles para esta categoría.');
                 }
+            },
+            error: function (xhr, status, error) {
+                console.log('Ocurrió un error: ' + error);
+            }
+        });
+    }
+
+    function obtenerAfinidad() {
+        $.ajax({
+            url: '/Actor/GetAfinidades',
+            type: 'GET',
+            success: function (response) {
+                $("#afinidad").kendoDropDownList({
+                    dataTextField: "nombre",
+                    dataValueField: "id",
+                    dataSource: response,
+                    optionLabel: "Seleccione una afinidad"
+                });
+            },
+            error: function (xhr, status, error) {
+                console.log('Ocurrió un error: ' + error);
+            }
+        });
+    }
+
+    function obtenerCompromisos() {
+        $.ajax({
+            url: '/Actor/GetCompromisos',
+            type: 'GET',
+            success: function (response) {
+                $("#compromiso").kendoDropDownList({
+                    dataTextField: "nombre",
+                    dataValueField: "id",
+                    dataSource: response,
+                    optionLabel: "Seleccione nivel de compromiso"
+                });
             },
             error: function (xhr, status, error) {
                 console.log('Ocurrió un error: ' + error);

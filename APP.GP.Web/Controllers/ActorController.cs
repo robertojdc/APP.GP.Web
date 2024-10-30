@@ -26,7 +26,7 @@ public class ActorController : Controller
         return View();
     }
 
-    public async Task<IActionResult> Consultar(string nombre, string apellidoPaterno, string apellidoMaterno, int idGrupo, int idSubGrupo, int idCategoria)
+    public async Task<IActionResult> Consultar(string nombre, string apellidoPaterno, string apellidoMaterno, int idGrupo, int idSubGrupo, int idCategoria, int afinidad, int compromiso)
     {
         var grupos = await _grupoService.GetActoresAsync(new Model.Filtros.FiltroActor
         {
@@ -35,7 +35,9 @@ public class ActorController : Controller
             ApellidoMaterno = apellidoMaterno,
             IdGrupo = idGrupo,
             IdSubGrupo = idSubGrupo,
-            IdCategoria = idCategoria
+            IdCategoria = idCategoria,
+            Afinidad = afinidad,
+            Compromiso = compromiso
         });
         return Ok(grupos);
     }
@@ -130,11 +132,20 @@ public class ActorController : Controller
     {
         var actor = await _grupoService.GetActorByIdAsync(idActor);
         ViewBag.Afinidades = (await _grupoService.GetAfinidades())
-             .Select(a => new SelectListItem
-             {
-                 Value = a.Id.ToString(),
-                 Text = a.Nombre
-             }).ToList();
+                .Select(a => new SelectListItem
+                {
+                    Value = a.Id.ToString(),
+                    Text = a.Nombre,
+                    Selected = a.Id == actor.AfinidadId
+                }).ToList();
+
+        ViewBag.Compromisos = (await _grupoService.GetCompromisos())
+            .Select(a => new SelectListItem
+            {
+                Value = a.Id.ToString(),
+                Text = a.Nombre,
+                Selected = a.Id == actor.CompromisoId
+            }).ToList();
         return View(actor);
     }
 
@@ -152,6 +163,12 @@ public class ActorController : Controller
     public async Task<IActionResult> GetAfinidades()
     {
         var afinidades = await _grupoService.GetAfinidades();
+        return Json(afinidades);
+    }
+
+    public async Task<IActionResult> GetCompromisos()
+    {
+        var afinidades = await _grupoService.GetCompromisos();
         return Json(afinidades);
     }
 

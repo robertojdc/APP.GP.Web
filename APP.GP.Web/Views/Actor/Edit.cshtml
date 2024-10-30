@@ -85,15 +85,17 @@
                     <span asp-validation-for="PaginaWeb" class="text-danger"></span>
                 </div>
                 <div class="col-12 col-md-6">
-                    <label asp-for="Afinidad" class="form-label">Afinidad</label>
-                    <select asp-for="Afinidad" asp-items="@ViewBag.Afinidades" class="form-control">
+                    <label asp-for="AfinidadId" class="form-label">Afinidad</label>
+                    <select asp-for="AfinidadId" asp-items="@ViewBag.Afinidades" class="form-control">
                         <option value="">Seleccione una opción</option>
                     </select>
                     <span asp-validation-for="Afinidad" class="text-danger"></span>
                 </div>
                 <div class="col-12 col-md-6">
-                    <label asp-for="Compromiso" class="form-label">Compromiso</label>
-                    <input asp-for="Compromiso" class="form-control" placeholder="Ingrese compromiso" />
+                    <label asp-for="CompromisoId" class="form-label">Compromiso</label>
+                    <select asp-for="CompromisoId" asp-items="@ViewBag.Compromisos" class="form-control">
+                        <option value="">Seleccione una opción</option>
+                    </select>
                     <span asp-validation-for="Compromiso" class="text-danger"></span>
                 </div>
                 <div class="col-12">
@@ -132,8 +134,8 @@
             formData.append("CorreoElectronico", $('#CorreoElectronico').val());
             formData.append("inputRedSocial", $('#inputRedSocial').val());
             formData.append("PaginaWeb", $('#PaginaWeb').val());
-            formData.append("Afinidad", $('#Afinidad').val());
-            formData.append("Compromiso", $('#Compromiso').val());
+            formData.append("AfinidadId", $('#AfinidadId').val());
+            formData.append("CompromisoId", $('#CompromisoId').val());
             formData.append("Comentarios", $('#Comentarios').val());
 
             // Agregar la foto seleccionada al FormData
