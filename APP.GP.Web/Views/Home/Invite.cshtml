@@ -1,341 +1,37 @@
 ﻿@{
-    Layout = null;
+    Layout = @"~/Views/Shared/_LayoutInvite.cshtml";
 }
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitación: Toma de Protesta del Gobernador Electo Alejandro Armenta</title>
-    <link href="~/css/aos.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body {
-            background-image: url('/img/fondo_invite.png');
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            font-family: 'Lucida Sans' !important;
-            
-        }
-
-            body::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-image: url('/img/fondo_invite.webp');
-                background-size: cover;
-                background-attachment: fixed;
-                background-position: center;
-                background-repeat: no-repeat;
-                opacity: 0.4;
-                z-index: -1;
-            }
-
-        .card {
-            background-color: rgba(255, 255, 255, 0.8);
-        }
-
-        .map-button {
-            display: inline-block;
-        }
-
-            .map-button svg {
-                margin-right: 15px;
-            }
-
-
-        .invitacion {
-            text-align: center;
-            background-color: white;
-            padding: 40px;
-            width: 60%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-
-        .motivo, .detalle, .presentacion, .fecha {
-            font-weight: 400;
-            font-size: 12pt;
-            margin: 10px 0;
-        }
-
-        .titulo, .vision {
-            font-weight: 700;
-            font-size: 14pt;
-            color: #b89d3a;
-        }
-
-        .nombre {
-            /* font-family: 'Great Vibes', cursive; */
-            font-size: 3rem;
-            margin: 20px 0;
-            color: #b89d3a;
-        }
-
-        .cargo {
-            font-weight: 700;
-            font-size: 1.3rem;
-            margin: 10px 0;
-            color: #b89d3a;
-        }
-
-        .fecha {
-            font-weight: 400;
-            font-size: 1rem;
-            margin-top: 20px;
-        }
-
-        .linea {
-            margin-top: 20px;
-            width: 50%;
-            height: 2px;
-            background-color: #b89d3a;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero {
-            position: relative;
-            background-size: cover;
-            background-position: center;
-            height: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-            /* Filtro oscuro para mejorar la legibilidad */
-            .hero::before {
-                content: "";
-                position: absolute;
-                top: 24pt;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.4); /* Oscurece la imagen */
-                z-index: 1;
-            }
-
-        /* Texto superpuesto */
-        .texto-superpuesto {
-            margin-top: 25pt;
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra al texto */
-        }
-
-            .texto-superpuesto h1 {
-                font-size: 3rem;
-                margin: 0;
-            }
-
-            .texto-superpuesto h2 {
-                font-size: 2rem;
-                margin: 10px 0;
-            }
-
-            .texto-superpuesto p {
-                font-size: 1.2rem;
-                margin-top: 10px;
-            }
-
-        .logo-container {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            background-color: rgba(255, 255, 255, 0.7);
-            padding: 10px 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-        }
-
-            .logo-container img {
-                height: 60px;
-                align-items: center;
-            }
-    </style>
-    <script src="~/js/app/qrcode.min.js"></script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/kendo/js/kendo.all.min.js"></script>
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/lib/kendo/styles/material-lime.css" rel="stylesheet" />
-</head>
-<body>
-
-    <div class="container mt-5">
-        <div class="logo-container text-center">
-            <img src="~/img/558768_413004.webp" alt="Gobierno de Puebla">
+<div class="bg1-wrapper" data-aos="fade-up">
+    <div class="text-center" data-aos="fade-up">
+        <img src="~/img/invite/armentaGob.png" style="width:380px; height: 260px;" />
+    </div>
+    <div class="container">
+        <div class="texto-superpuesto text-center" data-aos="fade-up">
+            <h2 class="display-4"><b>Estamos a</b></h2>
+        </div>
+        <div class="countdown">
+            <div class="time-box">
+                <span id="days">0</span>
+                <label>Días</label>
+            </div>
+            <div class="time-box">
+                <span id="hours">0</span>
+                <label>Horas</label>
+            </div>
+            <div class="time-box">
+                <span id="minutes">0</span>
+                <label>Minutos</label>
+            </div>
+            <div class="time-box">
+                <span id="seconds">0</span>
+                <label>Segundos</label>
+            </div>
         </div>
         <div class="hero">
             <div class="texto-superpuesto text-center" data-aos="fade-up">
-                <h1 class="display-4">Toma de protesta</h1>
-                <h2 class="display-4"><b>Alejandro Armenta Mier</b></h2>
-                <h3>Gobernador Constitucional del Estado de Puebla 2024 - 2030</h3>
-                <p>Con motivo del inicio de mi gestión, tengo el honor de invitarle a la</p>
+                <h2 class="display-4"><b>para la</b></h2>
+                <h1 class="display-4"><b>Toma de Protesta</b></h1>
             </div>
         </div>
-
-        <div class="row mt-5">
-            <!-- Toma de Protesta -->
-            <div class="col-md-4 mb-4" data-aos="fade-right">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="titulo">Sesión Solemne de Toma de Protesta</h2>
-                        <p class="detalle">Ante el Pleno del Honorable Congreso del Estado</p>
-                        <p class="card-text"><i class="fa fa-calendar"></i> Sábado 14 de diciembre 2024 a las 10:00 hrs</p>
-                        <p class="card-text"><i class="fa fa-map-marker-alt"></i> Salón del Pleno del Honorable Congreso de Puebla</p>
-                        <button id="confirmProtesta" class="btn btn-primary"><i class="fa fa-check"></i> Confirmar Asistencia</button>&nbsp;&nbsp;&nbsp;
-                        <a class="map-button btn btn-secondary" href="https://www.google.com/maps?q=Palacio+Legislativo+Puebla" target="_blank" rel="noopener noreferrer">
-                            <svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" height="16"><path d="M285.6 444.1C279.8 458.3 264.8 466.3 249.8 463.4C234.8 460.4 223.1 447.3 223.1 432V256H47.1C32.71 256 19.55 245.2 16.6 230.2C13.65 215.2 21.73 200.2 35.88 194.4L387.9 50.38C399.8 45.5 413.5 48.26 422.6 57.37C431.7 66.49 434.5 80.19 429.6 92.12L285.6 444.1z"></path></svg>
-                            Ver Mapa
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Meeting con Colaboradores -->
-            <div class="col-md-4 mb-4" data-aos="fade-up">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="titulo">Centro expositor</h2>
-                        <p class="card-text"><i class="fa fa-calendar"></i> Sábado 14 de diciembre 2024 a las 14:00 hrs</p>
-                        <p class="card-text"><i class="fa fa-map-marker-alt"></i> Zona de los Fuertes, Cívica 5 de Mayo, 72260 Heroica Puebla de Zaragoza</p>
-                        <button id="confirmMeeting" class="btn btn-primary"><i class="fa fa-check"></i> Confirmar Asistencia</button>&nbsp;&nbsp;&nbsp;
-                        <a class="map-button btn btn-secondary" href="https://www.google.com/maps?q=Centro+de+Convenciones+Puebla" target="_blank" rel="noopener noreferrer">
-                            <svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" height="16"><path d="M285.6 444.1C279.8 458.3 264.8 466.3 249.8 463.4C234.8 460.4 223.1 447.3 223.1 432V256H47.1C32.71 256 19.55 245.2 16.6 230.2C13.65 215.2 21.73 200.2 35.88 194.4L387.9 50.38C399.8 45.5 413.5 48.26 422.6 57.37C431.7 66.49 434.5 80.19 429.6 92.12L285.6 444.1z"></path></svg>
-                            Ver Mapa
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Comida -->
-            <div class="col-md-4 mb-4" data-aos="fade-left">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="titulo">Presentación de Gabinete de Gobierno</h2>
-                        <p class="card-text"><i class="fa fa-calendar"></i> Fecha y Hora: 14 de diciembre 2024 a las 17:00 hrs</p>
-                        <p class="card-text"><i class="fa fa-map-marker-alt"></i> Lugar: Centro de Convenciones Puebla</p>
-                        <button id="confirmComida" class="btn btn-primary"><i class="fa fa-check"></i> Confirmar Asistencia</button>&nbsp;&nbsp;&nbsp;
-                        <a class="map-button btn btn-secondary" href="https://www.google.com/maps?q=Centro+de+Convenciones+Puebla" target="_blank" rel="noopener noreferrer">
-                            <svg xmlns="https://www.w3.org/2000/svg" viewBox="0 0 448 512" width="16" height="16"><path d="M285.6 444.1C279.8 458.3 264.8 466.3 249.8 463.4C234.8 460.4 223.1 447.3 223.1 432V256H47.1C32.71 256 19.55 245.2 16.6 230.2C13.65 215.2 21.73 200.2 35.88 194.4L387.9 50.38C399.8 45.5 413.5 48.26 422.6 57.37C431.7 66.49 434.5 80.19 429.6 92.12L285.6 444.1z"></path></svg>
-                            Ver Mapa
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="text-center mt-5" data-aos="fade-up">
-            <h1 class="display-4">Trayectoria</h1>
-            <p>Diputado local en la LV Legislatura del Congreso de Puebla. Secretario de Acción Juvenil de la CNC en Tepeaca, Puebla. Delegado del Frente Juvenil Revolucionario en la Asamblea Municipal de Consulta y Debate en Puebla de la XVI Asamblea Nacional del PRI. Secretario general del CDM del PRI en Acatzingo, Puebla.</p>
-            @*   <div style="background-color: rgba(0, 0, 0, 0.6); padding: 20px; border-radius: 10px;">
-            <h5 class="card-title text-white">Pase para Eventos</h5>
-            <p class="card-text text-white">Escanea el siguiente código QR para acceder a los eventos:</p>
-            <div id="qrCode" class="d-flex justify-content-center">
-            <img src="URL_DEL_QR_CODE" alt="Código QR para Pase" />
-            </div>
-            </div> *@
-        </div>
-
-        <div class="text-center mt-5" data-aos="fade-up">
-            <h1 class="display-4">Visión</h1>
-            <p>Diputado local en la LV Legislatura del Congreso de Puebla. </p>
-            <p>Secretario de Acción Juvenil de la CNC en Tepeaca, Puebla. 1</p>
-            <p>Delegado del Frente Juvenil Revolucionario en la Asamblea Municipal de Consulta y Debate en Puebla de la XVI Asamblea Nacional del PRI. </p>
-            <p>Secretario general del CDM del PRI en Acatzingo, Puebla.</p>
-            @*   <div style="background-color: rgba(0, 0, 0, 0.6); padding: 20px; border-radius: 10px;">
-            <h5 class="card-title text-white">Pase para Eventos</h5>
-            <p class="card-text text-white">Escanea el siguiente código QR para acceder a los eventos:</p>
-            <div id="qrCode" class="d-flex justify-content-center">
-            <img src="URL_DEL_QR_CODE" alt="Código QR para Pase" />
-            </div>
-            </div> *@
-        </div>
-        
-        <div class="text-center mt-5" data-aos="fade-up">
-            <h1 class="display-4">Lugares recomendados en Puebla</h1>
-            <p>Diputado local en la LV Legislatura del Congreso de Puebla. </p>
-            <p>Secretario de Acción Juvenil de la CNC en Tepeaca, Puebla. 1</p>
-            <p>Delegado del Frente Juvenil Revolucionario en la Asamblea Municipal de Consulta y Debate en Puebla de la XVI Asamblea Nacional del PRI. </p>
-            <p>Secretario general del CDM del PRI en Acatzingo, Puebla.</p>
-            @*   <div style="background-color: rgba(0, 0, 0, 0.6); padding: 20px; border-radius: 10px;">
-            <h5 class="card-title text-white">Pase para Eventos</h5>
-            <p class="card-text text-white">Escanea el siguiente código QR para acceder a los eventos:</p>
-            <div id="qrCode" class="d-flex justify-content-center">
-            <img src="URL_DEL_QR_CODE" alt="Código QR para Pase" />
-            </div>
-            </div> *@
-        </div>
-
-        <div class="text-center mt-5" data-aos="fade-up">
-            <div style="background-color: rgba(0, 0, 0, 0.6); padding: 20px; border-radius: 10px;">
-                <h5 class="card-title text-white">Pase para Eventos</h5>
-                <p class="card-text text-white">Escanea el siguiente código QR para acceder a los eventos:</p>
-                <div id="qrCode" class="d-flex justify-content-center">
-                    <img src="URL_DEL_QR_CODE" alt="Código QR para Pase" />
-                </div>
-            </div>
-        </div>
-
     </div>
-    <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
-    <script src="~/js/aos.js"></script>
-    <script>
-        // Initialize AOS
-        AOS.init();
-
-        // SweetAlert2 for RSVP buttons
-        document.getElementById('confirmProtesta').addEventListener('click', function () {
-            Swal.fire({
-                title: '¡Gracias!',
-                text: 'Has confirmado tu asistencia a la Toma de Protesta.',
-                icon: 'success',
-                confirmButtonText: 'Cerrar'
-            });
-        });
-
-        document.getElementById('confirmMeeting').addEventListener('click', function () {
-            Swal.fire({
-                title: '¡Gracias!',
-                text: 'Has confirmado tu asistencia al Meeting con Colaboradores.',
-                icon: 'success',
-                confirmButtonText: 'Cerrar'
-            });
-        });
-
-        document.getElementById('confirmComida').addEventListener('click', function () {
-            Swal.fire({
-                title: '¡Gracias!',
-                text: 'Has confirmado tu asistencia a la Comida.',
-                icon: 'success',
-                confirmButtonText: 'Cerrar'
-            });
-        });
-        $(document).ready(function () {
-            var qrCodeData = "Evento: Toma de protesta\nInvitado: " + "Jose Roberto Juarez Diaz" + "\nFecha: 14/12/2024" + "\nHora: 13:00 horas" + "\nAsiento: 14" + "\nFila: 12";
-            $("#qrCode").empty();
-            new QRCode(document.getElementById("qrCode"), {
-                text: qrCodeData,
-                width: 200,
-                height: 200
-            });
-        });
-    </script>
-</body>
-</html>
+</div>

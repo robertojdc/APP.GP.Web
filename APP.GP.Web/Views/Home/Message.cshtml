@@ -1,0 +1,40 @@
+﻿@{
+    Layout = @"~/Views/Shared/_LayoutInvite.cshtml";
+}
+
+<div class="bg3-wrapper" data-aos="fade-up" style="text-align:center;">
+    <div class="container-fluid py-4">
+        <div class="row align-items-center">
+            <div class="col-md-4 col-12 d-flex justify-content-center">
+                <img src="~/img/invite/armenta.png" alt="Imagen de la persona" class="img-fluid" style="width: 90%; max-width: 400px; border-radius: 5%;">
+            </div>
+            <div class="col-md-8 col-12 text-center mt-3 mt-md-0">
+                <p class="quote-text" style="font-family: 'inviteFont'; color: #b89d3a;">
+                    El poder sólo se vuelve virtud cuando se pone al servicio de los demás...
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .bg3-wrapper {
+        padding: 50px 0;
+        width: 100%;
+    }
+
+    .quote-text {
+        font-size: 2rem;
+    }
+
+    @@media (min-width: 768px) {
+        .quote-text {
+            font-size: 3rem;
+        }
+    }
+
+    @@media (min-width: 992px) {
+        .quote-text {
+            font-size: 4rem;
+        }
+    }
+</style>

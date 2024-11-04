@@ -1,4 +1,5 @@
-﻿using APP.GP.Web.Services;
+﻿using APP.GP.Web.Model;
+using APP.GP.Web.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,10 +9,11 @@ namespace APP.GP.Web.Controllers
     public class HomeController : Controller
     {
         private readonly GrupoService _grupoService;
-
-        public HomeController(GrupoService grupoService)
+        private readonly RegistroInvitacionService _registroInvitacionService;
+        public HomeController(GrupoService grupoService, RegistroInvitacionService registroInvitacionService)
         {
             _grupoService = grupoService;
+            _registroInvitacionService = registroInvitacionService;
         }
 
         [HttpGet]
@@ -41,6 +43,34 @@ namespace APP.GP.Web.Controllers
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Invite()
+        {
+            return View(); // Solo usuarios autenticados pueden acceder
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Confirmation()
+        {
+            return View(); // Solo usuarios autenticados pueden acceder
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Message()
+        {
+            return View(); // Solo usuarios autenticados pueden acceder
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Places()
+        {
+            return View(); // Solo usuarios autenticados pueden acceder
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Invitacion()
         {
             return View(); // Solo usuarios autenticados pueden acceder
         }
@@ -110,6 +140,31 @@ namespace APP.GP.Web.Controllers
             // Solo usuarios autenticados pueden acceder
             var contact = new { /* detalle del contacto */ };
             return Json(contact);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> AddRegistroInvitacion(
+           string nombre,
+           string apellidoPaterno,
+           string apellidoMaterno,
+           string cargo,
+           string correoElectronico,
+           string telefonoPersonal)
+        {
+            // Crea una instancia de RegistroInvitacion con los valores recibidos
+            var request = new RegistroInvitacion
+            {
+                Nombre = nombre,
+                ApellidoPaterno = apellidoPaterno,
+                ApellidoMaterno = apellidoMaterno,
+                Cargo = cargo,
+                CorreoElectronico = correoElectronico,
+                TelefonoPersonal = telefonoPersonal
+            };
+
+            var result = await _registroInvitacionService.AddRegistroInvitacion(request);
+            return Json(result);
         }
     }
 }

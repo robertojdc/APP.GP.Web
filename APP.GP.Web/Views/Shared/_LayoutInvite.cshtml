@@ -1,0 +1,361 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación: Toma de Protesta del Gobernador Electo Alejandro Armenta</title>
+    <link href="~/css/aos.css" rel="stylesheet" />
+    
+    <style>
+        @@font-face {
+            font-family: 'inviteFont';
+            src: url('/fonts/Birds of Paradise.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        body{
+            overflow-x: hidden;
+        }
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .bg1-wrapper {
+            background-image: url('/img/invite/volcan.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 50px 0;
+            width: 100%;
+        }
+
+        .bg2-wrapper {
+            background-image: url('/img/invite/fondoConf.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 50px 0;
+            width: 100%;
+        }
+
+        .bg4-wrapper {
+            background-image: url('/img/invite/fondoInvita.png');
+            background-size: cover;
+            background-position: left;
+            background-repeat: no-repeat;
+            padding: 50px 0;
+            width: 100%;
+        }
+
+        .bg5-wrapper {
+            background-image: url('/img/invite/lugares.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100vh; /* Ocupar toda la altura de la pantalla */
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .map-button {
+            display: inline-block;
+        }
+
+            .map-button svg {
+                margin-right: 15px;
+            }
+
+
+        .invitacion {
+            text-align: center;
+            background-color: white;
+            padding: 40px;
+            width: 60%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .motivo, .detalle, .presentacion, .fecha {
+            font-weight: 400;
+            font-size: 12pt;
+            margin: 10px 0;
+        }
+
+        .titulo, .vision {
+            font-weight: 700;
+            font-size: 14pt;
+            color: #b89d3a;
+        }
+
+        .nombre {
+            /* font-family: 'Great Vibes', cursive; */
+            font-size: 3rem;
+            margin: 20px 0;
+            color: #b89d3a;
+        }
+
+        .cargo {
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin: 10px 0;
+            color: #b89d3a;
+        }
+
+        .fecha {
+            font-weight: 400;
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+
+
+
+        .hero {
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #601C2D;
+        }
+
+            /* Filtro oscuro para mejorar la legibilidad */
+            .hero::before {
+                content: "";
+                position: absolute;
+                top: 5pt;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.4);
+                z-index: 1;
+            }
+
+        /* Texto superpuesto */
+        .texto-superpuesto {
+            margin-top: 2pt;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra al texto */
+        }
+
+            .texto-superpuesto h1 {
+                font-size: 3rem;
+                margin: 0;
+            }
+
+            .texto-superpuesto h2 {
+                font-size: 2rem;
+                margin: 10px 0;
+            }
+
+            .texto-superpuesto p {
+                font-size: 1.2rem;
+                margin-top: 10px;
+            }
+
+        .logo-container {
+            background-image: url('/img/invite/superior.png');
+            background-color: #79211F;
+            background-repeat: repeat-x;
+            background-size: contain;
+            position: absolute;
+            top: 0;
+            z-index: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 40px;
+        }
+
+        /*    .logo-container img {
+                                width: 100%;
+                                height: 85px;
+                                align-items: center;
+                            } */
+
+        .countdown {
+            display: flex;
+            gap: 10px;
+            color: white !important;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            /*  position: relative;
+                                                            background-size: cover; */
+            background-position: center;
+            /* height: auto; */
+            align-items: center;
+            justify-content: center;
+            /* flex-direction: column; */
+        }
+
+        .time-box {
+            /* color: #333; */
+            border-radius: 8px;
+            border: 2px solid #FFF;
+            text-align: center;
+            padding: 15px 10px;
+            width: 100px;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+            .time-box span {
+                display: block;
+                font-size: 42px;
+                font-weight: bold;
+            }
+
+            .time-box label {
+                display: block;
+                font-size: 18px;
+            }
+
+        .styled-link {
+            color: #FFF !important;
+            text-decoration: none;
+            font-size: 14pt;
+        }
+    </style>
+    <script src="~/js/app/qrcode.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/kendo/js/kendo.all.min.js"></script>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    @* <link href="~/lib/kendo/styles/material-lime.css" rel="stylesheet" /> *@
+</head>
+<body>
+    <div class="logo-container"></div>
+    <div class="text-center">
+        <nav class="navbar navbar-expand-lg" style="background-color:#601C2D; margin-top:38px; color:#FFF;">
+            <div class="container-fluid">
+                <!-- Botón de hamburguesa -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Menú colapsable -->
+                <div class="collapse navbar-collapse" id="navbarMenu">
+                    <ul class="navbar-nav mx-auto" style="color: #FFF;">
+                        <li class="nav-item">
+                            @Html.ActionLink("Inicio", "Invite", "Home", null, new { @class = "nav-link styled-link" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Confirmación", "Confirmation", "Home", null, new { @class = "nav-link styled-link" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Mensaje", "Message", "Home", null, new { @class = "nav-link styled-link" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Invitación", "Invitacion", "Home", null, new { @class = "nav-link styled-link" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("Sitios de Interés", "Places", "Home", null, new { @class = "nav-link styled-link" })
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    @RenderBody()
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+<script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/js/popper.min.js"></script>
+<script src="~/js/aos.js"></script>
+<script type="text/javascript">
+    //Add document ready
+    $(document).ready(function () {
+        $("#confirmProtesta").click(function (e) {
+            e.preventDefault();
+            guardarConfirmacion();
+        });
+    });
+
+    function guardarConfirmacion() {
+        // Obtén los valores de cada campo
+        const nombre = $("#nombre").val();
+        const apellidoPaterno = $("#apellidoPaterno").val();
+        const apellidoMaterno = $("#apellidoMaterno").val();
+        const cargo = $("#cargo").val();
+        const correoElectronico = $("#correoElectronico").val();
+        const telefonoPersonal = $("#telefonoPersonal").val();
+
+        // Enviar cada valor mediante AJAX de manera individual
+        $.ajax({
+            url: '/Home/AddRegistroInvitacion', // Actualiza esta ruta según la estructura de tu proyecto
+            type: 'POST',
+            data: {
+                nombre: nombre,
+                apellidoPaterno: apellidoPaterno,
+                apellidoMaterno: apellidoMaterno,
+                cargo: cargo,
+                correoElectronico: correoElectronico,
+                telefonoPersonal: telefonoPersonal
+            },
+            success: function (response) {
+                if (response.procesoExitoso > 0) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Confirmación enviada',
+                        text: 'Tu asistencia ha sido confirmada con éxito.'
+                    });
+                    //Reset formulario
+                    $("#nombre").val('');
+                    $("#apellidoPaterno").val('');
+                    $("#apellidoMaterno").val('');
+                    $("#cargo").val('');
+                    $("#correoElectronico").val('');
+                    $("#telefonoPersonal").val('');
+                }
+            },
+            error: function (xhr, status, error) {
+                // Muestra una alerta de error con SweetAlert
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Hubo un problema al enviar la confirmación. Inténtalo nuevamente.'
+                });
+            }
+        });
+    }
+
+    // Initialize AOS
+    AOS.init();
+
+    function updateCountdown() {
+        const targetDate = new Date("December 14, 2024 11:00:00").getTime();
+        const now = new Date().getTime();
+        const difference = targetDate - now;
+
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerText = days;
+        document.getElementById("hours").innerText = hours;
+        document.getElementById("minutes").innerText = minutes;
+        document.getElementById("seconds").innerText = seconds;
+    }
+
+    setInterval(updateCountdown, 1000);
+</script>
+</html>
