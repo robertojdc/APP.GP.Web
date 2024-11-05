@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewData["Title"] = "Relation";
+}
+<div class="card shadow-sm mb-4">
+    <div class="card-header text-white text-center">
+        <h3 class="mb-0">OPCIONES PARA RELACIONAR ACTORES</h3>
+    </div>
+    <div class="card-body bg-light">
+        <div class="row g3">
+            <div class="col-md-12 text-center">
+                <div class="form-check form-check-inline form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="chkTodos" checked onchange="SeleccionarFiltro(0);">
+                    <label class="form-check-label" for="chkTodos">Todos los campos</label>
+                </div>
+                <div class="form-check form-check-inline form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="chkNombre" checked onchange="SeleccionarFiltro(1);">
+                    <label class="form-check-label" for="chkNombre">Nombre</label>
+                </div>
+                <div class="form-check form-check-inline form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="chkApellido" checked onchange="SeleccionarFiltro(2);">
+                    <label class="form-check-label" for="chkApellido">Apellidos</label>
+                </div>
+                <div class="form-check form-check-inline form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="chkCorreo" checked onchange="SeleccionarFiltro(3);">
+                    <label class="form-check-label" for="chkCorreo">Correo Electrónico</label>
+                </div>
+                <div class="form-check form-check-inline form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="chkTelefono" checked onchange="SeleccionarFiltro(4);">
+                    <label class="form-check-label" for="chkTelefono">Teléfono</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive mb-4">
+            <div id="gridResultados"></div>
+        </div>
+    </div>
+</div>
+<div id="loadingModal" style="display:none;">
+    <div style="text-align: center; padding: 20px;">
+        <span class="k-icon k-i-loading"></span>&nbsp;&nbsp;Cargando...
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        cargarGridInvitacion();
+    });
+
+    function cargarGridInvitacion() {
+        var datos = [];
+        datos.push({
+            nombre: "Erick",
+            apellidoPaterno: "Garcia",
+            apellidoMaterno: "de la Rosa",
+            nombreActor: "Erick Garcia de la Rosa",
+            correoElectronico: "erick.garcia@live.com.mx",
+            telefono: "5585370404"
+        });
+        datos.push({
+            nombre: "Roberto",
+            apellidoPaterno: "Juarez",
+            apellidoMaterno: "Diaz",
+            nombreActor: "Sin coincidencia",
+            correoElectronico: "jroberto@gmail.com",
+            telefono: "9876543210"
+        });
+        datos.push({
+            nombre: "Antonio",
+            apellidoPaterno: "Hernandez",
+            apellidoMaterno: "Islas",
+            nombreActor: "Sin coincidencia",
+            correoElectronico: "antonio.hernandez@gmail.com",
+            telefono: "1234567890"
+        });
+
+        llenarGridInvitacion(datos);
+    }
+
+    function llenarGridInvitacion(datos) {
+        $("#gridResultados").kendoGrid({
+            dataSource: {
+                data: datos,
+                pageSize: 10
+            },
+            pageable: true,
+            columns: [
+                { 
+                    title: "Invitado",
+                    columns: [
+                        { field: "nombre", width: "10%", title: "Nombre" },
+                        { field: "apellidoPaterno", width: "10%", title: "Apellido Paterno" },
+                        { field: "apellidoMaterno", width: "10%", title: "Apellido Materno" },
+                        { field: "correoElectronico", width: "10%", title: "Correo Electrónico" },
+                        { field: "telefono", width: "10%", title: "Teléfono" },
+                    ]
+                },
+                {
+                    title: "Actor",
+                    columns: [
+                        { field: "nombreActor", width: "40%", title: "Nombre Completo", attributes: { 'style': "background-color: lightgray; " } },
+                    ]
+                }
+            ],
+            resizable: true,
+            scrollable: false
+        });
+    }
+    function SeleccionarFiltro(tipo) {
+        if (tipo == 0) {
+            var activo = $("#chkTodos").is(":checked");
+
+            $("#chkNombre").prop("checked", activo);
+            $("#chkApellido").prop("checked", activo);
+            $("#chkCorreo").prop("checked", activo);
+            $("#chkTelefono").prop("checked", activo);
+        }
+        else {
+            if ($("#chkNombre").is(":checked") && $("#chkApellido").is(":checked") && $("#chkCorreo").is(":checked") &&
+                $("#chkTelefono").is(":checked")) {
+                $("#chkTodos").prop("checked", true);
+            }
+            else {
+                $("#chkTodos").prop("checked", false);
+            }
+        }
+    }
+</script>
