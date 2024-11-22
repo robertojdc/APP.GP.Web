@@ -17,8 +17,6 @@ namespace APP.GP.Web.Controllers
         [HttpGet]
         public IActionResult Relation()
         {
-            string p1 = Helper.Encriptacion.Encriptar("1");
-            string p2 = Helper.Encriptacion.Encriptar("41");
             return View();
         }
 
