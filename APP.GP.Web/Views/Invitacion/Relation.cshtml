@@ -1,10 +1,58 @@
-﻿
-@{
-    ViewData["Title"] = "Relation";
+﻿@{
+    ViewData["Title"] = "Relacionar Invitados con Actor";
 }
 <div class="card shadow-sm mb-4">
     <div class="card-header text-white text-center">
-        <h3 class="mb-0">OPCIONES PARA RELACIONAR ACTORES</h3>
+        <h3 class="mb-0">BUSCAR INVITADOS</h3>
+        <input id="hdfIdRegistroInvitacion" type="hidden" />
+    </div>
+    <div class="card-body bg-light">
+        <div class="row g3">
+            <div class="col-md-4">
+                <label for="txtNombreBuscar">Nombre</label>
+                <input id="txtNombreBuscar" type="text" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label for="txtAppBuscar">Apellido Paterno</label>
+                <input id="txtAppBuscar" type="text" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label for="txtApmBuscar">Apellido Materno</label>
+                <input id="txtApmBuscar" type="text" class="form-control" />
+            </div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row g3">
+            <div class="col-md-4">
+                <label for="txtTelefonoBuscar">Teléfono</label>
+                <input id="txtTelefonoBuscar" type="text" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label for="txtCorreoBuscar">Correo Electrónico</label>
+                <input id="txtCorreoBuscar" type="text" class="form-control" />
+            </div>
+            <div class="col-md-4">
+                <label for="ddlVinculado">Estatus</label>
+                <select id="ddlVinculado" class="form-control">
+                    <option value="-1">-- TODOS --</option>
+                    <option value="1">VINCULADO</option>
+                    <option value="0">SIN VINCULAR</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row g3">
+            <div class="col-md-12 text-center" >
+                <button type="button" class="btn btn-outline-secondary" onclick="BuscarInvitados()"><i class="bi bi-search"></i> Buscar</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="LimpiarFiltros()"><i class="bi bi-eraser"></i> Limpiar Filtros</button>
+            </div>
+        </div>
+        <div class="row">&nbsp;</div>
+    </div>
+</div>
+<div class="card shadow-sm mb-4 opcionesCSS" style="display:none;">
+    <div class="card-header text-center text-bg-dark">
+        <h3 class="mb-0">RELACIONAR INVITADOS CON ACTORES</h3>
     </div>
     <div class="card-body bg-light">
         <div class="row g3">
@@ -31,6 +79,11 @@
                 </div>
             </div>
         </div>
+        <div class="row g3">
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn btn-danger me-2" onclick="RelacionarInvitados()"><i class="bi bi-box-arrow-up-left"></i> Relacionar</button>
+            </div>
+        </div>
     </div>
 </div>
 <div class="row">
@@ -40,92 +93,76 @@
         </div>
     </div>
 </div>
-<div id="loadingModal" style="display:none;">
-    <div style="text-align: center; padding: 20px;">
-        <span class="k-icon k-i-loading"></span>&nbsp;&nbsp;Cargando...
+<div id="modalOpcionesVinculacion" style="display:none;">
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <button type="button" class="btn btn-danger me-2" onclick="MostrarModalActor();"><span class="bi bi-search"></span> Buscar Actor</button>
+        </div>
+    </div>
+    <div class="row">
+        &nbsp;
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="GridOpcionesVinculacion"></div>
+        </div>
     </div>
 </div>
-<script type="text/javascript">
-    $(document).ready(function () {
-        cargarGridInvitacion();
-    });
-
-    function cargarGridInvitacion() {
-        var datos = [];
-        datos.push({
-            nombre: "Erick",
-            apellidoPaterno: "Garcia",
-            apellidoMaterno: "de la Rosa",
-            nombreActor: "Erick Garcia de la Rosa",
-            correoElectronico: "erick.garcia@live.com.mx",
-            telefono: "5585370404"
-        });
-        datos.push({
-            nombre: "Roberto",
-            apellidoPaterno: "Juarez",
-            apellidoMaterno: "Diaz",
-            nombreActor: "Sin coincidencia",
-            correoElectronico: "jroberto@gmail.com",
-            telefono: "9876543210"
-        });
-        datos.push({
-            nombre: "Antonio",
-            apellidoPaterno: "Hernandez",
-            apellidoMaterno: "Islas",
-            nombreActor: "Sin coincidencia",
-            correoElectronico: "antonio.hernandez@gmail.com",
-            telefono: "1234567890"
-        });
-
-        llenarGridInvitacion(datos);
-    }
-
-    function llenarGridInvitacion(datos) {
-        $("#gridResultados").kendoGrid({
-            dataSource: {
-                data: datos,
-                pageSize: 10
-            },
-            pageable: true,
-            columns: [
-                { 
-                    title: "Invitado",
-                    columns: [
-                        { field: "nombre", width: "10%", title: "Nombre" },
-                        { field: "apellidoPaterno", width: "10%", title: "Apellido Paterno" },
-                        { field: "apellidoMaterno", width: "10%", title: "Apellido Materno" },
-                        { field: "correoElectronico", width: "10%", title: "Correo Electrónico" },
-                        { field: "telefono", width: "10%", title: "Teléfono" },
-                    ]
-                },
-                {
-                    title: "Actor",
-                    columns: [
-                        { field: "nombreActor", width: "40%", title: "Nombre Completo", attributes: { 'style': "background-color: lightgray; " } },
-                    ]
-                }
-            ],
-            resizable: true,
-            scrollable: false
-        });
-    }
-    function SeleccionarFiltro(tipo) {
-        if (tipo == 0) {
-            var activo = $("#chkTodos").is(":checked");
-
-            $("#chkNombre").prop("checked", activo);
-            $("#chkApellido").prop("checked", activo);
-            $("#chkCorreo").prop("checked", activo);
-            $("#chkTelefono").prop("checked", activo);
-        }
-        else {
-            if ($("#chkNombre").is(":checked") && $("#chkApellido").is(":checked") && $("#chkCorreo").is(":checked") &&
-                $("#chkTelefono").is(":checked")) {
-                $("#chkTodos").prop("checked", true);
-            }
-            else {
-                $("#chkTodos").prop("checked", false);
-            }
-        }
-    }
-</script>
+<div id="modalDetalleInvitacion"></div>
+<div id="modalBuscarActor" style="display:none;">
+    <div class="card shadow-sm mb-4">
+        <div class="card-header text-white text-center">
+            <h3 class="mb-0">BÚSQUEDA DE ACTORES</h3>
+        </div>
+        <div class="card-body bg-light">
+            <form id="consultaForm" class="row g-3">
+                <div class="col-md-6 col-lg-4">
+                    <label for="nombre" class="form-label">NOMBRE(S)</label>
+                    <input id="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre(s)">
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <label for="apellidoPaterno" class="form-label">APELLIDO PATERNO</label>
+                    <input id="apellidoPaterno" name="apellidoPaterno" type="text" class="form-control" placeholder="Apellido paterno">
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <label for="apellidoMaterno" class="form-label">APELLIDO MATERNO</label>
+                    <input id="apellidoMaterno" name="apellidoMaterno" type="text" class="form-control" placeholder="Apellido materno">
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <label for="grupo" class="form-label">GRUPO</label>
+                    <input id="grupo" name="grupo" class="form-control" placeholder="Seleccione un grupo">
+                    <input type="hidden" id="grupoId" name="grupoId">
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <label for="subgrupo" class="form-label">SUBGRUPO</label>
+                    <input id="subgrupo" name="subgrupo" class="form-control" placeholder="Seleccione un subgrupo">
+                    <input type="hidden" id="subgrupoId" name="subgrupoId">
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <label for="clasificacion" class="form-label">CLASIFICACIÓN</label>
+                    <input id="clasificacion" name="clasificacion" class="form-control" placeholder="Seleccione una clasificación">
+                    <input type="hidden" id="clasificacionId" name="clasificacionId">
+                </div>
+                <div class="col-md-4">
+                    <label for="afinidad" class="form-label">AFINIDAD</label>
+                    <input id="afinidad" name="afinidad" class="form-control" placeholder="Seleccione afinidad">
+                    <input type="hidden" id="afinidadId" name="subcategoriaId">
+                </div>
+                <div class="col-md-4">
+                    <label for="compromiso" class="form-label">COMPROMISO</label>
+                    <input id="compromiso" name="compromiso" class="form-control" placeholder="Seleccione compromiso">
+                    <input type="hidden" id="compromisoId" name="compromisoId">
+                </div>
+                <div class="col-12 text-center mt-4">
+                    <button type="button" class="btn btn-danger me-2" id="buscarActor">Buscar</button>
+                    <button type="button" class="btn btn-outline-secondary" id="crearActor">Crear</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="table-responsive mb-4">
+        <div id="gridResultadosActor"></div>
+    </div>
+</div>
+<script src="~/js/app/invitacion/relation.js"></script>
+<script src="~/js/app/invitacion/invitaciondetalle.js"></script>

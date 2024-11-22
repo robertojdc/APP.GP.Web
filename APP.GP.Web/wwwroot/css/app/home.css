@@ -288,3 +288,47 @@ tr:nth-child(even) {
         background-color: var(--color-secondary);
         color: white;
     }
+
+/* LOADING */
+.centerLoading {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-top: 15%;
+    z-index: 1030;
+    overflow: hidden;
+    outline: 0;
+}
+
+.lblLoading {
+    width: 100%;
+    text-align: center;
+    font-size: xx-large;
+    margin-left: auto;
+    margin-right: auto;
+    color: #003366;
+}
+
+.divLoad {
+    background: rgba(251,251,251,0.8);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    /*z-index: 1050;*/
+    z-index: 1000000000;
+    display: none;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+}
+
+/* FIN LOADING */
+
+/* PANEL GUINDA */
+.panelInvitacion {
+    background-color: var(--color-primary);
+    color: white;
+}
+/* FIN PANEL GUINDA */

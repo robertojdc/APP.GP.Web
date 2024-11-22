@@ -57,14 +57,9 @@ function MensajeConfirmacion(titulo = '¿Estás seguro?', mensaje = 'Esta acció
     });
 }
 
-//// Función global para mostrar el modal de cargando
-//function mostrarCargando() {
-//    var loadingModal = $("#loadingModal").data("kendoWindow");
-//    loadingModal.center().open(); // Centrar y abrir el modal
-//}
-
-//// Función global para ocultar el modal de cargando
-//function ocultarCargando() {
-//    var loadingModal = $("#loadingModal").data("kendoWindow");
-//    loadingModal.close(); // Cerrar el modal
-//}
+function MuestraCargando() {
+    $("#modalLoading").show();
+}
+function OcultaCargando() {
+    $("#modalLoading").hide();
+}

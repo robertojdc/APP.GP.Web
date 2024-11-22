@@ -12,6 +12,7 @@
     <link href="~/css/kendoicons.css" rel="stylesheet" />
     <link href="~/css/jquery-ui.css" rel="stylesheet" />
     <link href="~/css/app/home.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body cz-shortcut-listen="true">
     <header>
@@ -38,6 +39,14 @@
                             <li><a class="dropdown-item" href="../Categoria/Index">Categoría</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="invitacionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Invitación
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="invitacionDropdown">
+                            <li><a class="dropdown-item" href="../Invitacion/Relation">Relacionar Invitados</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item">
                         <a href="../Eventos/Index" title="Eventos" class="nav-link">Eventos</a>
                     </li>
@@ -62,11 +71,11 @@
     <div class="container-fluid">
         @RenderBody()
     </div>
-@*     <div id="loadingModal" style="display:none;">
-        <div style="text-align: center; padding: 10px;">
-            <span class="k-icon k-i-loading"></span>&nbsp;&nbsp;Cargando...
+    <div id="modalLoading" class="divLoad" style="display:none;">
+        <div class="spinner-border text-danger centerLoading" role="status">
+            <span class="visually-hidden">Loading...</span>
         </div>
-    </div> *@
+    </div>
     <style>
         /* Mantener elementos en una sola fila */
         @@media (max-width: 768px) {
