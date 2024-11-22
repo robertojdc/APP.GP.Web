@@ -54,4 +54,10 @@ public class Actor
     public int AfinidadId { get; set; }
 
     public int CompromisoId { get; set; }
+
+    public string? Seccion { get; set; }
+    public string? Fila { get; set; }
+    public string? Asiento { get; set; }
+    public string? Lugar { get; set; }
+    public DateTime? FechaHora { get; set; }
 }

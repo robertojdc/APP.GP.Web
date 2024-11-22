@@ -13,6 +13,9 @@
                     <label for="subgrupo" class="form-label">ESCENARIO</label>
                     <input id="subgrupo" name="subgrupo" class="form-control" placeholder="Seleccione un subgrupo">
                 </div>
+                <input type="hidden" id="hidEvento" />
+                <input type="hidden" id="hidEscenario" />
+                <input type="hidden" id="hidFechaHora" />
             </form>
         </div>
     </div>
@@ -20,7 +23,7 @@
 
 <input type="hidden" id="idSelected" />
 
-<div class="parent-container1" style="display:none;">
+<div class="parent-container1" id="seccion_A" style="display:none;">
     <div class="center-left selectable" style="margin-top:10px;  width:100%;float:left;">
         <div class="row row-1">
             <div id="cuadro-1-1" data-fila="1" data-columna="1"></div>
@@ -36,7 +39,7 @@
     </div>
 </div>
 
-<div class="parent-container2" style="display:none;">
+<div class="parent-container2" id="seccion_B" style="display:none;">
     <div class="center-left selectable" style="margin-top:10px;  width:100%;float:left;">
         <div class="row row-2">
             <div id="cuadro-2-1" data-fila="2" data-columna="1"></div>
@@ -68,7 +71,7 @@
     </div>
 </div>
 
-<div class="parent-container3" style="display:none;">
+<div class="parent-container3" id="seccion_C" style="display:none;">
     <div class="center-left selectable" style="margin-top:10px;  width:100%;float:left;">
         <div class="row row-3">
             <div id="cuadro-3-1" data-fila="3" data-columna="1"></div>
@@ -136,7 +139,7 @@
     </div>
 </div>
 
-<div class="parent-container4" style="display:none;">
+<div class="parent-container4" id="seccion_D" style="display:none;">
     <div class="center-left selectable" style="margin-top:10px;  width:100%;float:left;">
         <div class="row row-8">
             <div id="cuadro-8-1" data-fila="8" data-columna="1"></div>
@@ -239,8 +242,8 @@
         </div>
     </div>
 </div>
-
-<div class="parent-container5" style="display:none;">
+<hr />
+<div class="parent-container5" id="seccion_E" style="display:none;">
     <div class="center-left selectable" style="margin-top:10px;  width:100%;float:left;">
         <div class="row row-12">
             <div id="cuadro-12-1" data-fila="12" data-columna="1"></div>
@@ -380,7 +383,62 @@
         <h3>#: nombre # #: apellidoPaterno # #: apellidoMaterno #</h3>
     </div>
 </script>
-<div id="detalleActorModal"></div>
+<div id="detalleActorWindow"></div>
+<div id="boletoModal" style="display:none;">
+    <div id="boletoContent">
+        <div class="header">
+            @* <img src="escudo_puebla.png" alt="Escudo de Puebla"> *@
+            @*     <h1>PUEBLA</h1>
+            <p>Gobierno del Estado 2024 - 2030</p> *@
+        </div>
+        <div class="content">
+            <h3>TOMA DE PROTESTA</h3>
+            <table id="tablaActor">
+                <tr>
+                    <td>NOMBRE</td>
+                    <td><label id="lblActor"></label></td>
+                </tr>
+                <tr>
+                    <td>CARGO</td>
+                    <td><label id="lblCargo"></label></td>
+                </tr>
+                <tr>
+                    <td>FECHA</td>
+                    <td><label id="lblFecha"></label></td>
+                </tr>
+                <tr>
+                    <td>HORA</td>
+                    <td><label id="lblHora"></label></td>
+                </tr>
+                <tr>
+                    <td>LUGAR</td>
+                    <td><label id="lblLugar"></label></td>
+                </tr>
+                <tr>
+                    <td>SECCIÓN</td>
+                    <td><label id="lblSeccion"></label></td>
+                </tr>
+                <tr>
+                    <td>FILA</td>
+                    <td><label id="lblFila"></label></td>
+                </tr>
+                <tr>
+                    <td>ASIENTO</td>
+                    <td><label id="lblAsiento"></label></td>
+                </tr>
+            </table>
+        </div>
+        <div id="qrCode" class="qr-container"></div>
+        <div class="footer">
+            <p>© 2024 Gobierno del Estado de Puebla</p>
+        </div>
+    </div>
+    <div class="row mb-3 buttons-container">
+        <input type="button" id="exportarPDF" class="btn pdf-button styled-button" value="Descargar PDF" />
+        <input type="button" class="btn whatsapp-button styled-button" value="Enviar a WhatsApp" onclick="enviarWhats()" />
+        <input type="button" class="btn email-button styled-button" value="Enviar a Correo" onclick="$('#boletoModal').data('kendoWindow').close();" />
+    </div>
+</div>
 <script>
     var allActors = [];
     $(document).ready(function () {
@@ -391,6 +449,34 @@
             $("#idSelected").val(selectedId);
             var actorId = $(this).data('actor-id');
             mostrarVentanaKendo("#windowInstitucional", "600px", "BÚsqueda de actores", actorId);
+        });
+
+        $("#exportarPDF").prepend('<i class="fas fa-file-pdf"></i>');
+        $(".whatsapp-button").prepend('<i class="fab fa-whatsapp"></i>');
+        $(".email-button").prepend('<i class="fas fa-envelope"></i>');
+
+        $("#qrCode").kendoQRCode({
+            value: "https://mi-sitio.com/invitacion",
+            size: 150,
+            color: "#000000",
+            background: "#ffffff"
+        });
+        $("#exportarPDF").click(function () {
+            console.log($("#boletoContent").html());
+            kendo.drawing
+                .drawDOM("#boletoContent", {
+                    paperSize: "A4",
+                    margin: { top: "2cm", bottom: "1cm", left: "3cm", right: "3cm" },
+                    scale: 0.9,
+                    height: 510,
+                    landscape: false
+                })
+                .then(function (group) {
+                    kendo.drawing.pdf.saveAs(group, "boleto.pdf");
+                })
+                .catch(function (error) {
+                    console.error("Error al generar el PDF:", error);
+                });
         });
     });
 
@@ -416,11 +502,28 @@
         });
     }
 
+    function obtenerEscenariosById() {
+        $.ajax({
+            url: '/Eventos/GetEscenarioById',
+            type: 'GET',
+            data: { idEscenario: $("#subgrupo").val() },
+            success: function (response) {
+                console.log(response);
+                $("#hidEvento").val(response.evento.nombreEvento);
+                $("#hidEscenario").val(response.nombreEscenario);
+                $("#hidFechaHora").val(response.evento.fechaEvento);
+            },
+            error: function (xhr, status, error) {
+                console.log('Ocurrió un error: ' + error);
+            }
+        });
+    }
+
     function obtenerEscenarios() {
         $.ajax({
             url: '/Eventos/GetEscenariosByEvento',
             type: 'GET',
-            data: { idEvento: 1 },
+            data: { idEvento: $("#ddlGrupo").val() },
             success: function (response) {
                 $("#subgrupo").kendoDropDownList({
                     dataTextField: "nombreEscenario",
@@ -469,7 +572,6 @@
         }
     }
 
-
     function mostrarVentanaKendo(selector, ancho, titulo, id) {
         if (id) {
             verDetalleActor(id);
@@ -503,7 +605,6 @@
             $kendoWindow.center().open();
         }
     }
-
 
     function inicializarAutoComplete(actors) {
         $("#actorAutoComplete").kendoAutoComplete({
@@ -577,10 +678,11 @@
     }
 
     function obtenerDisposiciones() {
+        obtenerEscenariosById();
         $.ajax({
             url: '/Eventos/GetDisposicionesForEscenario',
             type: 'GET',
-            data: { idEvento: 1, idEscenario: $("#subgrupo").val() },
+            data: { idEvento: $("#ddlgrupo").val(), idEscenario: $("#subgrupo").val() },
             success: function (data) {
                 renderizarDisposiciones(data);
             },
@@ -612,21 +714,127 @@
     }
 
     function verDetalleActor(actorId) {
+        var fila = obtenerFilaSeleccionada();
+        var columna = obtenerColumnaSeleccionada();
+        var seccion = obtenerSeccionSeleccionada();
         $.ajax({
-            url: '@Url.Action("GetActorDetalle", "Actor")',
+            url: '@Url.Action("GetDetalleActor", "Actor")',
             type: 'GET',
-            data: { id: actorId },
+            data: {
+                id: actorId,
+                seccion: seccion,
+                fila: fila,
+                asiento: columna,
+                lugar: $("#hidEscenario").val(),
+                hora: $("#hidFechaHora").val()
+            },
+            success: function (actor) {
+                const detalleActorWindow = $("#detalleActorWindow").data("kendoWindow");
+
+                if (!detalleActorWindow) {
+                    $("#detalleActorWindow").kendoWindow({
+                        width: "700px",
+                        modal: true,
+                        visible: false,
+                        actions: ["Close"]
+                    });
+                }
+
+                const windowInstance = $("#detalleActorWindow").data("kendoWindow");
+
+                windowInstance.setOptions({
+                    title: `${actor.cargoActual}`
+                });
+
+                const contenido = `
+                                <div class="container mt-4 p-4 border rounded bg-light shadow-sm">
+                                    <div class="row mb-4">
+                                        <div class="col-12 col-md-4 text-center">
+                                            <img src="data:image/png;base64,${actor.fotoBase64}" class="rounded-circle img-fluid mb-3" alt="Foto del actor político" style="width: 150px; height: 150px; object-fit: cover;">
+                                        </div>
+                                        <div class="col-12 col-md-8 d-flex align-items-center">
+                                            <div>
+                                                <h3 class="fw-bold">${actor.nombre} ${actor.apellidoPaterno} ${actor.apellidoMaterno}</h3>
+                                                <p class="text-muted">Teléfono Personal: ${actor.telefonoPersonal}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row gy-3">
+                                        <div class="col-md-6">
+                                            <label class="fw-semibold text-primary">Domicilio Laboral</label>
+                                            <div class="text-secondary">${actor.domicilioLaboral}</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="fw-semibold text-primary">Teléfono Laboral</label>
+                                            <div class="text-secondary">${actor.telefonoLaboral}</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="fw-semibold text-primary">Fecha de Nacimiento</label>
+                                            <div class="text-secondary">${new Date(actor.fechaNacimiento).toLocaleDateString()}</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="fw-semibold text-primary">Correo Electrónico</label>
+                                            <div class="text-secondary">${actor.correoElectronico}</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="fw-semibold text-primary">Redes Sociales</label>
+                                            <div class="text-secondary">${actor.inputRedSocial ?? 'N/A'}</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="fw-semibold text-primary">Página Web</label>
+                                            <div class="text-secondary">${actor.paginaWeb || 'N/A'}</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="fw-semibold text-primary">Afinidad</label>
+                                            <div class="text-secondary">${actor.afinidad}</div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="fw-semibold text-primary">Compromiso</label>
+                                            <div class="text-secondary">${actor.compromiso}</div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="fw-semibold text-primary">Comentarios</label>
+                                            <div class="text-secondary">${actor.comentarios}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row gy-3">
+                                            <input type="button" onclick="GenerarInvitacion(${actor.idActor})" value="Generar invitación" id="btnInvite" />
+                                </div>
+                            `;
+
+                windowInstance.content(contenido);
+
+                windowInstance.center().open();
+            },
+            error: function (xhr, status, error) {
+                console.error('Error al obtener los detalles del actor:', error);
+            }
+        });
+    }
+
+    function GenerarInvitacion(idActor) {
+        $.ajax({
+            url: '@Url.Action("GetActorId", "Actor")',
+            type: 'GET',
+            data: { idActor: idActor },
             success: function (response) {
-                var cargo = $(response).find("#cargo").text();
-                var detalleModal = $("#detalleActorModal").kendoWindow({
-                    title: cargo,
+                $("#lblActor").text(response.nombre + " " + response.apellidoPaterno + " " + response.apellidoMaterno);
+                $("#lblCargo").text(response.cargo);
+                $("#lblFecha").text($("#hidFechaHora").val());
+                $("#lblHora").text($("#hidFechaHora").val());
+                $("#lblLugar").text($("#hidEscenario").val());
+                $("#lblFila").text(obtenerFilaSeleccionada());
+                $("#lblAsiento").text(obtenerColumnaSeleccionada());
+                $("#lblSeccion").text(obtenerSeccionSeleccionada());
+                var detalleModal = $("#boletoModal").kendoWindow({
+                    title: "Boleto",
                     modal: true,
                     visible: false,
-                    width: "650px",
-                    height: "550px",
+                    width: "500px",
+                    height: "715px",
                     actions: ["Close"]
                 }).data("kendoWindow");
-                detalleModal.content(response);
                 detalleModal.center().open();
             },
             error: function (xhr, status, error) {
@@ -661,7 +869,6 @@
     }
 
     function obtenerFilaSeleccionada() {
-        debugger;
         var idSelected = $("#idSelected").val();
         var $selectedDiv = $("#" + idSelected);
 
@@ -679,6 +886,12 @@
         return columna;
     }
 
+    function obtenerSeccionSeleccionada() {
+        var idSelected = $("#idSelected").val();
+        var $selectedDiv = $("#" + idSelected);
+        var parentSection = $selectedDiv.closest(".parent-container, .parent-container1, .parent-container2, .parent-container3, .parent-container4, .parent-container5");
+        return parentSection.attr("id");
+    }
 </script>
 
 <style>
@@ -892,4 +1105,141 @@
         border: 2px solid #000;
     }
 
+    #tablaActor {
+        font-size: 12pt;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        #tablaActor th, #tablaActor td {
+            padding: 2px;
+            text-align: left;
+            border: none;
+        }
+
+        #tablaActor tr {
+            background: none;
+            color: inherit;
+        }
+
+    #boletoContent {
+        width: 100%;
+        margin: auto;
+        background-color: #5b0e1d;
+        border: 2px solid #5b0e1d;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+        color: #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .header img {
+        width: 80px;
+        margin-bottom: 10px;
+    }
+
+    .header h1 {
+        font-size: 26px;
+        margin: 5px 0;
+    }
+
+    .header p {
+        font-size: 14px;
+        margin: 0;
+    }
+
+    .content {
+        width: 100%;
+        text-align: left;
+        margin: 10px 0;
+    }
+
+        .content p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        .content h3 {
+            text-align: center;
+        }
+
+    .qr-container {
+        margin: 5px 0;
+        text-align: center;
+    }
+
+    .footer {
+        text-align: center;
+        margin-top: 5px;
+    }
+
+        .footer p {
+            font-size: 12px;
+            color: #ccc;
+        }
+
+    .buttons-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: nowrap; /* Cambiado a nowrap */
+        gap: 10px;
+        margin: auto;
+        margin-top: 5px;
+        overflow-x: auto; /* Permite desplazamiento horizontal si es necesario */
+        width: 98%;
+    }
+
+    .styled-button {
+        flex: 1 1 auto; /* Permite que los botones se ajusten */
+        min-width: 100px; /* Ancho mínimo para los botones */
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        color: #fff;
+        cursor: pointer;
+        transition: background 0.3s ease, opacity 0.3s ease;
+    }
+
+    .pdf-button {
+        background-color: #007bff;
+    }
+
+    .whatsapp-button {
+        background-color: #25D366;
+    }
+
+    .email-button {
+        background-color: #dc3545;
+    }
+
+    .styled-button:hover {
+        opacity: 0.8;
+    }
+
+    @@media (max-width: 600px) {
+        #boletoContent {
+            padding: 15px;
+        }
+
+        .header h1 {
+            font-size: 20px;
+        }
+
+        .content p {
+            font-size: 14px;
+        }
+
+        .styled-button {
+            font-size: 14px;
+            padding: 8px 12px;
+        }
+    }
+
+    .k-window-content {
+        padding-inline: var(--kendo-spacing-1, 0.5rem);
+    }
 </style>

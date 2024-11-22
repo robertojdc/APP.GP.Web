@@ -7,7 +7,7 @@
 
     <div class="row">
         <center><h4 style="margin-top: 60px;">Tablero de actores</h4></center>
-        <div class="row" id="categorias-container"></div>       
+        <div class="row" id="categorias-container"></div>
     </div>
 
     <div id="windowInstitucional" style="border: 2px solid #8B0000; padding: 10px; background-color: #FFFFFF; display:none;">
@@ -20,7 +20,7 @@
         <div id="listView"></div>
 
         <script type="text/x-kendo-template" id="template">
-            <div class="actor" onclick="verDetalleActor(#= idActor #, '#= cargoActual #')">
+            <div class="actor" onclick="verDetalleActor(#= idActor #)">
                 # if (fotoBase64) { #
                     <img src="data:image/jpeg;base64,#= fotoBase64 #" alt="Foto de #= nombre # #= apellidoPaterno #" />
                 # } else { #
@@ -30,81 +30,14 @@
                 <h3>#: nombre # #: apellidoPaterno # #: apellidoMaterno #</h3>
             </div>
         </script>
-
-    </div>
-
-    <div id="contactDetailWindow" style="display:none;">
-        <div id="contactDetailContent" style="padding: 20px;">
-            <div style="background-color: #8B0000; color: white; padding: 10px; text-align: center; font-weight: bold; margin-top: 10px;">
-                NOMBRE
-            </div>
-            <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
-                <tr>
-                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">FOTO</td>
-                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">
-                        <center><img src="~/img/1.png" alt="Foto del contacto" style="width: 100px; height: 100px;"></center>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">CARGO ACTUAL</td>
-                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">DIRECTOR GENERAL</td>
-                </tr>
-                <tr>
-                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">FECHA DE NACIMIENTO</td>
-                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">22 DE DICIEMBRE DE 1969</td>
-                </tr>
-                <tr>
-                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">DOMICILIO LABORAL</td>
-                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">AVENIDA 16 DE SEPTIEMBRE 59 LOS ALAMOS PUEBLA</td>
-                </tr>
-                <tr>
-                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">DOMICILIO PARTICULAR</td>
-                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">CALLE 5 DE FEBRERO EL ROSAL PUEBLA</td>
-                </tr>
-                <tr>
-                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">TELÉFONO LABORAL</td>
-                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">5541236548</td>
-                </tr>
-                <tr>
-                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">TELÉFONO PERSONAL</td>
-                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">4452120014</td>
-                </tr>
-                <tr>
-                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">CORREO ELECTRÓNICO</td>
-                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">serafin.herrera@solpuebla.com</td>
-                </tr>
-                <tr>
-                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">REDES SOCIALES</td>
-                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;"></td>
-                </tr>
-                <tr>
-                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">PÁGINA WEB</td>
-                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;"></td>
-                </tr>
-                <tr>
-                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">AFINIDAD</td>
-                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">AFIN AL GOBIERNO DE ALEJANDRO ARMENTA</td>
-                </tr>
-                <tr>
-                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">COMPROMISO</td>
-                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">{{Compromiso}}</td>
-                </tr>
-                <tr>
-                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">ANEXOS</td>
-                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">{{Anexos}}</td>
-                </tr>
-                <tr>
-                    <td style="width: 30%; border: 1px solid #8B0000; padding: 10px;">COMENTARIOS</td>
-                    <td style="width: 70%; border: 1px solid #8B0000; padding: 10px;">{{Comentarios}}</td>
-                </tr>
-            </table>
-
-        </div>
     </div>
 
     <div class="responsive-message"></div>
 
-    <div id="detalleActorModal"></div>
+    <div id="detalleActorWindow">
+       
+    </div>
+
     <script>
         $(document).ready(function () {
             obtenerGrupos();
@@ -195,7 +128,7 @@
         }
 
         function mostrarVentanaKendo2(selector, ancho, titulo, id) {
-            
+
             var listView = $("#listView").data("kendoListView");
 
             if (listView) listView.dataSource.data([]);
@@ -249,7 +182,7 @@
 
         function handleSelectChange(select) {
             const value = select.value;
-            if (value) {                
+            if (value) {
                 ObtenerSubCategoria(value);
                 obtenerActores(value, 1);
             }
@@ -335,29 +268,100 @@
                 kendoWindow.restore();
         }
 
-        function verDetalleActor(actorId, cargoActual) {
-            var detalleModal = $("#detalleActorModal").kendoWindow({
-                title: cargoActual,
-                modal: true,
-                visible: false,
-                width: "650px",
-                height: "550px",
-                actions: ["Close"]
-            }).data("kendoWindow");
-
+        function verDetalleActor(actorId) {
             $.ajax({
-                url: '@Url.Action("GetActorDetalle", "Actor")',
+                url: '/Actor/GetDetalleActor',
                 type: 'GET',
                 data: { id: actorId },
-                success: function (response) {
-                    detalleModal.content(response);
-                    detalleModal.center().open();
+                success: function (actor) {
+                    const detalleActorWindow = $("#detalleActorWindow").data("kendoWindow");
+
+                    if (!detalleActorWindow) {
+                        // Inicializar el KendoWindow si no existe
+                        $("#detalleActorWindow").kendoWindow({
+                            width: "700px",
+                            modal: true,
+                            visible: false,
+                            actions: ["Close"]
+                        });
+                    }
+
+                    // Obtener la instancia del KendoWindow
+                    const windowInstance = $("#detalleActorWindow").data("kendoWindow");
+
+                    // Actualizar el título
+                    windowInstance.setOptions({
+                        title: `${actor.cargoActual}`
+                    });
+
+                    // Construir dinámicamente el contenido del KendoWindow
+                    const contenido = `
+                        <div class="container mt-4 p-4 border rounded bg-light shadow-sm">
+                            <div class="row mb-4">
+                                <div class="col-12 col-md-4 text-center">
+                                    <img src="data:image/png;base64,${actor.fotoBase64}" class="rounded-circle img-fluid mb-3" alt="Foto del actor político" style="width: 150px; height: 150px; object-fit: cover;">
+                                </div>
+                                <div class="col-12 col-md-8 d-flex align-items-center">
+                                    <div>
+                                        <h3 class="fw-bold">${actor.nombre} ${actor.apellidoPaterno} ${actor.apellidoMaterno}</h3>
+                                        <p class="text-muted">Teléfono Personal: ${actor.telefonoPersonal}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row gy-3">
+                                <div class="col-md-6">
+                                    <label class="fw-semibold text-primary">Domicilio Laboral</label>
+                                    <div class="text-secondary">${actor.domicilioLaboral}</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="fw-semibold text-primary">Teléfono Laboral</label>
+                                    <div class="text-secondary">${actor.telefonoLaboral}</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="fw-semibold text-primary">Fecha de Nacimiento</label>
+                                    <div class="text-secondary">${new Date(actor.fechaNacimiento).toLocaleDateString()}</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="fw-semibold text-primary">Correo Electrónico</label>
+                                    <div class="text-secondary">${actor.correoElectronico}</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="fw-semibold text-primary">Redes Sociales</label>
+                                    <div class="text-secondary">${actor.inputRedSocial ?? 'N/A'}</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="fw-semibold text-primary">Página Web</label>
+                                    <div class="text-secondary">${actor.paginaWeb || 'N/A'}</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="fw-semibold text-primary">Afinidad</label>
+                                    <div class="text-secondary">${actor.afinidad}</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="fw-semibold text-primary">Compromiso</label>
+                                    <div class="text-secondary">${actor.compromiso}</div>
+                                </div>
+                                <div class="col-12">
+                                    <label class="fw-semibold text-primary">Comentarios</label>
+                                    <div class="text-secondary">${actor.comentarios}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    // Actualizar el contenido dinámico
+                    windowInstance.content(contenido);
+
+                    // Abrir la ventana
+                    windowInstance.center().open();
                 },
                 error: function (xhr, status, error) {
                     console.error('Error al obtener los detalles del actor:', error);
                 }
             });
         }
+
+
     </script>
 
     <style>
@@ -501,31 +505,6 @@
             display: inline-block;
             vertical-align: middle;
         }
-
-        #contactDetailWindow {
-            border: 2px solid #8B0000;
-        }
-
-            #contactDetailWindow table td {
-                padding: 10px;
-                border: 1px solid #8B0000;
-                vertical-align: middle;
-            }
-
-            #contactDetailWindow img {
-                border-radius: 5px;
-            }
-
-            #contactDetailWindow h2 {
-                color: #8B0000;
-                font-size: 18px;
-                margin-bottom: 5px;
-            }
-
-            #contactDetailWindow p {
-                color: #555;
-                font-size: 14px;
-            }
 
         #listView {
             padding: 10px 5px;

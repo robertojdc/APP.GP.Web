@@ -45,6 +45,13 @@ public class EventoService
         return response.Lista;
     }
 
+    public async Task<Escenario> GetEscenarioById(int idEscenario)
+    {
+        var response = await _httpClient.GetFromJsonAsync<Escenario>($"/Eventos/GetEscenarioById/{idEscenario}");
+        return response;
+    }
+
+
     public async Task<List<Actor>> GetActore()
     {
         var response = await _httpClient.GetFromJsonAsync<Resultado<Actor>>("/Actor/GetActores");

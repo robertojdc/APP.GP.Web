@@ -76,4 +76,10 @@ public class EventosController : Controller
         var escenarios = await _eventoService.GetEscenariosByEvento(idEvento);
         return Json(escenarios);
     }
+
+    public async Task<IActionResult> GetEscenarioById(int idEscenario)
+    {
+        var actores = await _eventoService.GetEscenarioById(idEscenario);
+        return Json(actores);
+    }
 }

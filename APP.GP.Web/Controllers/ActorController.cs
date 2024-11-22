@@ -97,6 +97,14 @@ public class ActorController : Controller
         return View(actor);
     }
 
+    public async Task<IActionResult> GetActorId([FromQuery] int idActor)
+    {
+        var actor = await _grupoService.GetActorByIdAsync(idActor);
+
+        return Ok(actor);
+    }
+
+
     public async Task<IActionResult> ObtenerGrupos()
     {
         var grupos = await _grupoService.GetGrupos();
@@ -149,17 +157,28 @@ public class ActorController : Controller
         return View(actor);
     }
 
-    public async Task<IActionResult> GetActorDetalle(int id)
+    public async Task<IActionResult> GetActorDetalle(int id, string? seccion, string? fila, string? asiento, string? lugar, DateTime? hora)
     {
         var actor = await _grupoService.GetActorByIdAsync(id);
-
+        actor.Seccion = seccion;
+        actor.Fila = fila;
+        actor.Asiento = asiento;
+        actor.Lugar = lugar;
+        actor.FechaHora = hora;
         if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
         {
             return PartialView("_ActorDetailPartial", actor);
         }
-
         return View(actor);
     }
+
+    public async Task<IActionResult> GetDetalleActor(int id)
+    {
+        var actor = await _grupoService.GetActorByIdAsync(id);
+        // Devuelve el objeto como JSON
+        return Json(actor);
+    }
+
     public async Task<IActionResult> GetAfinidades()
     {
         var afinidades = await _grupoService.GetAfinidades();
