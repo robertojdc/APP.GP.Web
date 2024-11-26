@@ -9,11 +9,12 @@ public class EventosController : Controller
 {
     private readonly EventoService _eventoService;
     private readonly GrupoService _grupoService;
-
-    public EventosController(EventoService eventoService, GrupoService grupoService)
+    private IConfiguration _configuration;
+    public EventosController(EventoService eventoService, GrupoService grupoService, IConfiguration configuration)
     {
         _eventoService = eventoService;
         _grupoService = grupoService;
+        _configuration = configuration;
     }
     public IActionResult Index()
     {
@@ -81,5 +82,15 @@ public class EventosController : Controller
     {
         var actores = await _eventoService.GetEscenarioById(idEscenario);
         return Json(actores);
+    }
+
+    public async Task<IActionResult> GenerarUrl(string p1, string p2)
+    {
+        string idEscenario = Helper.Encriptacion.Encriptar(p1);
+        string idActor = Helper.Encriptacion.Encriptar(p2.Replace(" ", "+"));
+
+        string url = _configuration.GetValue<string>("UrlValidar");
+
+        return Json($"{url}/{idActor}/{idEscenario}");
     }
 }
