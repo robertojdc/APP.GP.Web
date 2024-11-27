@@ -433,69 +433,69 @@
                     title: `${actor.cargoActual}`
                 });
                 const contenido = `
-                                <div class="container mt-4 p-4 border rounded bg-light shadow-sm">
-                                    <div class="row mb-4">
-                                        <div class="col-12 col-md-4 text-center">
-                                            <img src="data:image/png;base64,${actor.fotoBase64}" class="rounded-circle img-fluid mb-3" alt="Foto del actor político" style="width: 150px; height: 150px; object-fit: cover;">
-                                        </div>
-                                        <div class="col-12 col-md-8 d-flex align-items-center">
-                                            <div>
-                                                <h3 class="fw-bold">${actor.nombre} ${actor.apellidoPaterno} ${actor.apellidoMaterno}</h3>
-                                                <p class="text-muted">Teléfono Personal: ${actor.telefonoPersonal}</p>
+                                    <div class="container mt-4 p-4 border rounded bg-light shadow-sm">
+                                        <div class="row mb-4">
+                                            <div class="col-12 col-md-4 text-center">
+                                                <img src="data:image/png;base64,${actor.fotoBase64}" class="rounded-circle img-fluid mb-3" alt="Foto del actor político" style="width: 150px; height: 150px; object-fit: cover;">
+                                            </div>
+                                            <div class="col-12 col-md-8 d-flex align-items-center">
+                                                <div>
+                                                    <h3 class="fw-bold">${actor.nombre} ${actor.apellidoPaterno} ${actor.apellidoMaterno}</h3>
+                                                    <p class="text-muted">Teléfono Personal: ${actor.telefonoPersonal}</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row gy-3">
-                                        <div class="col-md-6">
-                                            <label class="fw-semibold">Domicilio Laboral</label>
-                                            <div class="text-secondary">${actor.domicilioLaboral}</div>
+                                        <div class="row gy-3">
+                                            <div class="col-md-6">
+                                                <label class="fw-semibold">Domicilio Laboral</label>
+                                                <div class="text-secondary">${actor.domicilioLaboral}</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="fw-semibold">Teléfono Laboral</label>
+                                                <div class="text-secondary">${actor.telefonoLaboral}</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="fw-semibold">Fecha de Nacimiento</label>
+                                                <div class="text-secondary">${new Date(actor.fechaNacimiento).toLocaleDateString()}</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="fw-semibold">Correo Electrónico</label>
+                                                <div class="text-secondary">${actor.correoElectronico}</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="fw-semibold">Redes Sociales</label>
+                                                <div class="text-secondary">${actor.inputRedSocial ?? 'N/A'}</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="fw-semibold">Página Web</label>
+                                                <div class="text-secondary">${actor.paginaWeb || 'N/A'}</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="fw-semibold">Afinidad</label>
+                                                <div class="text-secondary">${actor.afinidad}</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="fw-semibold">Compromiso</label>
+                                                <div class="text-secondary">${actor.compromiso}</div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="fw-semibold">Comentarios</label>
+                                                <div class="text-secondary">${actor.comentarios}</div>
+                                            </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <label class="fw-semibold">Teléfono Laboral</label>
-                                            <div class="text-secondary">${actor.telefonoLaboral}</div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="fw-semibold">Fecha de Nacimiento</label>
-                                            <div class="text-secondary">${new Date(actor.fechaNacimiento).toLocaleDateString()}</div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="fw-semibold">Correo Electrónico</label>
-                                            <div class="text-secondary">${actor.correoElectronico}</div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="fw-semibold">Redes Sociales</label>
-                                            <div class="text-secondary">${actor.inputRedSocial ?? 'N/A'}</div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="fw-semibold">Página Web</label>
-                                            <div class="text-secondary">${actor.paginaWeb || 'N/A'}</div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="fw-semibold">Afinidad</label>
-                                            <div class="text-secondary">${actor.afinidad}</div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="fw-semibold">Compromiso</label>
-                                            <div class="text-secondary">${actor.compromiso}</div>
-                                        </div>
-                                        <div class="col-12">
-                                            <label class="fw-semibold">Comentarios</label>
-                                            <div class="text-secondary">${actor.comentarios}</div>
-                                        </div>
-                                    </div>
 
-                                <div class="row">
-                                <div class="col-2">  </div>
-                                    <div class="col-4">
-                                        <input type="button" class="btn btn-outline-secondary" onclick="GenerarInvitacion(${actor.idActor})" value="Generar invitación" id="btnInvite" />
-                                    </div>
-                                    <div class="col-4">
-                                        <input type="button"class="btn btn-danger me-2" onclick="ModificarAsignacion(${actor.idActor})" value="Modificar Asignación" id="btnInvite" />
-                                    </div>
+                                    <div class="row">
+                                    <div class="col-2">  </div>
+                                        <div class="col-4">
+                                            <input type="button" class="btn btn-outline-secondary" onclick="GenerarInvitacion(${actor.idActor})" value="Generar invitación" id="btnInvite" />
+                                        </div>
+                                        <div class="col-4">
+                                            <input type="button"class="btn btn-danger me-2" onclick="ModificarAsignacion(${actor.idActor})" value="Modificar Asignación" id="btnInvite" />
+                                        </div>
 
-                                </div>
-                                     </div>
-                            `;
+                                    </div>
+                                         </div>
+                                `;
 
                 windowInstance.content(contenido);
 
@@ -508,30 +508,7 @@
     }
 
     function ModificarAsignacion(idActor) {
-        // var actorId = $(this).data('actor-id');
         mostrarVentanaKendo("#windowInstitucional", "600px", "BÚsqueda de actores", null);
-        // var idDisposicion = $("#idSelected").val();
-        // var fila = obtenerFilaSeleccionada();
-        // var columna = obtenerColumnaSeleccionada();
-
-        // $.ajax({
-        //     url: '/Eventos/UpdateDisposicion',
-        //     type: 'POST',
-        //     data: {
-        //         IdActor: idActor,
-        //         IdEscenario: $("#subgrupo").val(),
-        //         IdDisposicion: idDisposicion,
-        //         Fila: fila,
-        //         Columna: columna
-        //     },
-        //     success: function (data) {
-        //         obtenerDisposicionesEscenario($("#subgrupo").val());
-        //         $("#windowInstitucional").data("kendoWindow").close();
-        //     },
-        //     error: function (error) {
-        //         console.error('Error al asignar el actor:', error);
-        //     }
-        // });
     }
 
     function GenerarInvitacion(idActor) {
@@ -675,6 +652,44 @@
         var $selectedDiv = $("#" + idSelected);
         var parentSection = $selectedDiv.closest(".parent-container, .parent-container1, .parent-container2, .parent-container3, .parent-container4, .parent-container5");
         return parentSection.attr("id");
+    }
+
+    function verificarAsignaciones(){
+        // Obtener todos los elementos con la clase "square"
+        const squares = document.querySelectorAll('.square');
+
+        // Inicializar una lista para almacenar errores
+        const errores = [];
+
+        // Recorrer cada elemento y verificar la correspondencia
+        squares.forEach(square => {
+            const fila = square.getAttribute('data-fila');
+            const columna = square.getAttribute('data-columna');
+            const id = square.id;
+
+            // Construir el id esperado
+            const idEsperado = `cuadro-${fila}-${columna}`;
+
+            // Comparar el id actual con el id esperado
+            if (id !== idEsperado) {
+                errores.push({
+                    elemento: square,
+                    idActual: id,
+                    idEsperado
+                });
+            }
+        });
+
+        // Mostrar los resultados
+        if (errores.length > 0) {
+            console.log('Se encontraron errores en los siguientes elementos:');
+            errores.forEach(error => {
+                console.log(`Elemento con id="${error.idActual}" debería ser "${error.idEsperado}"`);
+            });
+        } else {
+            console.log('Todos los elementos tienen una correspondencia correcta.');
+        }
+
     }
 </script>
 
@@ -861,6 +876,32 @@
                 justify-content: center;
                 margin: 0;
             }
+
+    .parent-container20 {
+        
+        justify-content: space-around;
+        height: auto;
+    }
+
+    .parent-container20 .row {
+        
+        justify-content: right;
+        margin-bottom: 5px;
+    }
+
+        .parent-container20 .row div {
+            text-align: center;
+            padding: 2px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            
+           
+            justify-content: right;
+            margin: 0;
+        }
 
     .ui-selected {
         background-color: #9F2241 !important;
