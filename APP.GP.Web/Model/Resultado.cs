@@ -31,3 +31,14 @@ public class Resultado<T>
 
     public string Cadena { get; set; }
 }
+
+public class ResultadoArchivo
+{
+    public int ProcesoExitoso { get; set; }
+
+    public string Mensaje { get; set; }
+
+    public byte[] Archivo { get; set; }
+
+
+}

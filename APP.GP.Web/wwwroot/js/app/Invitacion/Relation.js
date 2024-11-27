@@ -10,6 +10,7 @@
             telefono: $("#txtTelefonoBuscar").val(),
             correoElectronico: $("#txtCorreoBuscar").val(),
             estatus: $("#ddlVinculado").val(),
+            descartado: $("#ddlDescartado").val(),
         },
         success: function (response) {
             llenarGridInvitacion(response);
@@ -20,6 +21,13 @@
             console.log('Ocurrió un error: ' + error);
         }
     });
+}
+
+function ExportarInvitados() {
+
+    window.location = '../Invitacion/ExportarInivitados?nombre=' + $("#txtNombreBuscar").val() + "&apellidoPaterno=" + $("#txtAppBuscar").val() +
+        "&apellidoMaterno=" + $("#txtApmBuscar").val() + "&telefono=" + $("#txtTelefonoBuscar").val() + "&correoElectronico=" + $("#txtCorreoBuscar").val() +
+        "&estatus=" + $("#ddlVinculado").val() + "&descartado=" + $("#ddlDescartado").val();
 }
 
 function llenarGridInvitacion(datos) {
@@ -51,7 +59,7 @@ function llenarGridInvitacion(datos) {
             },
             {
                 title: "Opciones",
-                template: "#= opcionesGridInvitados(idRegistroInvitacion, vinculado, opcionVinculacion) #"
+                template: "#= opcionesGridInvitados(idRegistroInvitacion, vinculado, opcionVinculacion, descartado) #"
             }
         ],
         resizable: true,
@@ -59,15 +67,22 @@ function llenarGridInvitacion(datos) {
     });
 }
 
-function opcionesGridInvitados(id, vinculado, totalOpcion) {
+function opcionesGridInvitados(id, vinculado, totalOpcion, descartado) {
     var cadena = "<center>";
     if (vinculado == 0) {
 
         cadena += "<button class='btn btn-danger me-2' onclick='VerCoincidencias(" + id + ")' title='Coincidencias'><span class='badge text-bg-secondary'>" + totalOpcion + "</span></button>";
 
+        if (descartado == 1) {
+            cadena += "&nbsp;<button class='btn btn-success me-2' onclick='ConfirmarActivar(" + id + ")' title='Habilitar'><span class='bi bi-check2-circle'></span></button>";
+        }
+        else {
+            cadena += "&nbsp;<button class='btn btn-secondary me-2' onclick='ConfirmarDescartar(" + id + ")' title='Descartar'><span class='bi bi-dash-circle'></span></button>";
+        }
     }
     else if (vinculado == 1) {
         cadena += "<button class='btn btn-outline-secondary' onclick='VerDetalle(" + id + ")' title='Detalle'><span class='bi bi-card-list'></span></button>";
+
     }
 
     cadena += "</center>";
@@ -262,4 +277,62 @@ function LimpiarFiltros() {
     $("#txtTelefonoBuscar").val("");
     $("#txtCorreoBuscar").val("");
     $("#ddlVinculado").val(-1);
+}
+
+function ConfirmarDescartar(id) {
+    MensajeConfirmacionParametros("Descartar", "¿Esta seguro que desea descartar a este invitado?", Descartar, id);
+}
+
+function Descartar(id) {
+    MuestraCargando();
+    $.ajax({
+        url: '../Invitacion/DescartarInvitado',
+        type: 'POST',
+        data: {
+            idRegistroInvitacion: id
+        },
+        success: function (response) {
+            if (response.procesoExitoso == 0) {
+                MensajeError("¡Error!", response.mensaje);
+            }
+            OcultaCargando();
+
+            MensajeExito("Exito", "El invitado ha sido descartado");
+
+            BuscarInvitados();
+        },
+        error: function (xhr, status, error) {
+            OcultaCargando();
+            MensajeError("¡Error!", error);
+        }
+    });
+}
+
+function ConfirmarActivar(id) {
+    MensajeConfirmacionParametros("Habilitar", "¿Esta seguro que desea habilitar a este invitado?", Habilitar, id);
+}
+
+function Habilitar(id) {
+    MuestraCargando();
+    $.ajax({
+        url: '../Invitacion/HabilitarInvitado',
+        type: 'POST',
+        data: {
+            idRegistroInvitacion: id
+        },
+        success: function (response) {
+            if (response.procesoExitoso == 0) {
+                MensajeError("¡Error!", response.mensaje);
+            }
+            OcultaCargando();
+
+            MensajeExito("Exito", "El invitado ha sido habilitado");
+
+            BuscarInvitados();
+        },
+        error: function (xhr, status, error) {
+            OcultaCargando();
+            MensajeError("¡Error!", error);
+        }
+    });
 }
