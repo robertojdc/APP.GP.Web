@@ -195,7 +195,7 @@
                             $("#divEscenario_3").show();
                             $("#divEscenario_2").hide();
                             $("#divEscenario_2").empty();
-                            $('#divEscenario_3').load('/escenarios/comida.html', function (response, status, xhr) {
+                            $('#divEscenario_3').load('/escenarios/comida.html?' + new Date().getTime(), function (response, status, xhr) {
                                 obtenerDisposicionesEscenario(idEscenario);
                             });
                         }
