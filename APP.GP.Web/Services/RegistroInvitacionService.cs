@@ -17,7 +17,7 @@ namespace APP.GP.Web.Services
         {
             var response = 
                 await _httpClient.GetFromJsonAsync<List<RegistroInvitacion>>(
-                    $"/RegistroInvitacion/GetRegistroInvitacion?Nombre={request.Nombre}&ApellidoPaterno={request.ApellidoPaterno}&ApellidoMaterno={request.ApellidoMaterno}&TelefonoPersonal={request.TelefonoPersonal}&CorreoElectronico={request.CorreoElectronico}&Vinculado={request.Vinculado}");
+                    $"/RegistroInvitacion/GetRegistroInvitacion?Nombre={request.Nombre}&ApellidoPaterno={request.ApellidoPaterno}&ApellidoMaterno={request.ApellidoMaterno}&TelefonoPersonal={request.TelefonoPersonal}&CorreoElectronico={request.CorreoElectronico}&Vinculado={request.Vinculado}&Descartado={request.Descartado}");
             return response;
         }
 
@@ -66,6 +66,22 @@ namespace APP.GP.Web.Services
         public async Task<Resultado<DetalleValidarInvitacionDto>> GetDetalleInvitacionBy(int idEscenario, int idActor)
         {
             var response = await _httpClient.GetFromJsonAsync<Resultado<DetalleValidarInvitacionDto>>($"/Invitacion/GetInvitacionDe/{idEscenario}/{idActor}");
+            return response;
+        }
+
+        public async Task<Resultado> UpdDescartarInvitado(RegistroInvitacionRequest request)
+        {
+            var response = await _httpClient.PutAsJsonAsync("/RegistroInvitacion/UpdDescartarInvitado", request);
+
+            var result = await response.Content.ReadFromJsonAsync<Resultado>();
+            return result;
+        }
+
+        public async Task<ResultadoArchivo> GetExportarInvitados(RegistroInvitacionRequest request)
+        {
+            var response =
+                await _httpClient.GetFromJsonAsync<ResultadoArchivo>(
+                    $"/RegistroInvitacion/GetExportarInvitados?Nombre={request.Nombre}&ApellidoPaterno={request.ApellidoPaterno}&ApellidoMaterno={request.ApellidoMaterno}&TelefonoPersonal={request.TelefonoPersonal}&CorreoElectronico={request.CorreoElectronico}&Vinculado={request.Vinculado}&Descartado={request.Descartado}");
             return response;
         }
 

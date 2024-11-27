@@ -42,8 +42,20 @@
         </div>
         <div class="row">&nbsp;</div>
         <div class="row g3">
+            <div class="col-md-4">
+                <label for="ddlDescartado">Descartados</label>
+                <select id="ddlDescartado" class="form-control">
+                    <option value="-1">-- TODOS --</option>
+                    <option value="0" selected>No</option>
+                    <option value="1">Si</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row g3">
             <div class="col-md-12 text-center" >
-                <button type="button" class="btn btn-outline-secondary" onclick="BuscarInvitados()"><i class="bi bi-search"></i> Buscar</button>
+                <button type="button" class="btn btn-danger me-2" onclick="BuscarInvitados()"><i class="bi bi-search"></i> Buscar</button>
+                <button type="button" class="btn btn-success me-2" onclick="ExportarInvitados()"><i class="bi bi-file-earmark-excel"></i> Exportar</button>
                 <button type="button" class="btn btn-outline-secondary" onclick="LimpiarFiltros()"><i class="bi bi-eraser"></i> Limpiar Filtros</button>
             </div>
         </div>

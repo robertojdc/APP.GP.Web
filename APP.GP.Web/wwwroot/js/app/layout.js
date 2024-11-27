@@ -57,6 +57,24 @@ function MensajeConfirmacion(titulo = '¿Estás seguro?', mensaje = 'Esta acció
     });
 }
 
+function MensajeConfirmacionParametros(titulo = '¿Estás seguro?', mensaje = 'Esta acción no se puede deshacer.', callback, p1, p2, p3) {
+    Swal.fire({
+        icon: 'question',
+        title: titulo,
+        text: mensaje,
+        showCancelButton: true,
+        confirmButtonText: 'Sí, confirmar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Ejecutar el callback si se confirma
+            if (callback && typeof callback === 'function') {
+                callback(p1, p2, p3);
+            }
+        }
+    });
+}
+
 function MuestraCargando() {
     $("#modalLoading").show();
 }

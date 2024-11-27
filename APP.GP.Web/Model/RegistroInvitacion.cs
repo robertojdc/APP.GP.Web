@@ -19,4 +19,5 @@ public class RegistroInvitacion
     public bool? Propuesta { get; set; }
     public bool? Vinculado { get; set; }
     public int? OpcionVinculacion { get; set; }
+    public bool? Descartado { get; set; }
 }

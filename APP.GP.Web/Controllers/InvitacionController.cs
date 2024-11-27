@@ -22,7 +22,7 @@ namespace APP.GP.Web.Controllers
 
         [HttpPost]
         public async Task<IActionResult> BuscarInvitados(string nombre, string apellidoPaterno, string apellidoMaterno, 
-            string telefono, string correoElectronico, int estatus)
+            string telefono, string correoElectronico, int estatus, int descartado)
         {
             RegistroInvitacionRequest request = new RegistroInvitacionRequest()
             {
@@ -31,7 +31,8 @@ namespace APP.GP.Web.Controllers
                 ApellidoMaterno = apellidoMaterno,
                 TelefonoPersonal = telefono,
                 CorreoElectronico = correoElectronico,
-                Vinculado = estatus
+                Vinculado = estatus,
+                Descartado = descartado
             };
 
             return Ok(await _registroInvitacionService.GetRegistroInvitacion(request));
@@ -88,6 +89,50 @@ namespace APP.GP.Web.Controllers
             var detalle = await _registroInvitacionService.GetDetalleInvitacionBy(idEscenario, idActor);
 
             return View(detalle.Objeto);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DescartarInvitado(int idRegistroInvitacion)
+        {
+            RegistroInvitacionRequest request = new RegistroInvitacionRequest()
+            {
+                IdRegistroInvitacion = idRegistroInvitacion,
+                Descartado = 1
+            };
+
+            return Ok(await _registroInvitacionService.UpdDescartarInvitado(request));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> HabilitarInvitado(int idRegistroInvitacion)
+        {
+            RegistroInvitacionRequest request = new RegistroInvitacionRequest()
+            {
+                IdRegistroInvitacion = idRegistroInvitacion,
+                Descartado = 0
+            };
+
+            return Ok(await _registroInvitacionService.UpdDescartarInvitado(request));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ExportarInivitados(string nombre, string apellidoPaterno, string apellidoMaterno,
+            string telefono, string correoElectronico, int estatus, int descartado)
+        {
+            RegistroInvitacionRequest request = new RegistroInvitacionRequest()
+            {
+                Nombre = nombre,
+                ApellidoPaterno = apellidoPaterno,
+                ApellidoMaterno = apellidoMaterno,
+                TelefonoPersonal = telefono,
+                CorreoElectronico = correoElectronico,
+                Vinculado = estatus,
+                Descartado = descartado
+            };
+
+            ResultadoArchivo resultado = await _registroInvitacionService.GetExportarInvitados(request);
+
+            return File(resultado.Archivo, "application/octet-stream", "Invitados.xlsx");
         }
 
     }
