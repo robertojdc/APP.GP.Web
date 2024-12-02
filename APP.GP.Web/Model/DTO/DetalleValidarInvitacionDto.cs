@@ -4,7 +4,7 @@
     {
         public int IdDisposicion { get; set; }
 
-        public int Fila { get; set; }
+        public string Fila { get; set; }
 
         public int Columna { get; set; }
 
@@ -30,6 +30,6 @@
 
         public DateTime? FechaAcceso { get; set; }
 
-        public string Fotografia { get; set; }
+        public string? Fotografia { get; set; }
     }
 }

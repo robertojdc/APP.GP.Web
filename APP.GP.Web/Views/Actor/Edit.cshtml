@@ -11,103 +11,111 @@
         </div>
         <div class="card-body bg-light">
             <form asp-action="Edit" enctype="multipart/form-data" class="row g-3">
-                <div class="col-12 col-md-4 text-center">
-                    <img src="data:image/png;base64,@Model.FotoBase64" class="img-thumbnail mb-3" width="200" alt="Foto del actor político" />
-                    <input type="file" name="Foto" class="form-control" />
-                </div>
-
+                @if (User.FindFirst(System.Security.Claims.ClaimTypes.Sid)?.Value == "1")
+                {
+                    <div class="col-12 col-md-4 text-center">
+                        <img src="data:image/png;base64,@Model.FotoBase64" class="img-thumbnail mb-3" width="200" alt="Foto del actor político" />
+                        <input type="file" name="Foto" class="form-control" />
+                    </div>
+                }
                 <!-- Fila para los campos del formulario -->
-                <div class="col-12 col-md-8">
+                <div class="col-12">
                     <div class="row">
-                        <div class="col-12 col-md-6">
+                        <div class="col-12 col-md-4">
                             <label asp-for="Nombre" class="form-label">Nombre(s)</label>
                             <input asp-for="Nombre" class="form-control" placeholder="Ingrese el nombre" />
                             <span asp-validation-for="Nombre" class="text-danger"></span>
                         </div>
-                        <div class="col-12 col-md-6">
+                        <div class="col-12 col-md-4">
                             <label asp-for="ApellidoPaterno" class="form-label">Apellido Paterno</label>
                             <input asp-for="ApellidoPaterno" class="form-control" placeholder="Ingrese el apellido paterno" />
                             <span asp-validation-for="ApellidoPaterno" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label asp-for="ApellidoMaterno" class="form-label">Apellido Materno</label>
+                            <input asp-for="ApellidoMaterno" class="form-control" placeholder="Ingrese el apellido materno" />
+                            <span asp-validation-for="ApellidoMaterno" class="text-danger"></span>
                         </div>
                     </div>
 
                     <!-- Otros campos en filas separadas -->
                     <div class="row">
-                        <div class="col-12 col-md-6">
-                            <label asp-for="ApellidoMaterno" class="form-label">Apellido Materno</label>
-                            <input asp-for="ApellidoMaterno" class="form-control" placeholder="Ingrese el apellido materno" />
-                            <span asp-validation-for="ApellidoMaterno" class="text-danger"></span>
-                        </div>
-                        <div class="col-12 col-md-6">
+                        <div class="col-12 col-md-4">
                             <label asp-for="CargoActual" class="form-label">Cargo Actual</label>
                             <input asp-for="CargoActual" class="form-control" placeholder="Ingrese el cargo actual" />
                             <span asp-validation-for="CargoActual" class="text-danger"></span>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            <label asp-for="FechaNacimiento" class="form-label">Fecha de Nacimiento</label>
-                            <input asp-for="FechaNacimiento" type="date" class="form-control" />
-                            <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+                        <div class="col-12 col-md-4">
+                            <label asp-for="TelefonoPersonal" class="form-label">Teléfono Personal</label>
+                            <input asp-for="TelefonoPersonal" type="tel" class="form-control" placeholder="Ingrese teléfono personal" />
+                            <span asp-validation-for="TelefonoPersonal" class="text-danger"></span>
                         </div>
-                        <div class="col-12 col-md-6">
-                            <label asp-for="DomicilioLaboral" class="form-label">Domicilio Laboral</label>
-                            <input asp-for="DomicilioLaboral" class="form-control" placeholder="Ingrese domicilio laboral" />
-                            <span asp-validation-for="DomicilioLaboral" class="text-danger"></span>
+                        <div class="col-12 col-md-4">
+                            <label asp-for="CorreoElectronico" class="form-label">Correo Electrónico</label>
+                            <input asp-for="CorreoElectronico" type="email" class="form-control" placeholder="Ingrese correo electrónico" />
+                            <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
                         </div>
                     </div>
+                    @if (User.FindFirst(System.Security.Claims.ClaimTypes.Sid)?.Value == "1")
+                    {
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <label asp-for="FechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+                                <input asp-for="FechaNacimiento" type="date" class="form-control" />
+                                <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label asp-for="DomicilioLaboral" class="form-label">Domicilio Laboral</label>
+                                <input asp-for="DomicilioLaboral" class="form-control" placeholder="Ingrese domicilio laboral" />
+                                <span asp-validation-for="DomicilioLaboral" class="text-danger"></span>
+                            </div>
+                        </div>
+                    }
                 </div>
+                @if (User.FindFirst(System.Security.Claims.ClaimTypes.Sid)?.Value == "1")
+                {
+                    <!-- Continúa con los demás campos en nuevas filas -->
+                    <div class="col-12 col-md-6">
+                        <label asp-for="TelefonoLaboral" class="form-label">Teléfono Laboral</label>
+                        <input asp-for="TelefonoLaboral" type="tel" class="form-control" placeholder="Ingrese teléfono laboral" />
+                        <span asp-validation-for="TelefonoLaboral" class="text-danger"></span>
+                    </div>
 
-                <!-- Continúa con los demás campos en nuevas filas -->
-                <div class="col-12 col-md-6">
-                    <label asp-for="TelefonoLaboral" class="form-label">Teléfono Laboral</label>
-                    <input asp-for="TelefonoLaboral" type="tel" class="form-control" placeholder="Ingrese teléfono laboral" />
-                    <span asp-validation-for="TelefonoLaboral" class="text-danger"></span>
-                </div>
-                <div class="col-12 col-md-6">
-                    <label asp-for="TelefonoPersonal" class="form-label">Teléfono Personal</label>
-                    <input asp-for="TelefonoPersonal" type="tel" class="form-control" placeholder="Ingrese teléfono personal" />
-                    <span asp-validation-for="TelefonoPersonal" class="text-danger"></span>
-                </div>
-                <div class="col-12 col-md-6">
-                    <label asp-for="CorreoElectronico" class="form-label">Correo Electrónico</label>
-                    <input asp-for="CorreoElectronico" type="email" class="form-control" placeholder="Ingrese correo electrónico" />
-                    <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
-                </div>
-                <div class="col-12 col-md-6">
-                    <label asp-for="inputRedSocial" class="form-label">Redes Sociales</label>
-                    <input asp-for="inputRedSocial" class="form-control" placeholder="Ingrese red social" />
-                    <span asp-validation-for="inputRedSocial" class="text-danger"></span>
-                </div>
-                <div class="col-12 col-md-6">
-                    <label asp-for="PaginaWeb" class="form-label">Página Web</label>
-                    <input asp-for="PaginaWeb" type="url" class="form-control" placeholder="Ingrese página web" />
-                    <span asp-validation-for="PaginaWeb" class="text-danger"></span>
-                </div>
-                <div class="col-12 col-md-6">
-                    <label asp-for="AfinidadId" class="form-label">Afinidad</label>
-                    <select asp-for="AfinidadId" asp-items="@ViewBag.Afinidades" class="form-control">
-                        <option value="">Seleccione una opción</option>
-                    </select>
-                    <span asp-validation-for="Afinidad" class="text-danger"></span>
-                </div>
-                <div class="col-12 col-md-6">
-                    <label asp-for="CompromisoId" class="form-label">Compromiso</label>
-                    <select asp-for="CompromisoId" asp-items="@ViewBag.Compromisos" class="form-control">
-                        <option value="">Seleccione una opción</option>
-                    </select>
-                    <span asp-validation-for="Compromiso" class="text-danger"></span>
-                </div>
-                <div class="col-12">
-                    <label asp-for="Comentarios" class="form-label">Comentarios</label>
-                    <textarea asp-for="Comentarios" class="form-control" placeholder="Ingrese comentarios"></textarea>
-                    <span asp-validation-for="Comentarios" class="text-danger"></span>
-                </div>
 
+                    <div class="col-12 col-md-6">
+                        <label asp-for="inputRedSocial" class="form-label">Redes Sociales</label>
+                        <input asp-for="inputRedSocial" class="form-control" placeholder="Ingrese red social" />
+                        <span asp-validation-for="inputRedSocial" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label asp-for="PaginaWeb" class="form-label">Página Web</label>
+                        <input asp-for="PaginaWeb" type="url" class="form-control" placeholder="Ingrese página web" />
+                        <span asp-validation-for="PaginaWeb" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label asp-for="AfinidadId" class="form-label">Afinidad</label>
+                        <select asp-for="AfinidadId" asp-items="@ViewBag.Afinidades" class="form-control">
+                            <option value="">Seleccione una opción</option>
+                        </select>
+                        <span asp-validation-for="Afinidad" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label asp-for="CompromisoId" class="form-label">Compromiso</label>
+                        <select asp-for="CompromisoId" asp-items="@ViewBag.Compromisos" class="form-control">
+                            <option value="">Seleccione una opción</option>
+                        </select>
+                        <span asp-validation-for="Compromiso" class="text-danger"></span>
+                    </div>
+                    <div class="col-12">
+                        <label asp-for="Comentarios" class="form-label">Comentarios</label>
+                        <textarea asp-for="Comentarios" class="form-control" placeholder="Ingrese comentarios"></textarea>
+                        <span asp-validation-for="Comentarios" class="text-danger"></span>
+                    </div>
+                }
                 <!-- Botones de acción -->
                 <div class="col-12 text-center mt-4">
                     <button type="button" id="btnGuardar" class="btn btn-primary">Guardar</button>
-                    <a asp-action="Index" class="btn btn-outline-secondary">Regresar</a>
+                    <a asp-action="Select" class="btn btn-outline-secondary">Regresar</a>
                 </div>
             </form>
         </div>
@@ -140,10 +148,11 @@
 
             // Agregar la foto seleccionada al FormData
             var fileInput = $('input[name="Foto"]')[0];
-            if (fileInput.files.length > 0) {
-                formData.append("Foto", fileInput.files[0]);
+            if (fileInput) {
+                if (fileInput.files.length > 0) {
+                    formData.append("Foto", fileInput.files[0]);
+                }
             }
-
             // Realizar la solicitud AJAX para enviar los datos
             $.ajax({
                 url: '@Url.Action("Edit", "Actor")', // URL de la acción del controlador

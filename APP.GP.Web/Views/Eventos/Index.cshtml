@@ -16,6 +16,7 @@
                 <input type="hidden" id="hidEvento" />
                 <input type="hidden" id="hidEscenario" />
                 <input type="hidden" id="hidFechaHora" />
+                <input type="hidden" id="hidLugar" />
             </form>
         </div>
     </div>
@@ -45,21 +46,18 @@
 <div id="detalleActorWindow"></div>
 <div id="boletoModal" style="display:none;">
     <div id="boletoContent">
-        <div class="header">
-            @* <img src="escudo_puebla.png" alt="Escudo de Puebla"> *@
-            @*     <h1>PUEBLA</h1>
-            <p>Gobierno del Estado 2024 - 2030</p> *@
-        </div>
         <div class="content">
-            <h3>TOMA DE PROTESTA</h3>
+            <input type="hidden" id="hidIdInvitacion" />
+            <div style="font-size:15pt; text-align:center; color:#FFF; font-weight:600;width:100%;">
+                <label id="titleBoleto"></label>
+            </div>
+            <div style="font-size:12pt; text-align:center; color:#FFF; font-weight:400;width:100%; margin:15px;">
+                <label id="lblLugar"></label>
+            </div>
             <table id="tablaActor">
                 <tr>
                     <td>NOMBRE</td>
                     <td><label id="lblActor"></label></td>
-                </tr>
-                <tr>
-                    <td>CARGO</td>
-                    <td><label id="lblCargo"></label></td>
                 </tr>
                 <tr>
                     <td>FECHA</td>
@@ -68,10 +66,6 @@
                 <tr>
                     <td>HORA</td>
                     <td><label id="lblHora"></label></td>
-                </tr>
-                <tr>
-                    <td>LUGAR</td>
-                    <td><label id="lblLugar"></label></td>
                 </tr>
                 <tr>
                     <td>SECCIÓN</td>
@@ -95,11 +89,59 @@
     <div class="row mb-3 buttons-container">
         <input type="button" id="exportarPDF" class="btn pdf-button styled-button" value="Descargar PDF" />
         <input type="button" class="btn whatsapp-button styled-button" value="Enviar a WhatsApp" onclick="enviarWhats()" />
-        <input type="button" class="btn email-button styled-button" value="Enviar a Correo" onclick="$('#boletoModal').data('kendoWindow').close();" />
+        <input type="button" class="btn email-button styled-button" value="Enviar a Correo" onclick="enviarCorreo()" />
     </div>
 </div>
 
 <script>
+
+    function enviarCorreo() {
+        $('#boletoModal').data('kendoWindow').close();
+        mostrarLoading();
+        obtenerQrBase64().then((qrBase64) => {
+            // Clonar el contenido actual del div para no modificar el DOM original
+            const boletoContent = document.getElementById('boletoContent').cloneNode(true);
+
+            // Reemplazar el contenido del div QR por una imagen en Base64
+            const qrContainer = boletoContent.querySelector("#qrCode");
+
+            if (qrContainer) {
+                qrContainer.innerHTML = `
+                        <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+                            <div style="background-color: #FFF; padding: 10px; border-radius: 10px;">
+                                <img src="${qrBase64}" alt="Código QR" style="width: 300px; height: 150px; border: none;" />
+                            </div>
+                        </div>
+                    `;
+            }
+
+
+            // Convertir el contenido actualizado a HTML
+            const boletoHtml = boletoContent.innerHTML;
+
+            // Enviar el correo con el HTML modificado
+            $.ajax({
+                url: '/Eventos/EnviarInvitacionCorreo',
+                type: 'POST',
+                data: { idInvitacion: $("#hidIdInvitacion").val(), cuerpo: boletoHtml },
+                success: function (data) {
+                    ocultarLoading();
+                    if (data > 0) {
+                        MensajeExito("Éxito", "Correo enviado correctamente");
+                    } else {
+                        MensajeExito("Error", "Error al enviar el correo");
+                    }
+                },
+                error: function (error) {
+                    ocultarLoading();
+                    console.error('Error al enviar el correo:', error);
+                }
+            });
+        }).catch((error) => {
+            console.error("Error al generar el QR en Base64:", error);
+            MensajeExito("Error", "Error al generar el código QR.");
+        });
+    }
     var allActors = [];
     $(document).ready(function () {
         obtenerAllActores();
@@ -109,7 +151,7 @@
             if (selectedId) {
                 $("#idSelected").val(selectedId);
                 var actorId = $(this).data('actor-id');
-                mostrarVentanaKendo("#windowInstitucional", "600px", "BÚsqueda de actores", actorId);
+                mostrarVentanaKendo("#windowInstitucional", "600px", "Búsqueda de actores", actorId);
             }
         });
 
@@ -134,6 +176,36 @@
                 });
         });
     });
+
+    function obtenerQrBase64() {
+        var qrCodeElement = $("#qrCode").getKendoQRCode();
+        var svg = qrCodeElement.svg();
+        var svgBlob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
+
+        return new Promise((resolve, reject) => {
+            var url = URL.createObjectURL(svgBlob);
+            var img = new Image();
+            img.src = url;
+
+            img.onload = function () {
+                var canvas = document.createElement("canvas");
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0);
+
+                var base64Image = canvas.toDataURL("image/png");
+                URL.revokeObjectURL(url);
+                resolve(base64Image);
+            };
+
+            img.onerror = function (error) {
+                URL.revokeObjectURL(url);
+                reject(error);
+            };
+        });
+    }
 
     function obtenerEventos() {
         $.ajax({
@@ -176,7 +248,7 @@
                             $("#divEscenario_2").empty();
                             $("#divEscenario_3").hide();
                             $("#divEscenario_3").empty();
-                            $('#divEscenario_1').load('/escenarios/congreso.html', function (response, status, xhr) {
+                            $('#divEscenario_1').load('/escenarios/congreso.html?' + new Date().getTime(), function (response, status, xhr) {
                                 obtenerDisposicionesEscenario(idEscenario);
                             });
                         }
@@ -186,7 +258,7 @@
                             $("#divEscenario_2").show();
                             $("#divEscenario_3").hide();
                             $("#divEscenario_3").empty();
-                            $('#divEscenario_2').load('/escenarios/vision.html', function (response, status, xhr) {
+                            $('#divEscenario_2').load('/escenarios/vision.html?' + new Date().getTime(), function (response, status, xhr) {
                                 obtenerDisposicionesEscenario(idEscenario);
                             });
                         } else if (idEscenario == 3) {
@@ -263,6 +335,7 @@
                 $("#hidEvento").val(response.evento.nombreEvento);
                 $("#hidEscenario").val(response.nombreEscenario);
                 $("#hidFechaHora").val(response.evento.fechaEvento);
+                $("#hidLugar").val(response.descripcion);
             },
             error: function (xhr, status, error) {
                 console.log('Ocurrió un error: ' + error);
@@ -433,69 +506,56 @@
                     title: `${actor.cargoActual}`
                 });
                 const contenido = `
-                                    <div class="container mt-4 p-4 border rounded bg-light shadow-sm">
-                                        <div class="row mb-4">
-                                            <div class="col-12 col-md-4 text-center">
-                                                <img src="data:image/png;base64,${actor.fotoBase64}" class="rounded-circle img-fluid mb-3" alt="Foto del actor político" style="width: 150px; height: 150px; object-fit: cover;">
-                                            </div>
-                                            <div class="col-12 col-md-8 d-flex align-items-center">
-                                                <div>
-                                                    <h3 class="fw-bold">${actor.nombre} ${actor.apellidoPaterno} ${actor.apellidoMaterno}</h3>
-                                                    <p class="text-muted">Teléfono Personal: ${actor.telefonoPersonal}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row gy-3">
-                                            <div class="col-md-6">
-                                                <label class="fw-semibold">Domicilio Laboral</label>
-                                                <div class="text-secondary">${actor.domicilioLaboral}</div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="fw-semibold">Teléfono Laboral</label>
-                                                <div class="text-secondary">${actor.telefonoLaboral}</div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="fw-semibold">Fecha de Nacimiento</label>
-                                                <div class="text-secondary">${new Date(actor.fechaNacimiento).toLocaleDateString()}</div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="fw-semibold">Correo Electrónico</label>
-                                                <div class="text-secondary">${actor.correoElectronico}</div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="fw-semibold">Redes Sociales</label>
-                                                <div class="text-secondary">${actor.inputRedSocial ?? 'N/A'}</div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="fw-semibold">Página Web</label>
-                                                <div class="text-secondary">${actor.paginaWeb || 'N/A'}</div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="fw-semibold">Afinidad</label>
-                                                <div class="text-secondary">${actor.afinidad}</div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="fw-semibold">Compromiso</label>
-                                                <div class="text-secondary">${actor.compromiso}</div>
-                                            </div>
-                                            <div class="col-12">
-                                                <label class="fw-semibold">Comentarios</label>
-                                                <div class="text-secondary">${actor.comentarios}</div>
-                                            </div>
-                                        </div>
-
-                                    <div class="row">
-                                    <div class="col-2">  </div>
-                                        <div class="col-4">
-                                            <input type="button" class="btn btn-outline-secondary" onclick="GenerarInvitacion(${actor.idActor})" value="Generar invitación" id="btnInvite" />
-                                        </div>
-                                        <div class="col-4">
-                                            <input type="button"class="btn btn-danger me-2" onclick="ModificarAsignacion(${actor.idActor})" value="Modificar Asignación" id="btnInvite" />
-                                        </div>
-
+                            <div class="container p-4 border rounded bg-light shadow-sm">
+                                <div class="row mb-4">
+                                    <div class="col-12 col-md-4 text-center">
+                                        <img src="data:image/png;base64,${actor.fotoBase64}" class="rounded-circle img-fluid mb-3" alt="Foto del actor político" style="width: 150px; height: 150px; object-fit: cover;">
                                     </div>
-                                         </div>
-                                `;
+                                    <div class="col-12 col-md-8 d-flex align-items-center">
+                                        <div>
+                                            <h3 class="fw-bold">${actor.nombre} ${actor.apellidoPaterno} ${actor.apellidoMaterno}</h3>
+                                            <p class="text-muted">Teléfono Personal: ${actor.telefonoPersonal}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row gy-3">
+                                    <div class="col-md-6">
+                                        <label class="fw-semibold">Domicilio Laboral</label>
+                                        <div class="text-secondary">${actor.domicilioLaboral}</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="fw-semibold">Teléfono Laboral</label>
+                                        <div class="text-secondary">${actor.telefonoLaboral}</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="fw-semibold">Fecha de Nacimiento</label>
+                                        <div class="text-secondary">${new Date(actor.fechaNacimiento).toLocaleDateString()}</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="fw-semibold">Correo Electrónico</label>
+                                        <div class="text-secondary">${actor.correoElectronico}</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="fw-semibold">Afinidad</label>
+                                        <div class="text-secondary">${actor.afinidad}</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="fw-semibold">Compromiso</label>
+                                        <div class="text-secondary">${actor.compromiso}</div>
+                                    </div>
+                                </div>
+                                <br/>
+                            <div class="row">
+                            <div class="col-2">  </div>
+                                <div class="col-4">
+                                    <input type="button" class="btn btn-outline-secondary" onclick="GenerarInvitacion(${actor.idActor})" value="Generar invitación" id="btnInvite" />
+                                </div>
+                                <div class="col-4">
+                                    <input type="button"class="btn btn-danger me-2" onclick="ModificarAsignacion(${actor.idActor})" value="Modificar Asignación" id="btnInvite" />
+                                </div>
+                            </div>
+                        </div>
+                        `;
 
                 windowInstance.content(contenido);
 
@@ -512,6 +572,7 @@
     }
 
     function GenerarInvitacion(idActor) {
+        $("#detalleActorWindow").data("kendoWindow").close();
         $.ajax({
             url: '/Eventos/GenerarUrl',
             type: 'POST',
@@ -535,29 +596,25 @@
                     data: { idActor: idActor },
                     success: function (response) {
                         $("#lblActor").text(response.nombre + " " + response.apellidoPaterno + " " + response.apellidoMaterno);
-                        $("#lblCargo").text(response.cargo);
 
                         var fecha = new Date($("#hidFechaHora").val());
 
-                        // Formatea la fecha larga
                         var fechaLarga = fecha.toLocaleDateString("es-MX", {
-                            weekday: "long", // Día de la semana (ej. lunes)
-                            year: "numeric", // Año completo
-                            month: "long",   // Mes en texto largo (ej. enero)
-                            day: "numeric"   // Día numérico
+                            weekday: "long", 
+                            year: "numeric", 
+                            month: "long",   
+                            day: "numeric"   
                         });
 
-                        // Formatea la hora corta
                         var horaCorta = fecha.toLocaleTimeString("es-MX", {
-                            hour: "2-digit",  // Hora en formato de 2 dígitos
-                            minute: "2-digit" // Minutos en formato de 2 dígitos
+                            hour: "2-digit",  
+                            minute: "2-digit" 
                         });
 
-                        // Asigna los valores formateados a los labels
                         $("#lblFecha").text(fechaLarga);
                         $("#lblHora").text(horaCorta);
-
-                        $("#lblLugar").text($("#hidEscenario").val());
+                        $("#titleBoleto").text($("#hidEscenario").val());
+                        $("#lblLugar").html($("#hidLugar").val());
                         $("#lblFila").text(obtenerFilaSeleccionada());
                         $("#lblAsiento").text(obtenerColumnaSeleccionada());
                         $("#lblSeccion").text(obtenerSeccionSeleccionada());
@@ -566,7 +623,7 @@
                             modal: true,
                             visible: false,
                             width: "500px",
-                            height: "715px",
+                            height: "680px",
                             actions: ["Close"]
                         }).data("kendoWindow");
                         detalleModal.center().open();
@@ -580,9 +637,6 @@
                 console.error('Error al asignar el actor:', error);
             }
         });
-
-
-
     }
 
     function asignarActor(idActor) {
@@ -651,26 +705,21 @@
         var idSelected = $("#idSelected").val();
         var $selectedDiv = $("#" + idSelected);
         var parentSection = $selectedDiv.closest(".parent-container, .parent-container1, .parent-container2, .parent-container3, .parent-container4, .parent-container5");
-        return parentSection.attr("id");
+        return parentSection.attr("id")?.replaceAll("_"," ");
     }
 
-    function verificarAsignaciones(){
-        // Obtener todos los elementos con la clase "square"
+    function verificarAsignaciones() {
         const squares = document.querySelectorAll('.square');
 
-        // Inicializar una lista para almacenar errores
         const errores = [];
 
-        // Recorrer cada elemento y verificar la correspondencia
         squares.forEach(square => {
             const fila = square.getAttribute('data-fila');
             const columna = square.getAttribute('data-columna');
             const id = square.id;
 
-            // Construir el id esperado
             const idEsperado = `cuadro-${fila}-${columna}`;
 
-            // Comparar el id actual con el id esperado
             if (id !== idEsperado) {
                 errores.push({
                     elemento: square,
@@ -680,7 +729,6 @@
             }
         });
 
-        // Mostrar los resultados
         if (errores.length > 0) {
             console.log('Se encontraron errores en los siguientes elementos:');
             errores.forEach(error => {
@@ -878,30 +926,26 @@
             }
 
     .parent-container20 {
-        
         justify-content: space-around;
         height: auto;
     }
 
-    .parent-container20 .row {
-        
-        justify-content: right;
-        margin-bottom: 5px;
-    }
-
-        .parent-container20 .row div {
-            text-align: center;
-            padding: 2px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-            cursor: pointer;
-            width: 18px;
-            height: 18px;
-            
-           
+        .parent-container20 .row {
             justify-content: right;
-            margin: 0;
+            margin-bottom: 5px;
         }
+
+            .parent-container20 .row div {
+                text-align: center;
+                padding: 2px;
+                border: 1px solid #ccc;
+                background-color: #f9f9f9;
+                cursor: pointer;
+                width: 18px;
+                height: 18px;
+                justify-content: right;
+                margin: 0;
+            }
 
     .ui-selected {
         background-color: #9F2241 !important;

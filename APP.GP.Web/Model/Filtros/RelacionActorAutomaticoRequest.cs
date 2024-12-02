@@ -2,6 +2,7 @@
 {
     public class RelacionActorAutomaticoRequest
     {
+        public int IdUsuario { get; set; }
         public bool Todos { get; set; }
 
         public bool Nombre { get; set; }

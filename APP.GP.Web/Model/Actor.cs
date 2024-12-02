@@ -10,7 +10,7 @@ public class Actor
         SubCategorias = new();
     }
     public int? IdActor { get; set; }
-
+    public int IdUsuario { get; set; }
     [Required(ErrorMessage = "El nombre es obligatorio.")]
     public string? Nombre { get; set; }
     public string? ApellidoPaterno { get; set; }

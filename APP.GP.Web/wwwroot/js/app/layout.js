@@ -46,7 +46,10 @@ function MensajeConfirmacion(titulo = '¿Estás seguro?', mensaje = 'Esta acció
         text: mensaje,
         showCancelButton: true,
         confirmButtonText: 'Sí, confirmar',
-        cancelButtonText: 'Cancelar'
+        cancelButtonText: 'Cancelar',
+        customClass: {
+            popup: 'swal-zindex-override'
+        }
     }).then((result) => {
         if (result.isConfirmed) {
             // Ejecutar el callback si se confirma
@@ -73,6 +76,21 @@ function MensajeConfirmacionParametros(titulo = '¿Estás seguro?', mensaje = 'E
             }
         }
     });
+}
+
+function mostrarLoading() {
+    Swal.fire({
+        title: 'Cargando...',
+        html: 'Por favor, espere un momento.',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+}
+
+function ocultarLoading() {
+    Swal.close();
 }
 
 function MuestraCargando() {

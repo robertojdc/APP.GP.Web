@@ -1,4 +1,8 @@
-﻿<div class="container-fluid py-4">
+﻿<link href="~/lib/dataTables/datatables.min.css" rel="stylesheet">
+
+<script src="~/lib/dataTables/datatables.min.js"></script>
+
+<div class="container-fluid py-4">
     <div class="card shadow-sm mb-4">
         <div class="card-header text-white text-center">
             <h3 class="mb-0">ADMINISTRACIÓN DE EVENTOS</h3>
@@ -13,6 +17,9 @@
                     <label for="subgrupo" class="form-label">ESCENARIO</label>
                     <input id="subgrupo" name="subgrupo" class="form-control" placeholder="Seleccione un subgrupo">
                 </div>
+                <div class="col-md-4" id="btnDescargar" style="display:none; margin-top:48px;text-align:right;">
+                    <button type="button" class="btn btn-success" onclick="descargarReporteExcel(event)"><span style="margin-top:-3px;" class="k-icon k-font-icon k-i-excel k-icon-32"></span>&nbsp;Descargar</button>
+                </div>
                 <input type="hidden" id="hidEvento" />
                 <input type="hidden" id="hidEscenario" />
                 <input type="hidden" id="hidFechaHora" />
@@ -23,196 +30,58 @@
 
 <input type="hidden" id="idSelected" />
 
-<div id="divEscenario_1">
-    <div class="parent-container" id="grid-container"></div> 
-</div>
-@* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// *@
+<div id="divEscenario_1"></div>
+<div id="divEscenario_2"></div>
+<hr/>
 <div id="windowInstitucional" style="border: 2px solid #8B0000; padding: 20px; background-color: #FFFFFF; display:none; min-height:500px;">
-    <input id="actorAutoComplete" style="width: 100%;" />
-    <div id="listView"></div>
+    <label id="lblUbicacion" style="font-size:14pt;"></label>
+    <table id="grid" class="display" style="width:100%;">
+        <thead>
+            <tr>
+                <th>Nombre Completo</th>
+                <th>Descripción</th>
+                <th>Lugar Asignado</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 </div>
 <script type="text/x-kendo-template" id="template">
     <div class="actor" onclick="asignarActor(#= idActor #)">
-        # if (fotoBase64) { #
-            <img src="data:image/jpeg;base64,#= fotoBase64 #" alt="Foto de #= nombre # #= apellidoPaterno #" />
-        # } else { #
-            <img src="https://via.placeholder.com/110" alt="Foto no disponible" />
-        # } #
         <h2>#: cargoActual #</h2>
         <h3>#: nombre # #: apellidoPaterno # #: apellidoMaterno #</h3>
+    </div>
+</script>
+<script id="templateTooltip" type="text/x-kendo-template">
+    <div class="template-wrapper">
+        <p>#=target.data('actor-id')#</p>
     </div>
 </script>
 <div id="detalleActorWindow"></div>
 <div id="boletoModal" style="display:none;">
     <div id="boletoContent">
-        <div class="header">
-            @* <img src="escudo_puebla.png" alt="Escudo de Puebla"> *@
-            @*     <h1>PUEBLA</h1>
-            <p>Gobierno del Estado 2024 - 2030</p> *@
+        <input type="hidden" id="hidIdInvitacion" />
+
+        <div id="divInfo" style="text-align:center;">
+            <label id="lblActor" style="font-weight:700; font-size:14pt;"></label><br /><br /><br /><br />
+            Fila:&nbsp;<label id="lblFila"></label>&nbsp;&nbsp;&nbsp;Asiento:&nbsp;<label id="lblAsiento"></label>
         </div>
-        <div class="content">
-            <h3>TOMA DE PROTESTA</h3>
-            <table id="tablaActor">
-                <tr>
-                    <td>NOMBRE</td>
-                    <td><label id="lblActor"></label></td>
-                </tr>
-                <tr>
-                    <td>CARGO</td>
-                    <td><label id="lblCargo"></label></td>
-                </tr>
-                <tr>
-                    <td>FECHA</td>
-                    <td><label id="lblFecha"></label></td>
-                </tr>
-                <tr>
-                    <td>HORA</td>
-                    <td><label id="lblHora"></label></td>
-                </tr>
-                <tr>
-                    <td>LUGAR</td>
-                    <td><label id="lblLugar"></label></td>
-                </tr>
-                <tr>
-                    <td>SECCIÓN</td>
-                    <td><label id="lblSeccion"></label></td>
-                </tr>
-                <tr>
-                    <td>FILA</td>
-                    <td><label id="lblFila"></label></td>
-                </tr>
-                <tr>
-                    <td>ASIENTO</td>
-                    <td><label id="lblAsiento"></label></td>
-                </tr>
-            </table>
-        </div>
-        <div id="qrCode" class="qr-container"></div>
-        <div class="footer">
-            <p>© 2024 Gobierno del Estado de Puebla</p>
-        </div>
+
+        <div id="qrCode" class="qr-container" style="margin-top:45px;"></div>
     </div>
     <div class="row mb-3 buttons-container">
-        <input type="button" id="exportarPDF" class="btn pdf-button styled-button" value="Descargar PDF" />
-        <input type="button" class="btn whatsapp-button styled-button" value="Enviar a WhatsApp" onclick="enviarWhats()" />
-        <input type="button" class="btn email-button styled-button" value="Enviar a Correo" onclick="$('#boletoModal').data('kendoWindow').close();" />
+        <input type="button" id="exportarPDF" class="btn pdf-button styled-button" value="Descargar" />
+        <input type="button" class="btn whatsapp-button styled-button" value="WhatsApp" onclick="enviarWhats()" />
+        <input type="button" class="btn email-button styled-button" value="Correo" onclick="enviarCorreo()" />
     </div>
 </div>
-
+<input id="previewImage" type="hidden" />
 <script>
     var allActors = [];
-    $(document).ready(function () {
-        createGrid('grid-container', 10, 15);
-        crearCuadricula('seccion_1A', 10, 15);       
-    });
-
-    function createGrid(containerId, rows, cols) {
-        const container = document.getElementById(containerId);
-        container.style.display = 'grid';
-        container.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
-
-        for (let i = 1; i <= rows; i++) {
-            for (let j = 1; j <= cols; j++) {
-                const cell = document.createElement('div');
-                cell.id = `cuadro-${i}-${j}`;
-                cell.dataset.fila = i;
-                cell.dataset.columna = j;
-                container.appendChild(cell);
-            }
-        }
-    }
-
-    function crearCuadricula(idContenedor, filas, columnas) {
-        const contenedor = document.getElementById(idContenedor);
-        contenedor.style.display = 'grid';
-        contenedor.style.gridTemplateColumns = `repeat(${columnas}, 1fr)`;
-
-        for (let i = 1; i <= filas; i++) {
-            for (let j = 1; j <= columnas; j++) {
-                const celda = document.createElement('div');
-                celda.id = `cuadro-${i}-${j}`;
-                celda.dataset.fila = i;
-                celda.dataset.columna = j;
-                contenedor.appendChild(celda);
-            }
-        }
-    }
-
-    function obtenerEventos() {
-        $.ajax({
-            url: '/Eventos/GetEventos',
-            type: 'GET',
-            success: function (response) {
-                $("#ddlGrupo").kendoDropDownList({
-                    dataTextField: "nombreEvento",
-                    dataValueField: "idEvento",
-                    dataSource: response,
-                    optionLabel: "Seleccione un evento",
-                    change: function (e) {
-                        var idGrupo = this.value();
-                        obtenerEscenarios(idGrupo);
-                    }
-                });
-            },
-            error: function (xhr, status, error) {
-                console.log('Ocurrió un error: ' + error);
-            }
-        });
-    }
-
-    function obtenerEscenarios() {
-        $.ajax({
-            url: '/Eventos/GetEscenariosByEvento',
-            type: 'GET',
-            data: { idEvento: $("#ddlGrupo").val() },
-            success: function (response) {
-                $("#subgrupo").kendoDropDownList({
-                    dataTextField: "nombreEscenario",
-                    dataValueField: "idEscenario",
-                    dataSource: response,
-                    optionLabel: "Seleccione un escenario",
-                    change: function (e) {
-                        var idEscenario = this.value();
-                        obtenerDisposicionesEscenario(idEscenario);
-                        if (idEscenario == 1) {
-                            $("#divEscenario_1").show();
-                            $("#divEscenario_2").hide();
-                            $("#divEscenario_3").hide();
-                        }
-                        else if (idEscenario == 2) {
-                            $("#divEscenario_1").hide();
-                            $("#divEscenario_2").show();
-                            $("#divEscenario_3").hide();
-                        } else if (idEscenario == 3) {
-                            $("#divEscenario_1").hide();
-                            $("#divEscenario_3").show();
-                            $("#divEscenario_2").hide();
-                        }
-                    }
-                });
-            },
-            error: function (xhr, status, error) {
-                console.log('Ocurrió un error: ' + error);
-            }
-        });
-    }
-
-    function obtenerDisposicionesEscenario(idEscenario) {
-        obtenerDatosEscenariosById();
-        $.ajax({
-            url: '/Eventos/GetDisposicionesForEscenario',
-            type: 'GET',
-            data: { idEvento: $("#ddlgrupo").val(), idEscenario: idEscenario },
-            success: function (data) {
-                renderizarDisposiciones(data);
-            },
-            error: function (error) {
-                console.error('Error al cargar las disposiciones:', error);
-            }
-        });
-    }
 
     function renderizarDisposiciones(disposiciones) {
+        $("#btnDescargar").show();
         $('div[data-fila][data-columna]').each(function () {
             $(this).css({
                 "background-image": "",
@@ -238,6 +107,26 @@
                     "background-repeat": "no-repeat"
                 });
                 $cuadro.attr('data-actor-id', idActor);
+            } else if (idActor) {
+                $cuadro.css({
+                    "background-color": "#CCC",
+                    "background-size": "cover",
+                    "background-position": "center",
+                    "background-repeat": "no-repeat"
+                });
+                $cuadro.attr('data-actor-id', idActor);
+                $cuadro.kendoTooltip({
+                    //content: kendo.template($("#templateTooltip").html()), // disposicion.nombreActor + ' ' + disposicion.apellidoPaterno + ' ' + disposicion.apellidoMaterno,
+                    content:  disposicion.nombreActor + ' ' + disposicion.apellidoPaterno + ' ' + disposicion.apellidoMaterno + '<br/>Lugar asignado: ' + fila + ' - ' + columna ,
+                    position: "top",
+                    animation: {
+                        open: {
+                            effects: "zoom",
+                            duration: 50
+                        }
+                    }
+                });
+                $cuadro.html(obtenerIniciales(disposicion.nombre, disposicion.apellidoPaterno, disposicion.apellidoMaterno));
             }
         });
     }
@@ -248,7 +137,6 @@
             type: 'GET',
             data: { idEscenario: $("#subgrupo").val() },
             success: function (response) {
-                console.log(response);
                 $("#hidEvento").val(response.evento.nombreEvento);
                 $("#hidEscenario").val(response.nombreEscenario);
                 $("#hidFechaHora").val(response.evento.fechaEvento);
@@ -259,263 +147,137 @@
         });
     }
 
+    function obtenerDisposicionesEscenario(idEscenario) {
+        obtenerDatosEscenariosById();
+        $.ajax({
+            url: '/Eventos/GetDisposicionesForEscenario',
+            type: 'POST',
+            data: { idEvento: $("#ddlGrupo").val(), idEscenario: idEscenario },
+            success: function (data) {
+                renderizarDisposiciones(data);
+            },
+            error: function (error) {
+                console.error('Error al cargar las disposiciones:', error);
+            }
+        });
+    }
+
+    function obtenerEscenarios() {
+        $.ajax({
+            url: '/Eventos/GetEscenariosByEvento',
+            type: 'GET',
+            data: { idEvento: $("#ddlGrupo").val() },
+            success: function (response) {
+                $("#subgrupo").kendoDropDownList({
+                    dataTextField: "nombreEscenario",
+                    dataValueField: "idEscenario",
+                    dataSource: response,
+                    optionLabel: "Seleccione un escenario",
+                    change: function (e) {
+                        var idEscenario = this.value();
+                        if (idEscenario == 4) {
+                            $("#divEscenario_1").show();
+                            $("#divEscenario_2").hide();
+                            $('#divEscenario_1').load('/escenarios/estrella.html?' + new Date().getTime(), function () {
+                                obtenerDisposicionesEscenario(idEscenario);
+                            });
+                        }
+                        else if (idEscenario == 5) {
+                            $("#divEscenario_1").hide();
+                            $("#divEscenario_2").show();
+                            $('#divEscenario_2').load('/escenarios/coctel.html?' + new Date().getTime(), function () {
+                                obtenerDisposicionesEscenario(idEscenario);
+                            });
+                        }
+                    }
+                });
+            },
+            error: function (xhr, status, error) {
+                console.log('Ocurrió un error: ' + error);
+            }
+        });
+    }
+
+    function obtenerEventos() {
+        $("#btnDescargar").hide();
+        $.ajax({
+            url: '/Eventos/GetEventos',
+            type: 'GET',
+            success: function (response) {
+                $("#ddlGrupo").kendoDropDownList({
+                    dataTextField: "nombreEvento",
+                    dataValueField: "idEvento",
+                    dataSource: response,
+                    optionLabel: "Seleccione un evento",
+                    change: function (e) {
+                        var idGrupo = this.value();
+                        obtenerEscenarios(idGrupo);
+                    }
+                });
+            },
+            error: function (xhr, status, error) {
+                console.log('Ocurrió un error: ' + error);
+            }
+        });
+    }
+
+    function gridActores(dataSource) {
+        const transformedData = dataSource.map(item => ({
+            idActor: item.idActor,
+            nombreCompleto: `${item.nombre || ''} ${item.apellidoPaterno || ''} ${item.apellidoMaterno || ''}`.trim(),
+            descripcion: item.cargoActual || '',
+            lugarAsignado: (item.fila && item.columna) ? `Fila: ${item.fila} - Asiento: ${item.columna}` : ' - '
+        }));
+
+        if ($.fn.DataTable.isDataTable('#grid')) {
+            $('#grid').DataTable().destroy();
+        }
+
+        $('#grid').DataTable({
+            data: transformedData,
+            columns: [
+                { data: 'nombreCompleto', title: 'Nombre', width: '35%' },
+                { data: 'descripcion', title: 'Descripción', width: '30%' },
+                { data: 'lugarAsignado', title: 'Lugar asignado', width: '25%' },
+                {
+                    title: 'Asignar',
+                    width: '10%',
+                    render: function (data, type, row) {
+                        if (row.lugarAsignado == ' - ')
+                            return `<center><button class="btn btn-success btn-sm" onclick="asignarActor(${row.idActor})"><span class="k-icon k-font-icon k-i-check k-icon-24"></span></button></center>`;
+                        else
+                            return '';
+                    }
+                }
+            ],
+            paging: true,
+            searching: true,
+            ordering: true,
+            pageLength: 10,
+            lengthChange: false,
+            autoWidth: false,
+            fixedColumns: true
+        });
+    }
 
     function obtenerAllActores() {
-        if (allActors.length === 0) {
+        var fila = obtenerFilaSeleccionada();
+        var columna = obtenerColumnaSeleccionada();
+        $("#lblUbicacion").text(`Ubicación: Fila ${fila} - Asiento ${columna}`);
+        if (allActors.length == 0) {
             $.ajax({
-                url: '@Url.Action("GetAllActores", "Eventos")',
+                url: '/Eventos/GetActoresEscenariosById',
                 type: 'GET',
+                data: { idEscenario: $("#subgrupo").val() },
                 dataType: 'json',
-                success: function (actors) {
-                    allActors = actors.map(actor => ({
-                        ...actor,
-                        nombreCompleto: [
-                            actor.nombre,
-                            actor.apellidoPaterno,
-                            actor.apellidoMaterno
-                        ].filter(Boolean).join(' ')
-                    }));
-                    inicializarAutoComplete(allActors);
+                success: function (data) {
+                    gridActores(data);
                 },
                 error: function (xhr, status, error) {
                     console.error('Error al obtener los actores:', error);
                 }
             });
         }
-    }
-
-    function mostrarVentanaKendo(selector, ancho, titulo, id) {
-        if (id) {
-            verDetalleActor(id);
-        } else {
-            var listView = $("#listView").data("kendoListView");
-            if (!listView) {
-                console.log("Inicializando ListView...");
-                $("#listView").kendoListView({
-                    dataSource: [],
-                    template: kendo.template($("#template").html())
-                });
-                console.log("ListView inicializado: ", $("#listView").data("kendoListView"));
-                listView = $("#listView").data("kendoListView");
-            }
-
-            if (listView) {
-                listView.dataSource.data([]);
-            }
-
-            var $kendoWindow = $(selector).kendoWindow({
-                width: ancho,
-                title: titulo,
-                visible: false,
-                modal: true,
-                actions: ["Close"],
-                close: function () {
-                    $("#actorAutoComplete").val("");
-                }
-            }).data("kendoWindow");
-
-            $kendoWindow.center().open();
-        }
-    }
-
-    function inicializarAutoComplete(actors) {
-        $("#actorAutoComplete").kendoAutoComplete({
-            dataTextField: "nombreCompleto",
-            placeholder: 'Por favor, seleccione un actor...',
-            filter: "contains",
-            dataSource: actors,
-            suggest: true,
-            template: function (dataItem) {
-                let nombreCompleto = dataItem.nombreCompleto;
-                let additionalInfo = [
-                    dataItem.cargoActual,
-                    dataItem.grupos,
-                    dataItem.subGrupo,
-                    dataItem.categoria
-                ].filter(Boolean).join(' - ');
-
-                return `${nombreCompleto} (${additionalInfo})`;
-            },
-            select: function (e) {
-                var dataItem = this.dataItem(e.item.index());
-                obtenerActor(dataItem.idActor);
-            }
-        });
-    }
-
-    $("#actorAutoComplete").on("input", function () {
-        var searchText = $(this).val().toLowerCase();
-        if (searchText.length >= 3) {
-            filtrarActores(searchText);
-        }
-    });
-
-    function filtrarActores(searchText) {
-        var filteredActors = allActors.filter(function (actor) {
-            let nombreCompleto = [
-                actor.nombre,
-                actor.apellidoPaterno,
-                actor.apellidoMaterno
-            ].filter(Boolean).join(" ").toLowerCase();
-
-            let additionalInfo = [
-                actor.cargoActual,
-                actor.grupos,
-                actor.subGrupo,
-                actor.categoria
-            ].filter(Boolean).join(" - ").toLowerCase();
-
-            return nombreCompleto.includes(searchText) || additionalInfo.includes(searchText);
-        });
-
-        var autoComplete = $("#actorAutoComplete").data("kendoAutoComplete");
-        if (autoComplete) {
-            autoComplete.setDataSource(filteredActors);
-        }
-    }
-
-    function obtenerActor(idActor) {
-        $.ajax({
-            url: '@Url.Action("GetActorById", "Eventos")',
-            type: 'GET',
-            data: { id: idActor },
-            success: function (actor) {
-                var listView = $("#listView").data("kendoListView");
-                if (listView) listView.dataSource.data([actor]);
-            },
-            error: function (xhr, status, error) {
-                console.error('Error al obtener el actor:', error);
-            }
-        });
-    }
-
-    function verDetalleActor(actorId) {
-        var fila = obtenerFilaSeleccionada();
-        var columna = obtenerColumnaSeleccionada();
-        var seccion = obtenerSeccionSeleccionada();
-        $.ajax({
-            url: '@Url.Action("GetDetalleActor", "Actor")',
-            type: 'GET',
-            data: {
-                id: actorId,
-                seccion: seccion,
-                fila: fila,
-                asiento: columna,
-                lugar: $("#hidEscenario").val(),
-                hora: $("#hidFechaHora").val()
-            },
-            success: function (actor) {
-                const detalleActorWindow = $("#detalleActorWindow").data("kendoWindow");
-
-                if (!detalleActorWindow) {
-                    $("#detalleActorWindow").kendoWindow({
-                        width: "700px",
-                        modal: true,
-                        visible: false,
-                        actions: ["Close"]
-                    });
-                }
-
-                const windowInstance = $("#detalleActorWindow").data("kendoWindow");
-
-                windowInstance.setOptions({
-                    title: `${actor.cargoActual}`
-                });
-                const contenido = `
-                <div class="container mt-4 p-4 border rounded bg-light shadow-sm">
-                    <div class="row mb-4">
-                        <div class="col-12 col-md-4 text-center">
-                            <img src="data:image/png;base64,${actor.fotoBase64}" class="rounded-circle img-fluid mb-3" alt="Foto del actor político" style="width: 150px; height: 150px; object-fit: cover;">
-                        </div>
-                        <div class="col-12 col-md-8 d-flex align-items-center">
-                            <div>
-                                <h3 class="fw-bold">${actor.nombre} ${actor.apellidoPaterno} ${actor.apellidoMaterno}</h3>
-                                <p class="text-muted">Teléfono Personal: ${actor.telefonoPersonal}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row gy-3">
-                        <div class="col-md-6">
-                            <label class="fw-semibold">Domicilio Laboral</label>
-                            <div class="text-secondary">${actor.domicilioLaboral}</div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="fw-semibold">Teléfono Laboral</label>
-                            <div class="text-secondary">${actor.telefonoLaboral}</div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="fw-semibold">Fecha de Nacimiento</label>
-                            <div class="text-secondary">${new Date(actor.fechaNacimiento).toLocaleDateString()}</div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="fw-semibold">Correo Electrónico</label>
-                            <div class="text-secondary">${actor.correoElectronico}</div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="fw-semibold">Redes Sociales</label>
-                            <div class="text-secondary">${actor.inputRedSocial ?? 'N/A'}</div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="fw-semibold">Página Web</label>
-                            <div class="text-secondary">${actor.paginaWeb || 'N/A'}</div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="fw-semibold">Afinidad</label>
-                            <div class="text-secondary">${actor.afinidad}</div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="fw-semibold">Compromiso</label>
-                            <div class="text-secondary">${actor.compromiso}</div>
-                        </div>
-                        <div class="col-12">
-                            <label class="fw-semibold">Comentarios</label>
-                            <div class="text-secondary">${actor.comentarios}</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row gy-3">
-                            <input type="button" onclick="GenerarInvitacion(${actor.idActor})" value="Generar invitación" id="btnInvite" />
-                </div>
-            `;
-
-                windowInstance.content(contenido);
-
-                windowInstance.center().open();
-            },
-            error: function (xhr, status, error) {
-                console.error('Error al obtener los detalles del actor:', error);
-            }
-        });
-    }
-
-    function GenerarInvitacion(idActor) {
-        $.ajax({
-            url: '@Url.Action("GetActorId", "Actor")',
-            type: 'GET',
-            data: { idActor: idActor },
-            success: function (response) {
-                $("#lblActor").text(response.nombre + " " + response.apellidoPaterno + " " + response.apellidoMaterno);
-                $("#lblCargo").text(response.cargo);
-                $("#lblFecha").text($("#hidFechaHora").val());
-                $("#lblHora").text($("#hidFechaHora").val());
-                $("#lblLugar").text($("#hidEscenario").val());
-                $("#lblFila").text(obtenerFilaSeleccionada());
-                $("#lblAsiento").text(obtenerColumnaSeleccionada());
-                $("#lblSeccion").text(obtenerSeccionSeleccionada());
-                var detalleModal = $("#boletoModal").kendoWindow({
-                    title: "Boleto",
-                    modal: true,
-                    visible: false,
-                    width: "500px",
-                    height: "715px",
-                    actions: ["Close"]
-                }).data("kendoWindow");
-                detalleModal.center().open();
-            },
-            error: function (xhr, status, error) {
-                console.error('Error al obtener los detalles del actor:', error);
-            }
-        });
     }
 
     function asignarActor(idActor) {
@@ -533,9 +295,21 @@
                 Fila: fila,
                 Columna: columna
             },
-            success: function (data) {
-                obtenerDisposicionesEscenario($("#subgrupo").val());
-                $("#windowInstitucional").data("kendoWindow").close();
+            beforeSend: function () {
+                mostrarLoading();
+            },
+            success: function (result) {
+                if (result.procesoExitoso > 0) {
+                    MensajeExito("Éxito", "Lugar asignado satisfactoriamente");
+                    $("#subgrupo").data("kendoDropDownList").trigger("change");
+                    $("#windowInstitucional").data("kendoWindow").close();
+                    $("#detalleActorWindow").data("kendoWindow").close();
+                } else {
+                    MensajeExito("Error", "Error al asignar el lugar: " + result.mensaje);
+                }
+            },
+            complete: function () {
+                ocultarLoading();
             },
             error: function (error) {
                 console.error('Error al asignar el actor:', error);
@@ -543,21 +317,343 @@
         });
     }
 
+    function ModificarAsignacion(idActor) {
+        mostrarVentanaKendo("#windowInstitucional", "950px", "Búsqueda de invitados", null);
+    }
+
+    function mostrarVentanaKendo(selector, ancho, titulo, id) {
+        if (id) {
+            verDetalleAsignacion(id);
+        } else {
+            var $kendoWindow = $(selector).kendoWindow({
+                width: ancho,
+                title: titulo,
+                visible: false,
+                modal: true,
+                actions: ["Close"],
+            }).data("kendoWindow");
+            $kendoWindow.center().open();
+            obtenerAllActores();
+        }
+    }
+
+    function verDetalleAsignacion(idActor) {
+        $.ajax({
+            url: '/Eventos/GetDetalleAsignacion',
+            type: 'POST',
+            data: {
+                idActor: idActor,
+                idEscenario: $("#subgrupo").val()
+            },
+            success: function (actor) {
+                const detalleActorWindow = $("#detalleActorWindow").data("kendoWindow");
+
+                if (!detalleActorWindow) {
+                    $("#detalleActorWindow").kendoWindow({
+                        width: "700px",
+                        title: "Detalle de la asignación",
+                        modal: true,
+                        visible: false,
+                        actions: ["Close"]
+                    });
+                }
+                const windowInstance = $("#detalleActorWindow").data("kendoWindow");
+
+                const contenido = `
+                            <div class="container p-4 border rounded bg-light shadow-sm">
+                                <div class="row mb-4">
+                                    <div class="col-12 col-md-8 d-flex align-items-center">
+                                        <div>
+                                            <h3 class="fw-bold">${actor.nombreActor} ${actor.apellidoPaterno} ${actor.apellidoMaterno}</h3>
+                                            <p class="text-muted">Cargo actual</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3" style="font-size:14pt;">
+                                    <div class="col-4 d-flex align-items-center">
+                                        <label>Sección:</label>&nbsp;&nbsp;<label class="fw-bold">GENERAL</label>
+                                    </div>
+                                    <div class="col-4 d-flex align-items-center">
+                                        <label>Fila:</label>&nbsp;&nbsp;<label class="fw-bold">${actor.fila}</label>
+                                    </div>
+                                    <div class="col-4 d-flex align-items-center">
+                                        <label>Asiento:</label>&nbsp;&nbsp;<label class="fw-bold">${actor.columna}</label>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-2">  </div>
+                                    <div class="col-4">
+                                        <input type="button" class="btn btn-outline-secondary" onclick="GenerarInvitacion(${actor.idActor},${actor.idDisposicion})" value="Generar invitación" id="btnInvite" />
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="button" class="btn btn-danger me-2" onclick="ModificarAsignacion(${actor.idActor})" value="Modificar Asignación" id="btnInvite" />
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                windowInstance.content(contenido);
+                windowInstance.center().open();
+            },
+            error: function (xhr, status, error) {
+                console.error('Error al obtener los detalles del actor:', error);
+            }
+        });
+    }
+
+    // Funciones relacionadas con invitaciones
+    function GenerarInvitacion(idActor, idDisposicion) {
+        $("#detalleActorWindow").data("kendoWindow").close();
+        if ($("#subgrupo").val() == 4) {
+            $("#boletoContent").css("background-image", "url('/img/invite/SendelaI.jpg')");
+            $("#divInfo").css({
+                "margin-top": "300px",
+                "color": "#FFF"
+            });
+        }
+        else {
+            $("#boletoContent").css("background-image", "url('/img/invite/SendelaC.jpg')");
+            $("#divInfo").css({
+                "margin-top": "300px",
+                "color": "#000"
+            });
+        }
+        $.ajax({
+            url: '/Eventos/GenerarUrl',
+            type: 'POST',
+            data: {
+                p1: idActor,
+                p2: $("#subgrupo").val(),
+            },
+            success: function (data) {
+                $("#qrCode").empty();
+
+                $("#qrCode").kendoQRCode({
+                    value: data,
+                    size: 150,
+                    color: "#000000",
+                    background: "#ffffff"
+                });
+
+                $.ajax({
+                    url: '/Actor/GetActorId',
+                    type: 'GET',
+                    data: { idActor: idActor },
+                    success: async function (response) {
+                        $("#lblActor").text(response.nombre + " " + response.apellidoPaterno + " " + response.apellidoMaterno);
+
+                        try {
+                            const qrBase64 = await obtenerQrBase64();
+                            $.ajax({
+                                url: '/Eventos/AddInvitacion',
+                                type: 'POST',
+                                data: {
+                                    idDisposicion: idDisposicion,
+                                    codigoQr: qrBase64
+                                },
+                                beforeSend: function () {
+                                    mostrarLoading();
+                                },
+                                success: function (result) {
+                                    if (result > 0) {
+                                        $("#hidIdInvitacion").val(result);
+                                        $("#titleBoleto").text($("#hidEscenario").val());
+                                        $("#lblLugar").html($("#hidLugar").val());
+                                        $("#lblFila").text(obtenerFilaSeleccionada());
+                                        $("#lblAsiento").text(obtenerColumnaSeleccionada());
+                                        $("#lblSeccion").text(obtenerSeccionSeleccionada());
+                                        var detalleModal = $("#boletoModal").kendoWindow({
+                                            title: "Boleto", 
+                                            visible: false,
+                                            modal: true,
+                                            width: "390px",
+                                            height: "auto",
+                                            actions: ["Close"]
+                                        }).data("kendoWindow");
+                                        detalleModal.center().open();
+                                    } else {
+                                        MensajeExito("Error", "Error al generar la invitación: " + result.mensaje);
+                                    }
+                                },
+                                complete: function () {
+                                    ocultarLoading();
+                                },
+                                error: function (error) {
+                                    console.error('Error al asignar el actor:', error);
+                                }
+                            });
+                        } catch (error) {
+                            console.error("Error al convertir el QR a Base64:", error);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error al obtener los detalles del actor:', error);
+                    }
+                });
+            },
+            error: function (error) {
+                console.error('Error al asignar el actor:', error);
+            }
+        });
+    }
+
+    function cerratVentana() {
+        $("#boletoModal").data("kendoWindow").close();
+    }
+
+    // Función para enviar correo
+    function enviarCorreo() {
+        $('#boletoModal').data('kendoWindow').close();
+        mostrarLoading();
+
+        // Capturar el contenido del KendoWindow en Base64
+        capturarKendoWindowEnBase64("#boletoContent")
+            .then((imagenBase64) => {
+                const boletoHtml = `
+                <div style="text-align: center;">
+                    <h3>Invitación</h3>
+                    <img src="${imagenBase64}" alt="Vista previa de la invitación" style="max-width: 100%; border: 1px solid #ccc;" />
+                </div>
+            `;
+
+                $.ajax({
+                    url: '/Eventos/EnviarInvitacionCorreo',
+                    type: 'POST',
+                    data: {
+                        idInvitacion: $("#hidIdInvitacion").val(),
+                        cuerpo: boletoHtml
+                    },
+                    success: function (data) {
+                        ocultarLoading();
+                        if (data > 0) {
+                            MensajeExito("Éxito", "La invitación ha sido enviada correctamente");
+                        } else {
+                            MensajeExito("Error", "Error al enviar el correo");
+                        }
+                    },
+                    error: function (error) {
+                        ocultarLoading();
+                        console.error('Error al enviar el correo:', error);
+                    }
+                });
+            })
+            .catch((error) => {
+                ocultarLoading();
+                console.error("Error al capturar el contenido del KendoWindow en Base64:", error);
+                MensajeExito("Error", "Error al generar la invitación.");
+            });
+    }
+
+    // Eventos y document ready
+    $(document).ready(function () {
+        obtenerEventos();
+
+        $(document).on("click", "div[id^='cuadro-'], .circle", function () {
+            var selectedId = $(this).attr("id");
+            if (selectedId) {
+                $("#idSelected").val(selectedId);
+                var actorId = $(this).data('actor-id');
+                mostrarVentanaKendo("#windowInstitucional", "950px", "Búsqueda de invitados", actorId);
+                if (!actorId)
+                    obtenerAllActores();
+            }
+        });
+
+        $("#exportarPDF").prepend('<i class="fas fa-file-pdf"></i>');
+        $(".whatsapp-button").prepend('<i class="fab fa-whatsapp"></i>');
+        $(".email-button").prepend('<i class="fas fa-envelope"></i>');
+
+        $("#exportarPDF").click(function () {
+            descargarKendoWindowComoImagen("#boletoContent", "boleto " + $("#lblActor").text() + ".png");
+            // kendo.drawing.drawDOM("#boletoContent", {
+            //     paperSize: "A5",
+            //     margin: { top: ".5cm", bottom: "1cm", left: "1.5cm", right: "1.5cm" },
+            //     scale: 0.8,
+            //     landscape: false,
+            // }).then(function (group) {
+            //     kendo.drawing.pdf.saveAs(group, "boleto.pdf");
+            // })
+            //     .catch(function (error) {
+            //         console.error("Error al generar el PDF:", error);
+            //     });
+        });
+    });
+
+    function capturarKendoWindowEnBase64(selector) {
+        return kendo.drawing.drawDOM($(selector), {
+            paperSize: "auto",
+            margin: 0,
+            scale: 1
+        })
+            .then(function (group) {
+                return kendo.drawing.exportImage(group);
+            })
+            .catch(function (error) {
+                console.error("Error al capturar el contenido del KendoWindow:", error);
+                throw error;
+            });
+    }
+
+    function descargarKendoWindowComoImagen(selector, nombreArchivo) {
+        const container = $(selector);
+
+        kendo.drawing.drawDOM(container, {
+            paperSize: "auto",
+            margin: 0,
+            scale: 1
+        })
+            .then(function (group) {
+                return kendo.drawing.exportImage(group);
+            })
+            .then(function (dataURL) {
+                const link = document.createElement("a");
+                link.href = dataURL;
+                link.download = nombreArchivo || "contenido.png";
+                link.click();
+            })
+            .catch(function (error) {
+                console.error("Error al capturar el contenido del KendoWindow:", error);
+            });
+    }
+
+    function descargarReporteExcel(event) {
+        if (event) event.preventDefault();
+
+        let idEscenario = $("#subgrupo").val();
+
+        const url = `/Eventos/DescargarReporteExcel?idEscenario=${idEscenario}`;
+        window.open(url, "_blank");
+    }
+
+    function obtenerIniciales(nombre, apellidoPaterno, apellidoMaterno = "") {
+        let iniciales = "";
+
+        if (nombre && nombre.length > 0) {
+            iniciales += nombre.charAt(0);
+        }
+
+        if (apellidoPaterno && apellidoPaterno.length > 0) {
+            iniciales += apellidoPaterno.charAt(0);
+        }
+
+        if (apellidoMaterno && apellidoMaterno.length > 0) {
+            iniciales += apellidoMaterno.charAt(0);
+        }
+
+        return iniciales.toUpperCase();
+    }
+
     function obtenerFilaSeleccionada() {
         var idSelected = $("#idSelected").val();
         var $selectedDiv = $("#" + idSelected);
-
         var fila = $selectedDiv.data("fila");
-
         return fila;
     }
 
     function obtenerColumnaSeleccionada() {
         var idSelected = $("#idSelected").val();
         var $selectedDiv = $("#" + idSelected);
-
         var columna = $selectedDiv.data("columna");
-
         return columna;
     }
 
@@ -567,171 +663,68 @@
         var parentSection = $selectedDiv.closest(".parent-container, .parent-container1, .parent-container2, .parent-container3, .parent-container4, .parent-container5");
         return parentSection.attr("id");
     }
+
+    function obtenerQrBase64() {
+        var qrCodeElement = $("#qrCode").getKendoQRCode();
+        var svg = qrCodeElement.svg();
+        var svgBlob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
+
+        return new Promise((resolve, reject) => {
+            var url = URL.createObjectURL(svgBlob);
+            var img = new Image();
+            img.src = url;
+
+            img.onload = function () {
+                var canvas = document.createElement("canvas");
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0);
+
+                var base64Image = canvas.toDataURL("image/png");
+                URL.revokeObjectURL(url);
+                resolve(base64Image);
+            };
+
+            img.onerror = function (error) {
+                URL.revokeObjectURL(url);
+                reject(error);
+            };
+        });
+    }
 </script>
 
+
 <style>
-    .parent-container {
-        display: grid;
-        grid-template-columns: repeat(15, 1fr); /* Ajusta el número de columnas */
-        grid-gap: 5px; /* Ajusta el espacio entre los elementos de la cuadrícula */
+    @@font-face {
+        font-family: 'CustomFont';
+        src: url('/fonts/Roboto/Roboto-Regular.woff2') format('woff2'), url('/fonts/Roboto/Roboto-Regular.woff') format('woff'), url('/fonts/Roboto/Roboto-Regular.ttf') format('truetype');
     }
 
-        .parent-container div {
-            border: 1px solid #ccc;
-            padding: 10px;
-            /* Añade estilos adicionales aquí */
-        }
-
-        .parent-container .row {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2px;
-        }
-
-            .parent-container .row div {
-                text-align: center;
-                padding: 8px;
-                border: 1px solid #ccc;
-                background-color: #f9f9f9;
-                cursor: pointer;
-                width: 30px;
-                height: 30px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin: 1px;
-            }
-
-    .parent-container1 {
+    #boletoContent {
+        font-family: 'CustomFont';
+        width: 100%;
+        height: 640px;
+        margin: 0;
+        border-radius: 5px;
         display: flex;
-        justify-content: space-around;
-        height: auto;
+        flex-direction: column;
+        align-items: center;
+        color: #fff;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
     }
 
-        .parent-container1 .row {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2px;
-        }
-
-            .parent-container1 .row div {
-                text-align: center;
-                padding: 8px;
-                border: 1px solid #ccc;
-                background-color: #f9f9f9;
-                cursor: pointer;
-                width: 50px;
-                height: 50px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin: 1px;
-            }
-
-    .parent-container2 {
-        display: flex;
-        justify-content: space-around;
-        height: auto;
+    .qr-container {
+        margin-top: 100px;
+        text-align: center;
     }
 
-        .parent-container2 .row {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2px;
-        }
-
-            .parent-container2 .row div {
-                text-align: center;
-                padding: 8px;
-                border: 1px solid #ccc;
-                background-color: #f9f9f9;
-                cursor: pointer;
-                width: 30px;
-                height: 30px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin: 1px;
-            }
-
-    .parent-container3 {
-        display: flex;
-        justify-content: space-around;
-        height: auto;
+    div.dt-search {
+        margin-top: -45px;
     }
-
-        .parent-container3 .row {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 10px;
-        }
-
-            .parent-container3 .row div {
-                text-align: center;
-                padding: 8px;
-                border: 1px solid #ccc;
-                background-color: #f9f9f9;
-                cursor: pointer;
-                width: 40px;
-                height: 40px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin: 15px;
-                margin-left: 25px;
-            }
-
-    .parent-container4 {
-        display: flex;
-        justify-content: space-around;
-        height: auto;
-    }
-
-        .parent-container4 .row {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 10px;
-        }
-
-            .parent-container4 .row div {
-                text-align: center;
-                padding: 8px;
-                border: 1px solid #ccc;
-                background-color: #f9f9f9;
-                cursor: pointer;
-                width: 30px;
-                height: 30px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin: 1px;
-            }
-
-    .parent-container5 {
-        display: flex;
-        justify-content: space-around;
-        height: auto;
-    }
-
-        .parent-container5 .row {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 10px;
-        }
-
-            .parent-container5 .row div {
-                text-align: center;
-                padding: 8px;
-                border: 1px solid #ccc;
-                background-color: #f9f9f9;
-                cursor: pointer;
-                width: 30px;
-                height: 30px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin: 1px;
-            }
 
     .parent-container6 {
         display: flex;
@@ -742,22 +735,47 @@
         .parent-container6 .row {
             display: flex;
             justify-content: center;
-            margin-bottom: 5px;
+            margin-bottom: 2px;
         }
 
             .parent-container6 .row div {
                 text-align: center;
-                padding: 2px;
+                padding: 1px;
                 border: 1px solid #ccc;
                 background-color: #f9f9f9;
                 cursor: pointer;
-                width: 18px;
-                height: 18px;
+                width: 40px;
+                height: 40px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin: 0;
+                margin: 1px;
             }
+
+                .parent-container6 .row div.cuadros {
+                    text-align: center;
+                    padding: 1px;
+                    border: none;
+                    background-color: transparent;
+                    width: 40px;
+                    height: 40px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 1px;
+                    cursor: default;
+                }
+
+    div.divFila {
+        text-align: center;
+        background-color: #BFBFBF !important;
+        cursor: default !important;
+    }
+
+    div.divVertice {
+        background-color: transparent !important;
+        border: none !important;
+    }
 
     .ui-selected {
         background-color: #9F2241 !important;
@@ -812,37 +830,6 @@
         border: 2px solid #000;
     }
 
-    #tablaActor {
-        font-size: 12pt;
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-        #tablaActor th, #tablaActor td {
-            padding: 2px;
-            text-align: left;
-            border: none;
-        }
-
-        #tablaActor tr {
-            background: none;
-            color: inherit;
-        }
-
-    #boletoContent {
-        width: 100%;
-        margin: auto;
-        background-color: #5b0e1d;
-        border: 2px solid #5b0e1d;
-        border-radius: 10px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 15px;
-        color: #fff;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
-
     .header img {
         width: 80px;
         margin-bottom: 10px;
@@ -873,10 +860,6 @@
             text-align: center;
         }
 
-    .qr-container {
-        margin: 5px 0;
-        text-align: center;
-    }
 
     .footer {
         text-align: center;
@@ -891,24 +874,23 @@
     .buttons-container {
         display: flex;
         justify-content: center;
-        flex-wrap: nowrap; /* Cambiado a nowrap */
-        gap: 10px;
+        flex-wrap: nowrap;
+        gap: 5px;
         margin: auto;
-        margin-top: 5px;
-        overflow-x: auto; /* Permite desplazamiento horizontal si es necesario */
-        width: 98%;
+        margin-top: 10px;
+        overflow-x: auto; 
+        width: 95%;
     }
 
     .styled-button {
-        flex: 1 1 auto; /* Permite que los botones se ajusten */
-        min-width: 100px; /* Ancho mínimo para los botones */
-        padding: 10px 15px;
+        flex: 1 1 auto; 
+        min-width: 50px;
+        padding: 0;
         border: none;
         border-radius: 5px;
-        font-size: 14px;
+        font-size: 11pt;
         color: #fff;
         cursor: pointer;
-        transition: background 0.3s ease, opacity 0.3s ease;
     }
 
     .pdf-button {
@@ -921,6 +903,10 @@
 
     .email-button {
         background-color: #dc3545;
+    }
+
+    .cerrar-button {
+        background-color: #444;
     }
 
     .styled-button:hover {
@@ -950,58 +936,17 @@
         padding-inline: var(--kendo-spacing-1, 0.5rem);
     }
 
-    .circle-container {
-        position: relative;
-        width: 100px;
-        height: 100px;
-        margin: auto;
+    .k-window-titlebar {
+        height: 30px; 
+        font-size: 14px;
+        padding: 0 10px;
     }
 
-    .circle {
-        position: absolute;
-        width: 50px;
-        height: 50px;
-        background-color: #DDD;
-        border-radius: 50%;
-        top: 50%;
-        border: 0.5px solid #AAA;
-        left: 50%;
-        transform: translate(-35%, -35%);
+    .k-window-title {
+        line-height: 30px;
     }
 
-    .square {
-        position: absolute;
-        width: 15px;
-        height: 15px;
-        border: 1px solid #CCC;
-        background-color: #FFF;
-        top: 50%;
-        left: 50%;
-        transform: rotate(calc(var(--angle) * 1deg)) translate(38px) rotate(calc(var(--angle) * -1deg));
-        transform-origin: center;
-    }
-
-    .circle20 {
-        position: absolute;
-        width: 70px;
-        height: 70px;
-        background-color: #DDD;
-        border-radius: 50%;
-        top: 50%;
-        border: 0.5px solid #AAA;
-        left: 50%;
-        transform: translate(-40%, -40%);
-    }
-
-    .square20 {
-        position: absolute;
-        width: 14px;
-        height: 14px;
-        border: 1px solid #CCC;
-        background-color: #FFF;
-        top: 50%;
-        left: 50%;
-        transform: rotate(calc(var(--angle) * 1deg)) translate(50px) rotate(calc(var(--angle) * -1deg));
-        transform-origin: center;
+    .k-window-actions {
+        height: 30px;
     }
 </style>

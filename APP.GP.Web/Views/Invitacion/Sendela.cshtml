@@ -1,0 +1,128 @@
+﻿@model APP.GP.Web.Model.DTO.DetalleValidarInvitacionDto
+
+@{
+    ViewData["Title"] = "Validar Invitación";
+    Layout = null;
+}
+<style>
+    /* Imagen de fondo */
+    .background-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0.8;
+        z-index: -1;
+    }
+
+    /* Contenedor centralizado */
+    .center-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        opacity: 0.9;
+    }
+
+    /* Estilo para el recuadro */
+    .content-box {
+        background-color: rgba(255, 255, 255, 0.9); /* Fondo semitransparente */
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra suave */
+        padding: 30px;
+        text-align: center;
+        width: 75%;
+        max-width: 600px;
+    }
+
+        /* Encabezado principal */
+        .content-box h1 {
+            color: #007bff; /* Azul Bootstrap */
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Textos generales */
+        .content-box p {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+    /* Mensaje de alerta */
+    .alert-custom {
+        background-color: #f8d7da;
+        color: #721c24;
+        border-radius: 5px;
+        padding: 15px;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        border-radius: 5px;
+        padding: 15px;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+</style>
+
+<link href="~/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+<img src="~/img/sendela/logo.jpg" class="background-image" alt="Fondo">
+<input id="hiddenValido" type="hidden" value="@Model.Acceso" />
+<div class="center-content">
+    <div class="content-box">
+        <h1>SENDELA</h1>
+        <!-- Información Personal -->
+        <h3>@Model.Nombre @Model.ApellidoPaterno @Model.ApellidoMaterno</h3>
+        @* <h4>@Model.CargoActual</h4> *@
+
+        <!-- Información del Evento -->
+        <p><b>Evento:</b> @Model.NombreEvento</p>
+        <p><b>Fecha del Evento:</b> @Model.FechaEvento.ToString("dd/MM/yyyy HH:mm") hrs</p>
+        <p><b>Escenario:</b> @Model.NombreEscenario</p>
+
+        <!-- Detalles del Asiento -->
+        <p><b>Fila:</b> @Model.Fila</p>
+        <p><b>Asiento:</b> @Model.Columna</p>
+
+        <!-- Mensaje de Invitación Escaneada -->
+        @if (Model.Acceso)
+        {
+            <div class="alert-custom">
+                La invitación ya fue escaneada el @Model.FechaAcceso.Value.ToString("dd/MM/yyyy HH:mm") hrs
+            </div>
+        }
+        else
+        {
+            <div class="alert-success">
+                La invitación es válida para el ingreso al evento
+            </div>
+        }
+    </div>
+</div>
+
+<script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if (!document.getElementById("hiddenValido").value) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Acceso Permitido',
+                text: 'Acceso válido, se ha registrado el ingreso del invitado.',
+                confirmButtonText: 'Aceptar'
+            });
+        } else {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Acceso Denegado',
+                text: 'No se encontró un acceso válido para esta invitación.',
+                confirmButtonText: 'Entendido'
+            });
+        }
+    });
+</script>

@@ -1,0 +1,57 @@
+﻿@model APP.GP.Web.Model.Boletos.BoletoViewModel
+<meta charset="UTF-8">
+<style>
+    @@font-face {
+        font-family: 'CustomFont';
+        src: url('/fonts/Roboto/Roboto-Regular.ttf') format('truetype');
+    }
+
+    #boletoContent {
+        font-family: 'CustomFont', Arial, sans-serif;
+    }
+</style>
+<div id="boletoContent">
+    <div class="content">
+        <div style="font-size:15pt; text-align:center; color:#FFF; font-weight:600;width:100%;">
+            <label>@Model.Titulo</label>
+        </div>
+        <div style="font-size:12pt; text-align:center; color:#FFF; font-weight:400;width:100%; margin:15px;">
+            <label>@Model.Lugar</label>
+        </div>
+        <input type="hidden" id="hidIdInvitacion" value="@Model.IdInvitacion" />
+        <table id="tablaActor">
+            <tr>
+                <td>NOMBRE</td>
+                <td><label>@Model.Actor</label></td>
+            </tr>
+            <tr>
+                <td>FECHA</td>
+                <td><label>@Model.Fecha</label></td>
+            </tr>
+            <tr>
+                <td>HORA</td>
+                <td><label>@Model.Hora</label></td>
+            </tr>
+            <tr>
+                <td>SECCI&Oacute;N</td>
+                <td><label>@Model.Seccion</label></td>
+            </tr>
+            <tr>
+                <td>FILA</td>
+                <td><label>@Model.Fila</label></td>
+            </tr>
+            <tr>
+                <td>ASIENTO</td>
+                <td><label>@Model.Asiento</label></td>
+            </tr>
+        </table>
+    </div>
+    <div id="qrCode" class="qr-container">
+        <img src="@Model.CodigoQR" alt="QR Code" />
+    </div>
+</div>
+<div class="row mb-3 buttons-container">
+    <input type="button" id="exportarPDF" class="btn pdf-button styled-button" value="Descargar PDF" />
+    <input type="button" class="btn whatsapp-button styled-button" value="Enviar a WhatsApp" onclick="enviarWhats()" />
+    <input type="button" class="btn email-button styled-button" value="Enviar a Correo" onclick="enviarCorreo()" />
+</div>

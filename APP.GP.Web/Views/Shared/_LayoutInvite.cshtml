@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invitación: Toma de Protesta del Gobernador Electo Alejandro Armenta</title>
     <link href="~/css/aos.css" rel="stylesheet" />
-    
+
     <style>
         @@font-face {
             font-family: 'inviteFont';
@@ -17,18 +17,20 @@
             font-weight: normal;
             font-style: normal;
         }
-        body{
+
+        body {
             overflow-x: hidden;
         }
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
+
+            body::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+            }
 
         .bg1-wrapper {
             background-image: url('/img/invite/volcan.jpg');
@@ -63,7 +65,7 @@
             background-position: center;
             background-repeat: no-repeat;
             width: 100%;
-            height: 100vh; /* Ocupar toda la altura de la pantalla */
+            height: 100vh;
         }
 
         .card {
@@ -186,19 +188,11 @@
             min-height: 40px;
         }
 
-        /*    .logo-container img {
-                                width: 100%;
-                                height: 85px;
-                                align-items: center;
-                            } */
-
         .countdown {
             display: flex;
             gap: 10px;
             color: white !important;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-            /*  position: relative;
-                                                            background-size: cover; */
             background-position: center;
             /* height: auto; */
             align-items: center;
@@ -232,45 +226,64 @@
             text-decoration: none;
             font-size: 14pt;
         }
+
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            border: 0.3em solid rgba(255, 255, 255, 0.3);
+            border-top: 0.3em solid #fff;
+            border-radius: 50%;
+            animation: spinner 0.75s linear infinite;
+        }
+
+        @@keyframes spinner {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .styled-link {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            font-size: 10pt;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .styled-link:hover {
+                color: #f0ad4e;
+                text-decoration: underline;
+            }
+
+        .navbar {
+            flex-wrap: nowrap !important; 
+            overflow-x: auto; 
+        }
     </style>
     <script src="~/js/app/qrcode.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/kendo/js/kendo.all.min.js"></script>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    @* <link href="~/lib/kendo/styles/material-lime.css" rel="stylesheet" /> *@
 </head>
 <body>
     <div class="logo-container"></div>
     <div class="text-center">
-        <nav class="navbar navbar-expand-lg" style="background-color:#601C2D; margin-top:38px; color:#FFF;">
+        <nav class="navbar" style="background-color:#601C2D; margin-top:38px; color:#FFF;">
             <div class="container-fluid">
-                <!-- Botón de hamburguesa -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <!-- Menú colapsable -->
-                <div class="collapse navbar-collapse" id="navbarMenu">
-                    <ul class="navbar-nav mx-auto" style="color: #FFF;">
-                        <li class="nav-item">
-                            @Html.ActionLink("Inicio", "Invite", "Home", null, new { @class = "nav-link styled-link" })
-                        </li>
-                        <li class="nav-item">
-                            @Html.ActionLink("Confirmación", "Confirmation", "Home", null, new { @class = "nav-link styled-link" })
-                        </li>
-                        <li class="nav-item">
-                            @Html.ActionLink("Mensaje", "Message", "Home", null, new { @class = "nav-link styled-link" })
-                        </li>
-                        <li class="nav-item">
-                            @Html.ActionLink("Invitación", "Invitacion", "Home", null, new { @class = "nav-link styled-link" })
-                        </li>
-                        <li class="nav-item">
-                            @Html.ActionLink("Sitios de Interés", "Places", "Home", null, new { @class = "nav-link styled-link" })
-                        </li>
-                    </ul>
-                </div>
+                @Html.ActionLink("Inicio", "Invite", "Home", null, new { @class = "styled-link" })
+
+                @Html.ActionLink("Confirmación", "Confirmation", "Home", null, new { @class = "styled-link" })
+
+                @Html.ActionLink("Mensaje", "Message", "Home", null, new { @class = "styled-link" })
+
+                @Html.ActionLink("Invitación", "Invitacion", "Home", null, new { @class = "styled-link" })
+
+                @Html.ActionLink("Sitios de Interés", "Places", "Home", null, new { @class = "styled-link" })
+
             </div>
         </nav>
+
     </div>
 
     @RenderBody()
@@ -290,6 +303,8 @@
     });
 
     function guardarConfirmacion() {
+        $("#loadingSpinner").show();
+        $("#confirmProtesta").prop("disabled", true);
         // Obtén los valores de cada campo
         const nombre = $("#nombre").val();
         const apellidoPaterno = $("#apellidoPaterno").val();
@@ -311,6 +326,7 @@
                 telefonoPersonal: telefonoPersonal
             },
             success: function (response) {
+                $("#loadingSpinner").hide();
                 if (response.procesoExitoso > 0) {
                     Swal.fire({
                         icon: 'success',
@@ -327,7 +343,8 @@
                 }
             },
             error: function (xhr, status, error) {
-                // Muestra una alerta de error con SweetAlert
+                $("#loadingSpinner").hide();
+                $("#confirmProtesta").prop("disabled", false);
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',

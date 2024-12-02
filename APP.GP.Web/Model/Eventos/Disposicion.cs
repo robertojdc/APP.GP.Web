@@ -4,7 +4,7 @@ public class Disposicion
 {
     public int IdDisposicion { get; set; }
     public int IdEscenario { get; set; }
-    public int Fila { get; set; }
+    public string Fila { get; set; }
     public int Columna { get; set; }
     public int? IdActor { get; set; }
 

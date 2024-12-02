@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace APP.GP.Web.Controllers;
 [Authorize]
@@ -18,6 +19,7 @@ public class ActorController : Controller
 
     public IActionResult Index()
     {
+        ViewBag.Usuario = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
         return View();
     }
 
@@ -30,6 +32,7 @@ public class ActorController : Controller
     {
         var grupos = await _grupoService.GetActoresAsync(new Model.Filtros.FiltroActor
         {
+            IdUsuario = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value),
             Nombre = nombre,
             ApellidoPaterno = apellidoPaterno,
             ApellidoMaterno = apellidoMaterno,
@@ -46,6 +49,7 @@ public class ActorController : Controller
     {
         var grupos = await _grupoService.GetActoresAsync(new Model.Filtros.FiltroActor
         {
+            IdUsuario = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value),
             IdCategoria = idSubCategoria,
             Tipo = tipo,
             IdSubGrupo = idSubGrupo
@@ -81,6 +85,7 @@ public class ActorController : Controller
             }
         }
 
+        actor.IdUsuario = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value);
         var resultado = await _grupoService.AddActorAsync(actor);
 
         return Ok(resultado);

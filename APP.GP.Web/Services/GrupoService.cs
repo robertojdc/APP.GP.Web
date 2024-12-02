@@ -178,7 +178,7 @@ public class GrupoService
         if (filtro.Compromiso.HasValue)
             query.Add("Compromiso", filtro.Compromiso.Value.ToString());
 
-
+        query.Add("IdUsuario", filtro.IdUsuario.ToString());
 
         var queryString = string.Join("&", query.Select(kv => $"{kv.Key}={Uri.EscapeDataString(kv.Value)}"));
 

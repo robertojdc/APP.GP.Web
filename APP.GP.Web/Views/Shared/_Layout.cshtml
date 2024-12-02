@@ -22,34 +22,47 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="../Home/Tablero" title="Tablero de actores" class="nav-link">Tablero de actores</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="administracionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Administración
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="administracionDropdown">
-                            <li><a class="dropdown-item" href="../Actor/Select">Actores</a></li>
-                            <li><a class="dropdown-item" href="../Grupo/Index">Grupo</a></li>
-                            <li><a class="dropdown-item" href="../SubGrupo/Index">Subgrupo</a></li>
-                            <li><a class="dropdown-item" href="../Categoria/Index">Categoría</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="invitacionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Invitación
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="invitacionDropdown">
-                            <li><a class="dropdown-item" href="../Invitacion/Relation">Relacionar Invitados</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a href="../Eventos/Index" title="Eventos" class="nav-link">Eventos</a>
-                    </li>
+                    @if (User.FindFirst(System.Security.Claims.ClaimTypes.Sid)?.Value == "1")
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../Home/Tablero" title="Tablero de actores" class="nav-link">Tablero de actores</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="administracionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Administración
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="administracionDropdown">
+                                <li><a class="dropdown-item" href="../Actor/Select">Actores</a></li>
+                                <li><a class="dropdown-item" href="../Grupo/Index">Grupo</a></li>
+                                <li><a class="dropdown-item" href="../SubGrupo/Index">Subgrupo</a></li>
+                                <li><a class="dropdown-item" href="../Categoria/Index">Categoría</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="invitacionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Invitación
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="invitacionDropdown">
+                                <li><a class="dropdown-item" href="../Invitacion/Relation">Relacionar Invitados</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../Eventos/Index" title="Eventos" class="nav-link">Eventos</a>
+                        </li>
+
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a href="../Actor/Select" title="Invitados" class="nav-link">Invitados</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../Eventos/Asignacion" title="Eventos" class="nav-link">Eventos</a>
+                        </li>
+                    }
                     <li class="nav-item">
                         @Html.ActionLink("Cerrar sesión", "Logout", "Usuario", null, new { @class = "nav-link" })
                     </li>
@@ -62,7 +75,7 @@
             <a href="#" title="Consejo Nacional Morena" class="logo"></a>
         </div>
     </div>
-    <script src="~/js/app/layout.js"></script>
+    <script src="~/js/app/layout.js?v=1.0.1"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/kendo/js/kendo.all.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -103,6 +116,9 @@
                 }
         }
 
+        .swal-zindex-override {
+            z-index: 20000 !important; /* Asegúrate de que sea mayor al z-index de Kendo Window */
+        }
     </style>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

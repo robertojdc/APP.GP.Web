@@ -2,6 +2,7 @@
 using APP.GP.Web.Model.Filtros;
 using APP.GP.Web.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace APP.GP.Web.Controllers
 {
@@ -21,7 +22,7 @@ namespace APP.GP.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> BuscarInvitados(string nombre, string apellidoPaterno, string apellidoMaterno, 
+        public async Task<IActionResult> BuscarInvitados(string nombre, string apellidoPaterno, string apellidoMaterno,
             string telefono, string correoElectronico, int estatus, int descartado)
         {
             RegistroInvitacionRequest request = new RegistroInvitacionRequest()
@@ -43,6 +44,7 @@ namespace APP.GP.Web.Controllers
         {
             RelacionActorAutomaticoRequest request = new RelacionActorAutomaticoRequest()
             {
+                IdUsuario = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value),
                 Todos = todos,
                 Nombre = nombre,
                 Apellidos = apellidos,
@@ -84,12 +86,23 @@ namespace APP.GP.Web.Controllers
         [HttpGet("Invitacion/Validar/{p1}/{p2}")]
         public async Task<IActionResult> Validar(string p1, string p2)
         {
-            int idEscenario = Convert.ToInt32(Helper.Encriptacion.Desencriptar(p1));
-            int idActor = Convert.ToInt32(Helper.Encriptacion.Desencriptar(p2.Replace(" ", "+")));
+            int idEscenario = Convert.ToInt32(Helper.Encriptacion.Desencriptar(p1.Replace(" ", "+").Replace(".", "/")));
+            int idActor = Convert.ToInt32(Helper.Encriptacion.Desencriptar(p2.Replace(" ", "+").Replace(".", "/")));
             var detalle = await _registroInvitacionService.GetDetalleInvitacionBy(idEscenario, idActor);
 
             return View(detalle.Objeto);
         }
+
+        [HttpGet("Sendela/Validar/{p1}/{p2}")]
+        public async Task<IActionResult> Sendela(string p1, string p2)
+        {
+            int idEscenario = Convert.ToInt32(Helper.Encriptacion.Desencriptar(p1.Replace(" ", "+").Replace(".", "/")));
+            int idActor = Convert.ToInt32(Helper.Encriptacion.Desencriptar(p2.Replace(" ", "+").Replace(".", "/")));
+            var detalle = await _registroInvitacionService.GetDetalleInvitacionBy(idEscenario, idActor);
+
+            return View(detalle.Objeto);
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> DescartarInvitado(int idRegistroInvitacion)
