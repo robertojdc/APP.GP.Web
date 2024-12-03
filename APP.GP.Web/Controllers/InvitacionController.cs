@@ -94,11 +94,11 @@ namespace APP.GP.Web.Controllers
         }
 
         [HttpGet("Sendela/Validar/{p1}/{p2}")]
-        public async Task<IActionResult> Sendela(string p1, string p2)
+        public async Task<IActionResult> Sendela(int p1, int p2)
         {
-            int idEscenario = Convert.ToInt32(Helper.Encriptacion.Desencriptar(p1.Replace(" ", "+").Replace(".", "/")));
-            int idActor = Convert.ToInt32(Helper.Encriptacion.Desencriptar(p2.Replace(" ", "+").Replace(".", "/")));
-            var detalle = await _registroInvitacionService.GetDetalleInvitacionBy(idEscenario, idActor);
+            //int idEscenario = Convert.ToInt32(Helper.Encriptacion.Desencriptar(p1.Replace(" ", "+").Replace(".", "/")));
+            //int idActor = Convert.ToInt32(Helper.Encriptacion.Desencriptar(p2.Replace(" ", "+").Replace(".", "/")));
+            var detalle = await _registroInvitacionService.GetDetalleInvitacionBy(p1, p2);
 
             return View(detalle.Objeto);
         }

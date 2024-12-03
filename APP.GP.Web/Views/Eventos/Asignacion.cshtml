@@ -521,7 +521,8 @@
                     type: 'POST',
                     data: {
                         idInvitacion: $("#hidIdInvitacion").val(),
-                        cuerpo: boletoHtml
+                        cuerpo: boletoHtml,
+                        imagen: imagenBase64
                     },
                     success: function (data) {
                         ocultarLoading();

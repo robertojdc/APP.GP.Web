@@ -49,9 +49,9 @@ public class EventoService
     }
 
 
-    public async Task<int> EnviarInvitacionCorreo(int idInvitacion, string cuerpo)
+    public async Task<int> EnviarInvitacionCorreo(int idInvitacion, string cuerpo, string imagen)
     {
-        var response = await _httpClient.PostAsJsonAsync("/Eventos/EnviarInvitacionCorreo", new Invitacion { IdInvitacion = idInvitacion, CuerpoCorreo = cuerpo });
+        var response = await _httpClient.PostAsJsonAsync("/Eventos/EnviarInvitacionCorreo", new Invitacion { IdInvitacion = idInvitacion, CuerpoCorreo = cuerpo, CodigoQR = imagen });
         return response.StatusCode == System.Net.HttpStatusCode.OK ? 1 : 0;
     }
 

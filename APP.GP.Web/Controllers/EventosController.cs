@@ -114,20 +114,21 @@ public class EventosController : Controller
 
     public async Task<IActionResult> GenerarUrl(string p1, string p2)
     {
-        string idEscenario = Helper.Encriptacion.Encriptar(p1).Replace(" ", "+").Replace(".", "/");
-        string idActor = Helper.Encriptacion.Encriptar(p2).Replace(" ", "+").Replace(".", "/");
+        string idEscenario = Helper.Encriptacion.Encriptar(p1).Replace(" ", "+").Replace("/", ".");
+        string idActor = Helper.Encriptacion.Encriptar(p2).Replace(" ", "+").Replace("/", ".");
 
         string url = _configuration.GetValue<string>("UrlValidar");
         if (Convert.ToInt32(User.FindFirst(ClaimTypes.Sid)?.Value) == 2)
         {
             url = _configuration.GetValue<string>("UrlValidarSendela");
+            return Json($"{url}/{p2}/{p1}");
         }
         return Json($"{url}/{idActor}/{idEscenario}");
     }
 
-    public async Task<IActionResult> EnviarInvitacionCorreo(int idInvitacion, string cuerpo)
+    public async Task<IActionResult> EnviarInvitacionCorreo(int idInvitacion, string cuerpo, string imagen)
     {
-        var result = await _eventoService.EnviarInvitacionCorreo(idInvitacion, cuerpo);
+        var result = await _eventoService.EnviarInvitacionCorreo(idInvitacion, cuerpo, imagen);
 
         return Ok(result);
     }
