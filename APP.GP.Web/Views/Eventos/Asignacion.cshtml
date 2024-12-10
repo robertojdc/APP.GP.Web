@@ -19,6 +19,7 @@
                 </div>
                 <div class="col-md-4" id="btnDescargar" style="display:none; margin-top:48px;text-align:right;">
                     <button type="button" class="btn btn-success" onclick="descargarReporteExcel(event)"><span style="margin-top:-3px;" class="k-icon k-font-icon k-i-excel k-icon-32"></span>&nbsp;Descargar</button>
+                    <button type="button" class="btn btn-success" onclick="obtenerInvitados()">Descargar invitaciones</button>
                 </div>
                 <input type="hidden" id="hidEvento" />
                 <input type="hidden" id="hidEscenario" />
@@ -32,7 +33,7 @@
 
 <div id="divEscenario_1"></div>
 <div id="divEscenario_2"></div>
-<hr/>
+<hr />
 <div id="windowInstitucional" style="border: 2px solid #8B0000; padding: 20px; background-color: #FFFFFF; display:none; min-height:500px;">
     <label id="lblUbicacion" style="font-size:14pt;"></label>
     <table id="grid" class="display" style="width:100%;">
@@ -63,11 +64,12 @@
     <div id="boletoContent">
         <input type="hidden" id="hidIdInvitacion" />
 
-        <div id="divInfo" style="text-align:center;">
-            <label id="lblActor" style="font-weight:700; font-size:14pt;"></label><br /><br /><br /><br />
-            Fila:&nbsp;<label id="lblFila"></label>&nbsp;&nbsp;&nbsp;Asiento:&nbsp;<label id="lblAsiento"></label>
-        </div>
+        <div id="divInfo" style="text-align:center; font-size:14pt;">
+            <label id="lblActor" style="font-weight:700; font-size:14pt;"></label><br /><br /><br />
+            <div id="lblUbicacionEsc"> Fila:&nbsp;<b><label id="lblFila"></label></b>&nbsp;&nbsp;&nbsp;Asiento:&nbsp;<b><label id="lblAsiento"></label></b></div>
 
+        </div>
+        <div id="divPrensa" style="text-align:center;color: #000;"><label id="lblCArgoActual"></label></div>
         <div id="qrCode" class="qr-container" style="margin-top:45px;"></div>
     </div>
     <div class="row mb-3 buttons-container">
@@ -117,7 +119,7 @@
                 $cuadro.attr('data-actor-id', idActor);
                 $cuadro.kendoTooltip({
                     //content: kendo.template($("#templateTooltip").html()), // disposicion.nombreActor + ' ' + disposicion.apellidoPaterno + ' ' + disposicion.apellidoMaterno,
-                    content:  disposicion.nombreActor + ' ' + disposicion.apellidoPaterno + ' ' + disposicion.apellidoMaterno + '<br/>Lugar asignado: ' + fila + ' - ' + columna ,
+                    content: disposicion.nombreActor + ' ' + disposicion.apellidoPaterno + ' ' + disposicion.apellidoMaterno + '<br/>Lugar asignado: ' + fila + ' - ' + columna,
                     position: "top",
                     animation: {
                         open: {
@@ -186,6 +188,12 @@
                             $("#divEscenario_1").hide();
                             $("#divEscenario_2").show();
                             $('#divEscenario_2').load('/escenarios/coctel.html?' + new Date().getTime(), function () {
+                                obtenerDisposicionesEscenario(idEscenario);
+                            });
+                        } else if (idEscenario == 6 || idEscenario == 7) {
+                            $("#divEscenario_1").hide();
+                            $("#divEscenario_2").show();
+                            $('#divEscenario_2').load('/escenarios/prensa.html?' + new Date().getTime(), function () {
                                 obtenerDisposicionesEscenario(idEscenario);
                             });
                         }
@@ -360,38 +368,38 @@
                 const windowInstance = $("#detalleActorWindow").data("kendoWindow");
 
                 const contenido = `
-                            <div class="container p-4 border rounded bg-light shadow-sm">
-                                <div class="row mb-4">
-                                    <div class="col-12 col-md-8 d-flex align-items-center">
-                                        <div>
-                                            <h3 class="fw-bold">${actor.nombreActor} ${actor.apellidoPaterno} ${actor.apellidoMaterno}</h3>
-                                            <p class="text-muted">Cargo actual</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mb-3" style="font-size:14pt;">
-                                    <div class="col-4 d-flex align-items-center">
-                                        <label>Sección:</label>&nbsp;&nbsp;<label class="fw-bold">GENERAL</label>
-                                    </div>
-                                    <div class="col-4 d-flex align-items-center">
-                                        <label>Fila:</label>&nbsp;&nbsp;<label class="fw-bold">${actor.fila}</label>
-                                    </div>
-                                    <div class="col-4 d-flex align-items-center">
-                                        <label>Asiento:</label>&nbsp;&nbsp;<label class="fw-bold">${actor.columna}</label>
-                                    </div>
-                                </div>
-                                <br/>
-                                <div class="row">
-                                    <div class="col-2">  </div>
-                                    <div class="col-4">
-                                        <input type="button" class="btn btn-outline-secondary" onclick="GenerarInvitacion(${actor.idActor},${actor.idDisposicion})" value="Generar invitación" id="btnInvite" />
-                                    </div>
-                                    <div class="col-4">
-                                        <input type="button" class="btn btn-danger me-2" onclick="ModificarAsignacion(${actor.idActor})" value="Modificar Asignación" id="btnInvite" />
-                                    </div>
-                                </div>
-                            </div>
-                        `;
+                                                                            <div class="container p-4 border rounded bg-light shadow-sm">
+                                                                                <div class="row mb-4">
+                                                                                    <div class="col-12 col-md-8 d-flex align-items-center">
+                                                                                        <div>
+                                                                                            <h3 class="fw-bold">${actor.nombreActor} ${actor.apellidoPaterno} ${actor.apellidoMaterno}</h3>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row mb-3" style="font-size:14pt;">
+                                                                                    <div class="col-4 d-flex align-items-center">
+                                                                                        <label>Sección:</label>&nbsp;&nbsp;<label class="fw-bold">GENERAL</label>
+                                                                                    </div>
+                                                                                    <div class="col-4 d-flex align-items-center">
+                                                                                        <label>Fila:</label>&nbsp;&nbsp;<label class="fw-bold">${actor.fila}</label>
+                                                                                    </div>
+                                                                                    <div class="col-4 d-flex align-items-center">
+                                                                                        <label>Asiento:</label>&nbsp;&nbsp;<label class="fw-bold">${actor.columna}</label>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <br/>
+                                                                                <div class="row">
+                                                                                    <div class="col-2">  </div>
+                                                                                    <div class="col-4">
+                                                                                        <input type="button" class="btn btn-outline-secondary" onclick="GenerarInvitacion(${actor.idActor},${actor.idDisposicion})" value="Generar invitación" id="btnInvite" />
+                                                                                    </div>
+                                                                                    <div class="col-4">
+                                                                                        <input type="button" class="btn btn-danger me-2" onclick="ModificarAsignacion(${actor.idActor})" value="Modificar Asignación" id="btnInvite" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        `;
                 windowInstance.content(contenido);
                 windowInstance.center().open();
             },
@@ -400,6 +408,212 @@
             }
         });
     }
+
+    function obtenerInvitados() {
+        obtenerDatosEscenariosById();
+        $.ajax({
+            url: '/Eventos/GetDisposicionesForEscenario',
+            type: 'POST',
+            data: { idEvento: $("#ddlGrupo").val(), idEscenario: $("#subgrupo").val() },
+            success: function (data) {
+                const idActors = data.map(item => item.idActor);
+                invitacionesAutomaticas(idActors);
+            },
+            error: function (error) {
+                console.error('Error al cargar las disposiciones:', error);
+            }
+        });
+    }
+
+    async function invitacionesAutomaticas(idsUsuario) {
+        // $("#boletoContent").css("background-image", "url('/img/invite/SendelaC.jpg')");
+        // $("#divInfo").css({
+        //     "margin-top": "300px",
+        //     "color": "#000"
+        // });
+        // $("#divPrensa").hide();
+        // $("#lblUbicacionEsc").show();
+
+        if ($("#subgrupo").val() == 4) {
+            $("#boletoContent").css("background-image", "url('/img/invite/SendelaI.jpg')");
+            $("#divInfo").css({
+                "margin-top": "300px",
+                "color": "#FFF"
+            });
+            $("#lblUbicacionEsc").show();
+            $("#divPrensa").hide();
+        }
+        else if ($("#subgrupo").val() == 5) {
+            $("#boletoContent").css("background-image", "url('/img/invite/SendelaC.jpg')");
+            $("#divInfo").css({
+                "margin-top": "300px",
+                "color": "#000"
+            });
+            $("#divPrensa").hide();
+            $("#lblUbicacionEsc").show();
+        } else if ($("#subgrupo").val() == 6 || $("#subgrupo").val() == 7) {
+            $("#boletoContent").css("background-image", "url('/img/invite/prensa.jpg')");
+            $("#divInfo").css({
+                "margin-top": "300px",
+                "color": "#000"
+            });
+            $("#lblUbicacionEsc").hide();
+            $("#divPrensa").show();
+        }
+
+        for (const idUsuario of idsUsuario) {
+            try {
+                await GenerarInvitacionTest(idUsuario, $("#subgrupo").val());
+                await delay(1000); // Espera de 4 segundos
+            } catch (error) {
+                console.error(`Error procesando el usuario ${idUsuario}:`, error);
+            }
+        }
+        console.log("Todas las invitaciones han sido generadas.");
+    };
+
+    function delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function GenerarInvitacionTest(idActor, idDisposicion) {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: '/Eventos/GenerarUrl',
+                type: 'POST',
+                data: {
+                    p1: idActor,
+                    p2: $("#subgrupo").val(),
+                },
+                success: function (data) {
+                    $("#qrCode").empty();
+
+                    $("#qrCode").kendoQRCode({
+                        value: data,
+                        size: 150,
+                        color: "#000000",
+                        background: "#ffffff"
+                    });
+
+                    $.ajax({
+                        url: '/Actor/GetActorId',
+                        type: 'GET',
+                        data: { idActor: idActor },
+                        success: async function (response) {
+                            $("#lblActor").text(response.nombre + " " + response.apellidoPaterno + " " + response.apellidoMaterno);
+                            $("#lblCArgoActual").text(response.cargoActual);
+                            try {
+                                const qrBase64 = await obtenerQrBase64();
+                                $.ajax({
+                                    url: '/Eventos/AddInvitacion',
+                                    type: 'POST',
+                                    data: {
+                                        idDisposicion: idDisposicion,
+                                        codigoQr: qrBase64
+                                    },
+                                    beforeSend: function () {
+                                        mostrarLoading();
+                                    },
+                                    success: async function (result) {
+                                        $("#hidIdInvitacion").val(result);
+                                        $("#titleBoleto").text($("#hidEscenario").val());
+                                        $("#lblLugar").html($("#hidLugar").val());
+                                        if ($("#subgrupo").val() == 6 || $("#subgrupo").val() == 7) {
+                                            $("#lblFila").text(" - ");
+                                            $("#lblAsiento").text(" - ");
+                                        } else {
+                                            $("#lblFila").text(response.lugar);
+                                            $("#lblAsiento").text(response.asiento);
+                                        }
+                                        $("#lblSeccion").text('');
+                                        var detalleModal = $("#boletoModal").kendoWindow({
+                                            title: "Boleto",
+                                            visible: false,
+                                            modal: true,
+                                            width: "390px",
+                                            height: "auto",
+                                            actions: ["Close"]
+                                        }).data("kendoWindow");
+                                        detalleModal.center().open();
+
+                                        // Retraso antes de descargar la imagen
+                                        await descargarKendoWindowComoImagen("#boletoContent", response.asiento + response.lugar + ".png");
+                                        $("#boletoModal").data("kendoWindow").close();
+                                        resolve();
+                                    },
+                                    complete: function () {
+                                        ocultarLoading();
+                                    },
+                                    error: function (error) {
+                                        console.error('Error al asignar el actor:', error);
+                                        reject(error); // ¡Promesa rechazada!
+                                    }
+                                });
+                            } catch (error) {
+                                console.error("Error al convertir el QR a Base64:", error);
+                                reject(error); // ¡Promesa rechazada!
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error al obtener los detalles del actor:', error);
+                            reject(error); // ¡Promesa rechazada!
+                        }
+                    });
+                },
+                error: function (error) {
+                    console.error('Error al asignar el actor:', error);
+                    reject(error); // ¡Promesa rechazada!
+                }
+            });
+        });
+    }
+
+
+    async function descargarKendoWindowComoImagen(selector, nombreArchivo) {
+        try {
+            // Retraso de 500 ms para asegurarte de que el contenido esté renderizado completamente
+            await delay(500);
+
+            kendo.drawing.drawDOM($(selector))
+                .then(function (group) {
+                    return kendo.drawing.exportImage(group);
+                })
+                .then(function (data) {
+                    const a = document.createElement("a");
+                    a.href = data;
+                    a.download = nombreArchivo;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                })
+                .catch(function (error) {
+                    console.error("Error al descargar la imagen:", error);
+                });
+        } catch (error) {
+            console.error("Error en descargarKendoWindowComoImagen:", error);
+        }
+    }
+    // function descargarKendoWindowComoImagen(selector, nombreArchivo) {
+    //     const container = $(selector);
+    //     kendo.drawing.drawDOM(container, {
+    //         paperSize: "auto",
+    //         margin: 0,
+    //         scale: 1
+    //     })
+    //         .then(function (group) {
+    //             return kendo.drawing.exportImage(group);
+    //         })
+    //         .then(function (dataURL) {
+    //             const link = document.createElement("a");
+    //             link.href = dataURL;
+    //             link.download = nombreArchivo || "contenido.png";
+    //             link.click();
+    //             cerratVentana();
+    //         })
+    //         .catch(function (error) {
+    //             console.error("Error al capturar el contenido del KendoWindow:", error);
+    //         });
+    // }
 
     // Funciones relacionadas con invitaciones
     function GenerarInvitacion(idActor, idDisposicion) {
@@ -410,13 +624,25 @@
                 "margin-top": "300px",
                 "color": "#FFF"
             });
+            $("#lblUbicacionEsc").show();
+            $("#divPrensa").hide();
         }
-        else {
+        else if ($("#subgrupo").val() == 5) {
             $("#boletoContent").css("background-image", "url('/img/invite/SendelaC.jpg')");
             $("#divInfo").css({
                 "margin-top": "300px",
                 "color": "#000"
             });
+            $("#divPrensa").hide();
+            $("#lblUbicacionEsc").show();
+        } else if ($("#subgrupo").val() == 6 || $("#subgrupo").val() == 7) {
+            $("#boletoContent").css("background-image", "url('/img/invite/prensa.jpg')");
+            $("#divInfo").css({
+                "margin-top": "300px",
+                "color": "#000"
+            });
+            $("#lblUbicacionEsc").hide();
+            $("#divPrensa").show();
         }
         $.ajax({
             url: '/Eventos/GenerarUrl',
@@ -441,7 +667,8 @@
                     data: { idActor: idActor },
                     success: async function (response) {
                         $("#lblActor").text(response.nombre + " " + response.apellidoPaterno + " " + response.apellidoMaterno);
-
+                        //$("#lblCargoActuak").text(response.cargoActual);
+                        $("#lblCArgoActual").text(response.cargoActual);
                         try {
                             const qrBase64 = await obtenerQrBase64();
                             $.ajax({
@@ -459,11 +686,16 @@
                                         $("#hidIdInvitacion").val(result);
                                         $("#titleBoleto").text($("#hidEscenario").val());
                                         $("#lblLugar").html($("#hidLugar").val());
-                                        $("#lblFila").text(obtenerFilaSeleccionada());
-                                        $("#lblAsiento").text(obtenerColumnaSeleccionada());
+                                        if ($("#subgrupo").val() == 6 || $("#subgrupo").val() == 7) {
+                                            $("#lblFila").text(" - ");
+                                            $("#lblAsiento").text(" - ");
+                                        } else {
+                                            $("#lblFila").text(obtenerFilaSeleccionada());
+                                            $("#lblAsiento").text(obtenerColumnaSeleccionada());
+                                        }
                                         $("#lblSeccion").text(obtenerSeccionSeleccionada());
                                         var detalleModal = $("#boletoModal").kendoWindow({
-                                            title: "Boleto", 
+                                            title: "Boleto",
                                             visible: false,
                                             modal: true,
                                             width: "390px",
@@ -510,11 +742,11 @@
         capturarKendoWindowEnBase64("#boletoContent")
             .then((imagenBase64) => {
                 const boletoHtml = `
-                <div style="text-align: center;">
-                    <h3>Invitación</h3>
-                    <img src="${imagenBase64}" alt="Vista previa de la invitación" style="max-width: 100%; border: 1px solid #ccc;" />
-                </div>
-            `;
+                                                                <div style="text-align: center;">
+                                                                    <h3>Invitación</h3>
+                                                                    <img src="${imagenBase64}" alt="Vista previa de la invitación" style="max-width: 100%; border: 1px solid #ccc;" />
+                                                                </div>
+                                                            `;
 
                 $.ajax({
                     url: '/Eventos/EnviarInvitacionCorreo',
@@ -595,27 +827,7 @@
             });
     }
 
-    function descargarKendoWindowComoImagen(selector, nombreArchivo) {
-        const container = $(selector);
 
-        kendo.drawing.drawDOM(container, {
-            paperSize: "auto",
-            margin: 0,
-            scale: 1
-        })
-            .then(function (group) {
-                return kendo.drawing.exportImage(group);
-            })
-            .then(function (dataURL) {
-                const link = document.createElement("a");
-                link.href = dataURL;
-                link.download = nombreArchivo || "contenido.png";
-                link.click();
-            })
-            .catch(function (error) {
-                console.error("Error al capturar el contenido del KendoWindow:", error);
-            });
-    }
 
     function descargarReporteExcel(event) {
         if (event) event.preventDefault();
@@ -879,12 +1091,12 @@
         gap: 5px;
         margin: auto;
         margin-top: 10px;
-        overflow-x: auto; 
+        overflow-x: auto;
         width: 95%;
     }
 
     .styled-button {
-        flex: 1 1 auto; 
+        flex: 1 1 auto;
         min-width: 50px;
         padding: 0;
         border: none;
@@ -938,7 +1150,7 @@
     }
 
     .k-window-titlebar {
-        height: 30px; 
+        height: 30px;
         font-size: 14px;
         padding: 0 10px;
     }

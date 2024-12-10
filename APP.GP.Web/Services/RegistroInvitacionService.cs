@@ -1,5 +1,6 @@
 ﻿using APP.GP.Web.Model;
 using APP.GP.Web.Model.DTO;
+using APP.GP.Web.Model.Eventos;
 using APP.GP.Web.Model.Filtros;
 
 namespace APP.GP.Web.Services
@@ -15,7 +16,7 @@ namespace APP.GP.Web.Services
 
         public async Task<List<RegistroInvitacion>> GetRegistroInvitacion(RegistroInvitacionRequest request)
         {
-            var response = 
+            var response =
                 await _httpClient.GetFromJsonAsync<List<RegistroInvitacion>>(
                     $"/RegistroInvitacion/GetRegistroInvitacion?Nombre={request.Nombre}&ApellidoPaterno={request.ApellidoPaterno}&ApellidoMaterno={request.ApellidoMaterno}&TelefonoPersonal={request.TelefonoPersonal}&CorreoElectronico={request.CorreoElectronico}&Vinculado={request.Vinculado}&Descartado={request.Descartado}");
             return response;
@@ -66,6 +67,12 @@ namespace APP.GP.Web.Services
         public async Task<Resultado<DetalleValidarInvitacionDto>> GetDetalleInvitacionBy(int idEscenario, int idActor)
         {
             var response = await _httpClient.GetFromJsonAsync<Resultado<DetalleValidarInvitacionDto>>($"/Invitacion/GetInvitacionDe/{idEscenario}/{idActor}");
+            return response;
+        }
+
+        public async Task<Resultado<InvitacionScreen>> ObtenerNuevosAccesos(int idDisposicion)
+        {
+            var response = await _httpClient.GetFromJsonAsync<Resultado<InvitacionScreen>>($"/Invitacion/ObtenerNuevosAccesos/{idDisposicion}");
             return response;
         }
 

@@ -1,4 +1,5 @@
 ﻿using APP.GP.Web.Model;
+using APP.GP.Web.Model.DTO;
 using APP.GP.Web.Model.Filtros;
 using APP.GP.Web.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -98,9 +99,16 @@ namespace APP.GP.Web.Controllers
         {
             //int idEscenario = Convert.ToInt32(Helper.Encriptacion.Desencriptar(p1.Replace(" ", "+").Replace(".", "/")));
             //int idActor = Convert.ToInt32(Helper.Encriptacion.Desencriptar(p2.Replace(" ", "+").Replace(".", "/")));
-            var detalle = await _registroInvitacionService.GetDetalleInvitacionBy(p1, p2);
 
-            return View(detalle.Objeto);
+            if (p2 > 0)
+            {
+                var detalle = await _registroInvitacionService.GetDetalleInvitacionBy(p1, p2);
+                return View(detalle.Objeto);
+            }
+            else
+            {
+                return View(new DetalleValidarInvitacionDto { NombreEvento = string.Empty, Acceso = false, CargoActual = "PRENSA", Nombre = string.Empty, DescripcionEscenario = string.Empty, Fila = string.Empty, Columna = 0, FechaEvento = Convert.ToDateTime("2024-12-05 19:00") });
+            }
         }
 
 
@@ -147,6 +155,16 @@ namespace APP.GP.Web.Controllers
 
             return File(resultado.Archivo, "application/octet-stream", "Invitados.xlsx");
         }
+        public IActionResult Accesos()
+        {
+            return View();
+        }
 
+        [HttpGet]
+        public async Task<IActionResult> ObtenerNuevos(int idEscenario)
+        {
+            var detalle = await _registroInvitacionService.ObtenerNuevosAccesos(idEscenario);
+            return Json(detalle.Lista);
+        }
     }
 }

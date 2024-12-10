@@ -1,0 +1,100 @@
+﻿<div class="container">
+    <div id="datos-container"></div>
+    <div class="row">
+        <div class="col-12">
+            &nbsp;
+        </div>
+        <div class="row">
+            <div class="col-2"></div>
+            <div id="divDerecho" class="col-2" style="background-color:mediumpurple; width:64px; height:384px; text-align: center;">
+                Bienvenid@@
+                <label id="lblNombre"></label><br/>
+                <label id="lblFila"></label><br />
+                <label id="lblAsiento"></label>
+            </div>
+            <div class="col-4">
+            </div>
+            <div id="divIzquierdo" class="col-2" style="background-color:palevioletred; width:64px; height:384px;">
+                Bienvenid@@
+                <label id="lbl2Nombre"></label><br />
+                <label id="lbl2Fila"></label><br />
+                <label id="lbl2Asiento"></label>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {        
+        $("header").hide();
+
+
+    });
+</script>
+
+<script>
+    let colaRegistros = [];
+    let idsMostrados = [];
+    let intervalo;
+
+    async function obtenerNuevosDatos() {
+        try {
+            const idEscenario = 6; // Define el parámetro
+            const response = await fetch(`/Invitacion/ObtenerNuevos?idEscenario=${idEscenario}`, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' } // Este encabezado no es estrictamente necesario para GET
+            });
+
+            if (response.ok) {
+                const nuevosDatos = await response.json();
+                if (nuevosDatos.length > 0) {
+                    colaRegistros = colaRegistros.concat(nuevosDatos);
+                    console.log("Datos obtenidos:", nuevosDatos);
+                } else {
+                    console.log("No hay datos nuevos disponibles.");
+                }
+            } else {
+                console.error('Error al obtener datos del servidor.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+
+    function mostrarSiguienteRegistro() {
+        if (colaRegistros.length > 0) {
+            const registro = colaRegistros.shift(); // Extrae el primer registro de la cola
+            idsMostrados.push(registro.id); // Añade el ID a los mostrados
+            const container = document.getElementById('datos-container');
+            $("#lblNombre").text(registro.nombre);
+            $("#lblFila").text("Fila: " + registro.fila);
+            $("#lblAsiento").text("Asiento: " + registro.asiento);
+            // container.innerHTML = `
+            //             <div>
+            //                 <p><strong>Nombre:</strong> ${registro.nombre}</p>
+            //                 <p><strong>Fila:</strong> ${registro.fila}</p>
+            //                 <p><strong>Asiento:</strong> ${registro.asiento}</p>
+            //             </div>
+            //       `;
+        } else {
+            clearInterval(intervalo); // Detén el intervalo si no hay más registros
+            obtenerNuevosDatos().then(() => {
+                if (colaRegistros.length > 0) {
+                    intervalo = setInterval(mostrarSiguienteRegistro, 5000);
+                }
+            });
+        }
+    }
+
+    // Inicia la primera carga de datos y configura el intervalo
+    obtenerNuevosDatos().then(() => {
+        intervalo = setInterval(mostrarSiguienteRegistro, 5000);
+    });
+</script>
+
+<style>
+    .container {
+        margin-top: 20px;
+        font-size: 10px;
+    }
+</style>
