@@ -4,6 +4,7 @@
     {
         public int IdDisposicion { get; set; }
 
+        public string? Zona { get; set; }
         public string Fila { get; set; }
 
         public int Columna { get; set; }

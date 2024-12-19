@@ -1,5 +1,4 @@
 ﻿using APP.GP.Web.Model;
-using APP.GP.Web.Model.DTO;
 using APP.GP.Web.Model.Filtros;
 using APP.GP.Web.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -85,30 +84,13 @@ namespace APP.GP.Web.Controllers
         }
 
         [HttpGet("Invitacion/Validar/{p1}/{p2}")]
-        public async Task<IActionResult> Validar(string p1, string p2)
-        {
-            int idEscenario = Convert.ToInt32(Helper.Encriptacion.Desencriptar(p1.Replace(" ", "+").Replace(".", "/")));
-            int idActor = Convert.ToInt32(Helper.Encriptacion.Desencriptar(p2.Replace(" ", "+").Replace(".", "/")));
-            var detalle = await _registroInvitacionService.GetDetalleInvitacionBy(idEscenario, idActor);
-
-            return View(detalle.Objeto);
-        }
-
-        [HttpGet("Sendela/Validar/{p1}/{p2}")]
-        public async Task<IActionResult> Sendela(int p1, int p2)
+        public async Task<IActionResult> Validar(int p1, int p2)
         {
             //int idEscenario = Convert.ToInt32(Helper.Encriptacion.Desencriptar(p1.Replace(" ", "+").Replace(".", "/")));
             //int idActor = Convert.ToInt32(Helper.Encriptacion.Desencriptar(p2.Replace(" ", "+").Replace(".", "/")));
+            var detalle = await _registroInvitacionService.GetDetalleInvitacionBy(p1, p2);
 
-            if (p2 > 0)
-            {
-                var detalle = await _registroInvitacionService.GetDetalleInvitacionBy(p1, p2);
-                return View(detalle.Objeto);
-            }
-            else
-            {
-                return View(new DetalleValidarInvitacionDto { NombreEvento = string.Empty, Acceso = false, CargoActual = "PRENSA", Nombre = string.Empty, DescripcionEscenario = string.Empty, Fila = string.Empty, Columna = 0, FechaEvento = Convert.ToDateTime("2024-12-05 19:00") });
-            }
+            return View(detalle.Objeto);
         }
 
 

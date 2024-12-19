@@ -426,40 +426,6 @@
     }
 
     async function invitacionesAutomaticas(idsUsuario) {
-        // $("#boletoContent").css("background-image", "url('/img/invite/SendelaC.jpg')");
-        // $("#divInfo").css({
-        //     "margin-top": "300px",
-        //     "color": "#000"
-        // });
-        // $("#divPrensa").hide();
-        // $("#lblUbicacionEsc").show();
-
-        if ($("#subgrupo").val() == 4) {
-            $("#boletoContent").css("background-image", "url('/img/invite/SendelaI.jpg')");
-            $("#divInfo").css({
-                "margin-top": "300px",
-                "color": "#FFF"
-            });
-            $("#lblUbicacionEsc").show();
-            $("#divPrensa").hide();
-        }
-        else if ($("#subgrupo").val() == 5) {
-            $("#boletoContent").css("background-image", "url('/img/invite/SendelaC.jpg')");
-            $("#divInfo").css({
-                "margin-top": "300px",
-                "color": "#000"
-            });
-            $("#divPrensa").hide();
-            $("#lblUbicacionEsc").show();
-        } else if ($("#subgrupo").val() == 6 || $("#subgrupo").val() == 7) {
-            $("#boletoContent").css("background-image", "url('/img/invite/prensa.jpg')");
-            $("#divInfo").css({
-                "margin-top": "300px",
-                "color": "#000"
-            });
-            $("#lblUbicacionEsc").hide();
-            $("#divPrensa").show();
-        }
 
         for (const idUsuario of idsUsuario) {
             try {

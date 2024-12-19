@@ -12,9 +12,9 @@ public class EventoService
         _httpClient = httpClient;
     }
 
-    public async Task<List<Disposicion>> GetDisposicionesForEscenario(int idEvento, int idEscenatio)
+    public async Task<List<Disposicion>> GetDisposicionesForEscenario(int idEvento, int idEscenatio, int marcar)
     {
-        return await _httpClient.GetFromJsonAsync<List<Disposicion>>($"/Eventos/GetDisposicionesForEscenario/{idEvento}/{idEscenatio}");
+        return await _httpClient.GetFromJsonAsync<List<Disposicion>>($"/Eventos/GetDisposicionesForEscenario/{idEvento}/{idEscenatio}/{marcar}");
     }
 
     public async Task<Disposicion> GetDetalleAsignacion(int idActor, int idEscenario)
@@ -40,6 +40,12 @@ public class EventoService
     public async Task<Resultado> AddDisposicion(Disposicion request)
     {
         var response = await _httpClient.PostAsJsonAsync("/Eventos/AddDisposicion", request);
+        return await response.Content.ReadFromJsonAsync<Resultado>();
+    }
+
+    public async Task<Resultado> AddDisposiciones(ActoresRequest request)
+    {
+        var response = await _httpClient.PostAsJsonAsync("/Actor/InsActorPet", request);
         return await response.Content.ReadFromJsonAsync<Resultado>();
     }
     public async Task<int> AddInvitacion(Invitacion request)

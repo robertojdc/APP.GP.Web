@@ -23,9 +23,22 @@ namespace APP.GP.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Place()
+        [AllowAnonymous]
+        public IActionResult Politicas()
         {
             return View(); // Solo usuarios autenticados pueden acceder
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Condiciones()
+        {
+            return View(); // Solo usuarios autenticados pueden acceder
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Eliminacion()
+        {
+            return View();
         }
 
         [HttpGet]

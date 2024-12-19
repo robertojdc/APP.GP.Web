@@ -1,145 +1,100 @@
-﻿@model APP.GP.Web.Model.DTO.DetalleValidarInvitacionDto
-
-@{
+﻿@{
     ViewData["Title"] = "Validar Invitación";
     Layout = null;
 }
 
-@if (Model.Acceso)
-{
-    <div class="row">
-        <div class="col-1"></div>
-        <div class="col-10">
-            <div class="card shadow-sm mb-4">
-                <div class="card-header text-bg-dark text-center" style="min-height:80vh">
-                    <div class="row">
-                        <div class="col-12">
-                            <h3 class="mb-0">INVITACIÓN YA INGRESADA</h3>
-                        </div>
-                    </div>
-                    <div class="row">&nbsp;</div>
-                    <div class="row">
-                        <div class="col-12">
-                            <img src="data:image/png;base64,@Model.Fotografia" class="rounded-circle img-fluid mb-3" alt="Foto del actor político" style="width: 150px; height: 150px; object-fit: cover;">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <h3>@Model.Nombre @Model.ApellidoPaterno @Model.ApellidoMaterno</h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <h4>@Model.CargoActual</h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <label><b>Evento:</b> @Model.NombreEvento</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <label><b>Descripción del Evento:</b> @Model.DescripcionEvento</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <label><b>Fecha del Evento:</b> @Model.FechaEvento.ToString("dd/MM/yyyy HH:mm") hrs</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <label><b>Escenario:</b> @Model.NombreEscenario</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <label><b>Fila:</b> @Model.Fila</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <label><b>Asiento:</b> @Model.Columna</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div style="background-color: var(--bs-danger-bg-subtle); color: black; font-weight: bold;">
-                                <p>La invitación ya fue escaneada el @Model.FechaAcceso.Value.ToString("dd/MM/yyyy HH:mm") hrs</p>
-                            </div>
-                        </div>
-                    </div>
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh; font-size: 150%;">
+    @if (Model.Acceso)
+    {
+        <div class="card shadow-sm w-100" style="max-width: 600px;">
+            <div class="card-header text-bg-dark text-center p-4">
+                <h3 class="mb-4">INVITACIÓN YA INGRESADA</h3>
+                <h3 class="fw-bold">@Model.Nombre @Model.ApellidoPaterno @Model.ApellidoMaterno</h3>
+                <h4 class="text-bg-dark mb-3">@Model.CargoActual</h4>
+
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <th class="text-end">Evento:</th>
+                                <td>@Model.NombreEvento</td>
+                            </tr>
+                            <tr>
+                                <th class="text-end">Descripción del Evento:</th>
+                                <td>@Model.DescripcionEvento</td>
+                            </tr>
+                            <tr>
+                                <th class="text-end">Fecha del Evento:</th>
+                                <td>@Model.FechaEvento.ToString("dd/MM/yyyy HH:mm") hrs</td>
+                            </tr>
+                            <tr>
+                                <th class="text-end">Zona:</th>
+                                <td>@Model.Zona</td>
+                            </tr>
+                            <tr>
+                                <th class="text-end">Fila:</th>
+                                <td>@Model.Fila</td>
+                            </tr>
+                            <tr>
+                                <th class="text-end">Asiento:</th>
+                                <td>@Model.Columna</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="alert alert-danger mt-4 fw-bold">
+                    La invitación ya fue escaneada el @Model.FechaAcceso.ToString("dd/MM/yyyy HH:mm") hrs
                 </div>
             </div>
         </div>
-        <div class="col-1"></div>
-    </div>
-}
-else
-{
-    <div class="row">
-        <div class="col-1"></div>
-        <div class="col-10">
-            <div class="card shadow-sm mb-4">
-                <div class="card-header text-white text-center" style="min-height:80vh">
-                    <div class="row">
-                        <div class="col-12">
-                            <h3 class="mb-0">INVITACIÓN VALIDA</h3>
-                        </div>
-                    </div>
-                    <div class="row">&nbsp;</div>
-                    <div class="row">
-                        <div class="col-12">
-                            <img src="data:image/png;base64,@Model.Fotografia" class="rounded-circle img-fluid mb-3" alt="Foto del actor político" style="width: 150px; height: 150px; object-fit: cover;">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <h3>@Model.Nombre @Model.ApellidoPaterno @Model.ApellidoMaterno</h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <h4>@Model.CargoActual</h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <label><b>Evento:</b> @Model.NombreEvento</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <label><b>Descripción del Evento:</b> @Model.DescripcionEvento</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <label><b>Fecha del Evento:</b> @Model.FechaEvento.ToString("dd/MM/yyyy HH:mm") hrs</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <label><b>Escenario:</b> @Model.NombreEscenario</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <label><b>Fila:</b> @Model.Fila</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <label><b>Asiento:</b> @Model.Columna</label>
-                        </div>
-                    </div>
+    }
+    else
+    {
+        <div class="card shadow-sm w-100" style="max-width: 600px;">
+            <div class="card-header text-center p-4" style="background-color:#79211F; color: #FFF">
+                <h3 class="mb-4">INVITACIÓN VÁLIDA</h3>
+                <h3 class="fw-bold">@Model.Nombre @Model.ApellidoPaterno @Model.ApellidoMaterno</h3>
+                <h4 class="mb-3">@Model.CargoActual</h4>
+
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <th class="text-end">Evento:</th>
+                                <td>@Model.NombreEvento</td>
+                            </tr>
+                            <tr>
+                                <th class="text-end">Descripción del Evento:</th>
+                                <td>@Model.DescripcionEvento</td>
+                            </tr>
+                            <tr>
+                                <th class="text-end">Fecha del Evento:</th>
+                                <td>@Model.FechaEvento.ToString("dd/MM/yyyy HH:mm") hrs</td>
+                            </tr>
+                            <tr>
+                                <th class="text-end">Zona:</th>
+                                <td style="text-align:center; font-weight:800;"><b>@Model.Zona</b></td>
+                            </tr>
+                            <tr>
+                                <th class="text-end">Fila:</th>
+                                <td style="text-align:center; font-weight:800;"><b>@Model.Fila</b></td>
+                            </tr>
+                            <tr>
+                                <th class="text-end">Asiento:</th>
+                                <td style="text-align:center; font-weight:800;"><b>@Model.Columna</b></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="alert alert-success mt-4 fw-bold">
+                    Acceso correcto
                 </div>
             </div>
         </div>
-        <div class="col-1"></div>
-    </div>
-}
+    }
+</div>
 
 <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
 <link href="~/css/app/home.css" rel="stylesheet" />

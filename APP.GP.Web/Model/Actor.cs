@@ -61,3 +61,21 @@ public class Actor
     public string? Lugar { get; set; }
     public DateTime? FechaHora { get; set; }
 }
+
+public class ActorEscenarioDisposicion
+{
+    public int? IdActor { get; set; }
+    public string? Nombre { get; set; }
+    public string? CargoActual { get; set; }
+    public string? Telefono { get; set; }
+    public string? Fila { get; set; }
+    public int? Columna { get; set; }
+    public string? Zona { get; set; }
+}
+
+public class ActoresRequest
+{
+    public ActoresRequest() => Actores = new();
+
+    public List<ActorEscenarioDisposicion> Actores { get; set; }
+}

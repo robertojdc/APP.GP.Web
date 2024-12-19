@@ -7,15 +7,9 @@ public class Disposicion
     public string Fila { get; set; }
     public int Columna { get; set; }
     public int? IdActor { get; set; }
-
-    // Relación con Escenario
-    //public Escenario Escenario { get; set; }
-
-    // Relación opcional con ActorEscenario
-    //public ICollection<ActorEscenario> ActorEscenarios { get; set; }
-
     public string NombreActor { get; set; }
     public string ApellidoPaterno { get; set; }
     public string ApellidoMaterno { get; set; }
     public string FotoBase64 { get; set; }
+    public string Zona { get; set; }
 }
